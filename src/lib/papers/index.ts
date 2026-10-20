@@ -8,6 +8,38 @@ import {
   READING_SECTIONS,
 } from "./2025-12-set1.reading";
 import { TRANSLATION, WRITING } from "./2025-12-set1.writing";
+import {
+  LISTENING_QUESTIONS as LQ_2406_SET1,
+  LISTENING_UNITS as LU_2406_SET1,
+} from "./2024-06-set1.listening";
+import {
+  READING_QUESTIONS as RQ_2406_SET1,
+  READING_SECTIONS as RS_2406_SET1,
+} from "./2024-06-set1.reading";
+import {
+  TRANSLATION as T_2406_SET1,
+  WRITING as W_2406_SET1,
+} from "./2024-06-set1.writing";
+import {
+  LISTENING_QUESTIONS as LQ_2406_SET2,
+  LISTENING_UNITS as LU_2406_SET2,
+} from "./2024-06-set2.listening";
+import {
+  READING_QUESTIONS as RQ_2406_SET2,
+  READING_SECTIONS as RS_2406_SET2,
+} from "./2024-06-set2.reading";
+import {
+  TRANSLATION as T_2406_SET2,
+  WRITING as W_2406_SET2,
+} from "./2024-06-set2.writing";
+import {
+  READING_QUESTIONS as RQ_2406_SET3,
+  READING_SECTIONS as RS_2406_SET3,
+} from "./2024-06-set3.reading";
+import {
+  TRANSLATION as T_2406_SET3,
+  WRITING as W_2406_SET3,
+} from "./2024-06-set3.writing";
 
 /**
  * 2025.12 第一套
@@ -39,10 +71,117 @@ const PAPER_2025_12_SET_1: Paper = {
   questions: [...LISTENING_QUESTIONS, ...READING_QUESTIONS],
   writing: WRITING,
   translation: TRANSLATION,
+  sources: {
+    paper: "《2025年12月英语六级真题第1套》PDF（用户提供）",
+    answer: "《2025年12月英语六级解析第1套》PDF（用户提供）",
+    explain: "《2025年12月英语六级解析第1套》PDF（用户提供）",
+    transcript: "《2025年12月英语六级解析第1套》PDF（用户提供）",
+    evidenceVerbatim: false,
+  },
   stats: { listening: 25, reading: 30, writing: 1, translation: 1 },
 };
 
-export const PAPERS: Paper[] = [PAPER_2025_12_SET_1];
+/**
+ * 2024.06 三套
+ *
+ * 卷面、选项、阅读原文、写作题面、翻译原文来自三份真题 PDF；
+ * 答案、参考范文、参考译文来自三份「答案速查」PDF。
+ *
+ * 这三套没有解析册：逐题解析与原文依据句由本项目依据真题原文撰写，
+ * 依据句逐字取自原文（scripts/build-2024-06-papers.py 生成前逐条校验过）。
+ *
+ * 听力窗口来自对用户提供的 MP3 的静音分析：答题停顿稳定在 13.2–14.7 秒，
+ * 全卷检出 25 个，分组 4/4/3/4/3/3/4，与卷面「1-4 / 5-8 / 9-11 / 12-15 /
+ * 16-18 / 19-21 / 22-25」一一对应。
+ *
+ * 官方第三套真题不提供听力：卷面写着「由于多题多卷，官方第三套真题的听力试题
+ * 与第二套真题的一致，只是选项顺序不同，因此，本套试卷不再提供听力部分」。
+ * 所以第三套只有阅读、写作、翻译，不硬造一套听力出来。
+ */
+const PAPER_2024_06_SET_1: Paper = {
+  id: "2024-06-set1",
+  title: "2024 年 06 月 · 第一套",
+  titleEn: "CET-6 · Jun 2024 · Paper One",
+  examDate: "2024-06-15",
+  setNumber: 1,
+  sources: {
+    paper: "《2024年06月大学英语六级考试真题（第1套）》PDF（用户提供）",
+    answer: "《2024年06月六级考试真题答案速查（第1套）》PDF（用户提供）",
+    explain: "本套没有解析册；逐题解析与原文依据句由本项目依据真题原文撰写",
+    transcript: "《2024年6月六级真题（第1套）》录音的机器转写（listen_audio）",
+    evidenceVerbatim: true,
+  },
+  timing: {
+    audioPath: "/audio/cet6-2024-06-set1-listening.mp3",
+    durationSec: 1650.78,
+    method:
+      "静音能量分析：20ms 帧 RMS，-46 dBFS 为静音阈值，桥接 0.3s 以下间隙；识别出 25 个 13.3–14.7s 的答题停顿，分组 4/4/3/4/3/3/4，与卷面「1-4 / 5-8 / 9-11 / 12-15 / 16-18 / 19-21 / 22-25」一一对应。逐段转写核对确认：每段单元的构成是 原文/对话 → “Questions N to M are based on …” → 各题英文题干 + 每题之间的答题停顿，因此单元的完整可播区间一直盖到最后一个题号的停顿结束。",
+    sentenceLevelVerified: false,
+    note: "单元级音频窗口为实测值；逐句时间戳尚未强制对齐，本套暂不提供逐句切片播放。原始录音是 32 kHz / 96 kbps 的 MP3，Chrome 播不动，已按 44.1 kHz / 128 kbps 重新编码（scripts/encode-listening-mp3.py），窗口时间点一个没动。",
+  },
+  listeningUnits: LU_2406_SET1,
+  readingSections: RS_2406_SET1,
+  questions: [...LQ_2406_SET1, ...RQ_2406_SET1],
+  writing: W_2406_SET1,
+  translation: T_2406_SET1,
+  stats: { listening: 25, reading: 30, writing: 1, translation: 1 },
+};
+
+const PAPER_2024_06_SET_2: Paper = {
+  id: "2024-06-set2",
+  title: "2024 年 06 月 · 第二套",
+  titleEn: "CET-6 · Jun 2024 · Paper Two",
+  examDate: "2024-06-15",
+  setNumber: 2,
+  sources: {
+    paper: "《2024年06月大学英语六级考试真题（第2套）》PDF（用户提供）",
+    answer: "《2024年06月六级考试真题答案速查（第2套）》PDF（用户提供）",
+    explain: "本套没有解析册；逐题解析与原文依据句由本项目依据真题原文撰写",
+    transcript: "《2024年6月六级真题（第2套）》录音的机器转写（listen_audio）",
+    evidenceVerbatim: true,
+  },
+  timing: {
+    audioPath: "/audio/cet6-2024-06-set2-listening.mp3",
+    durationSec: 1562.75,
+    method:
+      "静音能量分析：20ms 帧 RMS，-46 dBFS 为静音阈值，桥接 0.3s 以下间隙；识别出 25 个 13.2–13.8s 的答题停顿，分组 4/4/3/4/3/3/4，与卷面「1-4 / 5-8 / 9-11 / 12-15 / 16-18 / 19-21 / 22-25」一一对应。逐段转写核对确认：每段单元的构成是 原文/对话 → “Questions N to M are based on …” → 各题英文题干 + 每题之间的答题停顿，因此单元的完整可播区间一直盖到最后一个题号的停顿结束。",
+    sentenceLevelVerified: false,
+    note: "单元级音频窗口为实测值；逐句时间戳尚未强制对齐，本套暂不提供逐句切片播放。原始录音是 32 kHz / 96 kbps 的 MP3，Chrome 播不动，已按 44.1 kHz / 128 kbps 重新编码（scripts/encode-listening-mp3.py），窗口时间点一个没动。",
+  },
+  listeningUnits: LU_2406_SET2,
+  readingSections: RS_2406_SET2,
+  questions: [...LQ_2406_SET2, ...RQ_2406_SET2],
+  writing: W_2406_SET2,
+  translation: T_2406_SET2,
+  stats: { listening: 25, reading: 30, writing: 1, translation: 1 },
+};
+
+const PAPER_2024_06_SET_3: Paper = {
+  id: "2024-06-set3",
+  title: "2024 年 06 月 · 第三套",
+  titleEn: "CET-6 · Jun 2024 · Paper Three",
+  examDate: "2024-06-15",
+  setNumber: 3,
+  sources: {
+    paper: "《2024年06月大学英语六级考试真题（第3套）》PDF（用户提供）",
+    answer: "《2024年06月六级考试真题答案速查（第3套）》PDF（用户提供）",
+    explain: "本套没有解析册；逐题解析与原文依据句由本项目依据真题原文撰写",
+    evidenceVerbatim: true,
+  },
+  listeningUnits: [],
+  readingSections: RS_2406_SET3,
+  questions: [...RQ_2406_SET3],
+  writing: W_2406_SET3,
+  translation: T_2406_SET3,
+  stats: { listening: 0, reading: 30, writing: 1, translation: 1 },
+};
+
+export const PAPERS: Paper[] = [
+  PAPER_2025_12_SET_1,
+  PAPER_2024_06_SET_1,
+  PAPER_2024_06_SET_2,
+  PAPER_2024_06_SET_3,
+];
 
 export function getPaper(id: string): Paper | undefined {
   return PAPERS.find((p) => p.id === id);

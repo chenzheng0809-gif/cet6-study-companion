@@ -1619,6 +1619,62 @@ console.log(
   "  每段播到最后一题 · 题干窗口紧接原文 · 25 道题的题干都在音频里 · 死字段 dictationWindow 已清除",
 );
 
+/* ------------------------------------------- 第二十一轮：多卷 + Section 归属 */
+
+// 真题库不止一套了：2024.06 三套 + 2025.12 一套
+assert(PAPERS.length >= 4, `真题库只有 ${PAPERS.length} 套，2024-06 三套没进库`);
+assert(
+  ["2024-06-set1", "2024-06-set2", "2024-06-set3", "2025-12-set1"].every((id) =>
+    PAPERS.some((p) => p.id === id),
+  ),
+  "四套卷子的 id 不齐",
+);
+
+// 每套卷子都要写清材料出处 —— 没有出处的解析等于来源不明
+for (const paper of PAPERS) {
+  assert(!!paper.sources, `${paper.id} 没写材料出处`);
+  assert(
+    (paper.sources?.paper?.length ?? 0) > 0 && (paper.sources?.answer?.length ?? 0) > 0 &&
+      (paper.sources?.explain?.length ?? 0) > 0,
+    `${paper.id} 的出处不完整（卷面 / 答案 / 解析）`,
+  );
+}
+
+// Section 归属写在数据里，不从题段标题的前缀去猜
+const navSrc = readSrc("src/lib/papers/nav.ts");
+assert(
+  navSrc.includes("unit.section"),
+  "nav.ts 还在靠题段标题猜 Section —— 猜反了浏览顺序就是 Q16→Q1→Q9",
+);
+assert(
+  !/head === "recording"\)\s*\{[^}]*key: "A"/.test(navSrc),
+  "nav.ts 里还留着 Recording→A 的旧猜测",
+);
+
+for (const paper of PAPERS) {
+  for (const unit of paper.listeningUnits) {
+    assert(
+      unit.section === "A" || unit.section === "B" || unit.section === "C",
+      `${unit.id} 的 Section 字母不合法：${unit.section}`,
+    );
+  }
+}
+
+// 听力题干来自录音：2024 年起六级卷面不印听力题干，题干只在录音里念出来
+for (const paper of PAPERS) {
+  for (const q of paper.questions) {
+    if (q.n > 25) continue;
+    assert(
+      q.stem.trim().length > 0,
+      `${paper.id} Q${q.n} 没有题干 —— 听力题必须带录音里念出来的题干`,
+    );
+  }
+}
+
+console.log(
+  "  四套真题在库 · 每套写明材料出处 · Section 归属来自数据不是猜的 · 听力题干来自录音",
+);
+
 /* --------------------------------------------------------------- result */
 
 console.log(

@@ -2,15 +2,49 @@ import Link from "next/link";
 import { ArrowRight, Headphones, PenLine, ScrollText, Languages } from "lucide-react";
 import { AppShell } from "@/components/ui/app-shell";
 import { PAPERS } from "@/lib/papers";
+import type { Paper } from "@/lib/papers/types";
 
 export const metadata = { title: "真题库 · CET-6 Study Companion" };
 
-const PARTS = [
-  { icon: Headphones, name: "Listening", note: "25 题 · 7 段原文" },
-  { icon: ScrollText, name: "Reading", note: "30 题 · 4 个题段" },
-  { icon: PenLine, name: "Writing", note: "1 篇 · 含范文点评" },
-  { icon: Languages, name: "Translation", note: "1 段 · 含译点精析" },
-];
+/**
+ * 每套卷子有哪几个 Part、各有多少内容 —— 全从数据里数，不写死。
+ *
+ * 官方第三套真题不提供听力（卷面自己写着的），所以那一套的听力那一格
+ * 直接不出现，不能硬写成「25 题」。
+ */
+function partsOf(paper: Paper): { icon: typeof Headphones; name: string; note: string }[] {
+  const parts: { icon: typeof Headphones; name: string; note: string }[] = [];
+
+  if (paper.stats.listening > 0) {
+    parts.push({
+      icon: Headphones,
+      name: "Listening",
+      note: `${paper.stats.listening} 题 · ${paper.listeningUnits.length} 段原文`,
+    });
+  }
+  if (paper.stats.reading > 0) {
+    parts.push({
+      icon: ScrollText,
+      name: "Reading",
+      note: `${paper.stats.reading} 题 · ${paper.readingSections.length} 个题段`,
+    });
+  }
+  if (paper.writing) {
+    parts.push({
+      icon: PenLine,
+      name: "Writing",
+      note: paper.writing.comments ? "1 篇 · 含范文点评" : "1 篇 · 含参考范文",
+    });
+  }
+  if (paper.translation) {
+    parts.push({
+      icon: Languages,
+      name: "Translation",
+      note: paper.translation.points ? "1 段 · 含译点精析" : "1 段 · 含参考译文",
+    });
+  }
+  return parts;
+}
 
 export default function PapersPage() {
   return (
@@ -19,7 +53,7 @@ export default function PapersPage() {
         <p className="eyebrow text-fg-muted">PAPER BANK</p>
         <h1 className="mt-2 text-title font-black tracking-[-0.03em]">真题库</h1>
         <p className="mt-2 text-body text-fg-muted">
-          整套卷面、听力原文、逐题解析和全文译文都在这儿。不是题库，是原卷。
+          整套卷面、逐题解析和原文依据都在这儿。不是题库，是原卷。
         </p>
 
         <div className="mt-6 grid gap-4">
@@ -41,7 +75,7 @@ export default function PapersPage() {
               </div>
 
               <div className="mt-4 flex flex-wrap gap-2">
-                {PARTS.map((p) => (
+                {partsOf(paper).map((p) => (
                   <span
                     key={p.name}
                     className="rounded-pill bg-surface-2 px-3 py-1 text-caption font-bold"

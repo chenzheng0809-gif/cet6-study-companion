@@ -51,23 +51,31 @@ export interface NavPart {
 /**
  * 听力的 Section 判定。
  *
- * 真题卷面的听力是三段式：Section A 是 News，Section B 是 Conversations，
- * Section C 是 Passages。数据里这三类题段的 label 分别以 Recording / Conversation /
- * Passage 开头（News 一类在题源里标注成 Recording），所以按题段自己的 label 前缀判定，
- * 不按 id 前缀写死一套映射。判不出来的题段单独成组，不硬塞进 A/B/C。
+ * 分组依据是数据里的 section 字段 —— 那是卷面印的 Section 字母：
+ *   Section A 两段长对话（Q1–8）
+ *   Section B 两篇短文（Q9–15）
+ *   Section C 三段讲座（Q16–25）
+ *
+ * 以前这里是按题段标题的前缀猜的（Recording→A / Conversation→B / Passage→C），
+ * 猜反了：浏览顺序会变成 Q16→Q1→Q9，跟卷面完全对不上。
+ * 所以归属写进数据，标题前缀只用来显示这一段是什么类型。
  */
+const LISTENING_TYPE_NAME: Record<string, string> = {
+  conversation: "Conversations",
+  passage: "Passages",
+  recording: "Recordings",
+  news: "News",
+  lecture: "Recordings",
+  talk: "Recordings",
+};
+
 function listeningSection(unit: ListeningUnit): { key: string; label: string } {
   const head = (unit.label.split(/[\s·—-]+/)[0] ?? "").toLowerCase();
-  if (head === "recording" || head === "news") {
-    return { key: "A", label: "Section A · News" };
-  }
-  if (head === "conversation") {
-    return { key: "B", label: "Section B · Conversations" };
-  }
-  if (head === "passage") {
-    return { key: "C", label: "Section C · Passages" };
-  }
-  return { key: unit.id, label: unit.label };
+  const type = LISTENING_TYPE_NAME[head];
+  return {
+    key: unit.section,
+    label: type ? `Section ${unit.section} · ${type}` : `Section ${unit.section}`,
+  };
 }
 
 /**

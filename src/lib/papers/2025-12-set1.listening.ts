@@ -26,6 +26,7 @@ const N = "N";
 export const LISTENING_UNITS: ListeningUnit[] = [
   {
     id: "l-c1",
+    section: "A",
     label: "Conversation One",
     labelZh: "对话一 · 外交官访谈",
     questionRange: [1, 4],
@@ -61,6 +62,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
   },
   {
     id: "l-c2",
+    section: "A",
     label: "Conversation Two",
     labelZh: "对话二 · 合同项目加班",
     questionRange: [5, 8],
@@ -96,6 +98,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
   },
   {
     id: "l-b1",
+    section: "B",
     label: "Passage One",
     labelZh: "短文一 · 职场冲突处理",
     questionRange: [9, 11],
@@ -121,6 +124,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
   },
   {
     id: "l-b2",
+    section: "B",
     label: "Passage Two",
     labelZh: "短文二 · 美国人为什么不再做饭",
     questionRange: [12, 15],
@@ -150,6 +154,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
   },
   {
     id: "l-r1",
+    section: "C",
     label: "Recording One",
     labelZh: "讲座一 · 行李为什么会被弄丢",
     questionRange: [16, 18],
@@ -181,6 +186,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
   },
   {
     id: "l-r2",
+    section: "C",
     label: "Recording Two",
     labelZh: "讲座二 · 面对面聊天时看手机",
     questionRange: [19, 21],
@@ -216,6 +222,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
   },
   {
     id: "l-r3",
+    section: "C",
     label: "Recording Three",
     labelZh: "讲座三 · 开一家 B&B 要考虑什么",
     questionRange: [22, 25],

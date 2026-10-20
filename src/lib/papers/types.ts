@@ -57,11 +57,24 @@ export interface TranscriptSentence {
   endSec?: number | null;
 }
 
+/**
+ * 听力卷面的 Section 归属。
+ *
+ * 2024 年起六级听力的卷面分三段：
+ *   Section A  两段长对话（Q1–8）
+ *   Section B  两篇短文（Q9–15）
+ *   Section C  三段讲座/讲话（Q16–25）
+ * 这个归属写在数据里，不从题段标题的前缀去猜 —— 猜错了浏览顺序就整个反了。
+ */
+export type ListeningSection = "A" | "B" | "C";
+
 export interface ListeningUnit {
   id: string;
   /** "Conversation One" / "Passage Two" / "Recording Three" */
   label: string;
   labelZh: string;
+  /** 卷面里的 Section 字母 */
+  section: ListeningSection;
   questionRange: [number, number];
   /**
    * 本单元的原文/对话在音频里的位置（真实检测值）。
@@ -149,6 +162,33 @@ export interface PaperTimingProvenance {
   note?: string;
 }
 
+/**
+ * 一套卷子的数据出处。
+ *
+ * 卷面、答案、解析、听力原文分别来自哪份文件，必须写在数据里。
+ * 没有解析册的卷子就如实写「无解析册，解析由本项目依据原文撰写」，
+ * 不拿别处的解析冒充，也不悄悄留空。
+ */
+export interface PaperSources {
+  /** 卷面原文（题干、选项、阅读原文、写作题面、翻译原文） */
+  paper: string;
+  /** 答案 */
+  answer: string;
+  /** 逐题解析 */
+  explain: string;
+  /** 听力原文 */
+  transcript?: string;
+  /**
+   * 依据句是否逐字取自本项目持有的原文（录音转写 / 阅读原文）。
+   *
+   * 为 true 时，校验会强制「每条依据句必须是原文某一句的逐字子串」——
+   * 这是防编造最硬的一道闸门。没有解析册、自己写解析的卷子才适用：
+   * 解析册的引文用的是解析册自己的措辞，有时还跨句、按自己的方式摘编，
+   * 那套材料本项目手上没有原文可比，就不该拿这条规则去卡它。
+   */
+  evidenceVerbatim?: boolean;
+}
+
 export interface Paper {
   id: string;
   /** "2025.12 第一套" */
@@ -158,6 +198,8 @@ export interface Paper {
   examDate: string;
   /** 场次序号：1 */
   setNumber: number;
+  /** 这套卷子的材料出处，界面上要能看到 */
+  sources?: PaperSources;
   timing?: PaperTimingProvenance;
   listeningUnits: ListeningUnit[];
   readingSections: ReadingSection[];

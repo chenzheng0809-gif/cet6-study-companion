@@ -8,11 +8,12 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "verify": "tsx scripts/verify.ts && npm run verify:papers && npm run verify:vocab && npm run verify:plan",
+    "verify": "tsx scripts/verify.ts && npm run verify:papers && npm run verify:vocab && npm run verify:plan && npm run verify:audio",
     "check": "npm run typecheck && npm run lint && npm run verify",
     "verify:papers": "tsx scripts/verify-papers.ts",
     "verify:vocab": "tsx scripts/verify-vocab-store.ts",
-    "verify:plan": "tsx scripts/verify-plan-store.ts"
+    "verify:plan": "tsx scripts/verify-plan-store.ts",
+    "verify:audio": "tsx scripts/verify-audio.ts"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
