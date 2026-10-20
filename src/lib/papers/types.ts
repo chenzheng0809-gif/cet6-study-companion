@@ -63,10 +63,25 @@ export interface ListeningUnit {
   label: string;
   labelZh: string;
   questionRange: [number, number];
-  /** 音频中该单元的可播放窗口（真实检测值） */
+  /**
+   * 本单元的原文/对话在音频里的位置（真实检测值）。
+   * 到 endSec 为止只包含原文、题号提示和第一题的题干 —— 不含后面的题干。
+   */
   window: { startSec: number; endSec: number };
-  /** 答题/听写停顿窗口 */
-  dictationWindow?: { startSec: number; endSec: number };
+  /**
+   * 剩余题目的英文题干播报区间（含每题之间的答题停顿）（真实检测值）。
+   *
+   * 音频里每段单元的真实构成是：
+   *   原文/对话 → "Questions N to M are based on …" → 各题英文题干 + 每题约 13.5s 的答题停顿
+   * 所以一段单元的完整可播区间是 window.startSec → stemsWindow.endSec，
+   * 只放到 window.endSec 的话每段就只播到第一题就停。
+   */
+  stemsWindow?: {
+    startSec: number;
+    endSec: number;
+    /** 在这段里被读出来的题号（第一题的题干在 window 末尾，不在这里面） */
+    questions: number[];
+  };
   transcript: TranscriptSentence[];
   /** 单元内出现的生词/短语标注（来自解析册） */
   notes?: VocabNote[];

@@ -22,7 +22,7 @@ import {
 } from "../src/lib/journey";
 import { currentStreak, weekStat, monthStat } from "../src/lib/stats";
 import { EXAM_PART_LIMIT, PART_ORDER } from "../src/lib/papers/exam-clock";
-import { PAPERS, getListeningUnit, getPaper, getReadingSection } from "../src/lib/papers";
+import { PAPERS, getListeningUnit, getPaper, getReadingSection, unitAudioRange } from "../src/lib/papers";
 import { POS_ORDER, posGroups, samePosSiblings, splitExplain } from "../src/lib/papers/bank";
 import { mergeVocabEntry, normWord } from "../src/lib/vocab";
 import {
@@ -1563,6 +1563,60 @@ assert(
 
 console.log(
   "  依据按「距考 N 天 / 已练 M X / 建议本周练习 K X」写 · 弱项尾巴最多一条 · 弱项只挪一位 · 「少一项」自己挑 · 试卷内无翻页按钮",
+);
+
+/* --------- 23. 听力每段必须播到最后一题，不能只播到第一题 */
+
+section("23. 听力音频每段都要播到最后一题的题干");
+
+/**
+ * 音频里每段单元的真实构成是：
+ *   原文/对话 → "Questions N to M are based on …" → 各题英文题干 + 每题约 13.5s 的答题停顿
+ * 曾经把「答题停顿的起点」当成单元终点，于是每段只播到第一题就停，
+ * 后面几题的题干从来没人播 —— 而做题界面按考场规矩不显示题干。
+ */
+const listenUnitSrc = readSrc("src/components/paper/segments/listening-unit.tsx");
+assert(
+  listenUnitSrc.includes("unitAudioRange(unit)"),
+  "听力段没有用 unitAudioRange() —— 完整可播区间被绕过了",
+);
+assert(
+  !/startSec=\{unit\.window\.startSec\}/.test(listenUnitSrc) &&
+    !/endSec=\{unit\.window\.endSec\}/.test(listenUnitSrc),
+  "听力段又把原文窗口直接喂给播放器了 —— 那样每段只播到第一题",
+);
+
+// 那个把题干晾在一边的死字段不能再回来
+const listenDataSrc = readSrc("src/lib/papers/2025-12-set1.listening.ts");
+assert(
+  !listenDataSrc.includes("dictationWindow"),
+  "dictationWindow 还在 —— 那是从不播放的死字段，题干就晾在里面",
+);
+assert(
+  listenDataSrc.includes("stemsWindow"),
+  "stemsWindow 不见了 —— 剩余题目的题干播报区间没了",
+);
+
+// 数据上：每段的完整可播区间都必须越过原文结尾
+for (const paper of PAPERS) {
+  for (const unit of paper.listeningUnits) {
+    const range = unitAudioRange(unit);
+    assert(
+      range.endSec > unit.window.endSec,
+      `${unit.id} 的可播区间没越过原文结尾（${range.endSec} vs ${unit.window.endSec}）`,
+    );
+    const stems = unit.stemsWindow?.questions ?? [];
+    const [lo, hi] = unit.questionRange;
+    const expected = Array.from({ length: hi - lo }, (_, i) => lo + 1 + i);
+    assert(
+      stems.join(",") === expected.join(","),
+      `${unit.id} 题干窗口的题号不对：${stems.join(",")} vs ${expected.join(",")}`,
+    );
+  }
+}
+
+console.log(
+  "  每段播到最后一题 · 题干窗口紧接原文 · 25 道题的题干都在音频里 · 死字段 dictationWindow 已清除",
 );
 
 /* --------------------------------------------------------------- result */

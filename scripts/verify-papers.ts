@@ -11,7 +11,9 @@ import {
   locateSentences,
   matchingOptionKeys,
   PAPERS,
+  unitAudioRange,
 } from "../src/lib/papers";
+import { EXAM_PART_LIMIT } from "../src/lib/papers/exam-clock";
 import type { Paper, Question } from "../src/lib/papers/types";
 
 let passed = 0;
@@ -96,20 +98,74 @@ function verifyPaper(paper: Paper) {
       check(`${unit.id} Q${q.n} 有原文定位句`, locateSentences(unit, q.n).length > 0);
     }
 
-    // 听写停顿窗口的组成：N 段 13.3–13.7s 的静音 + N-1 段报数字语音（约 3.5s）
-    // 因此每题摊到 16.5–18.5s；这正好反证单元边界没有错位。
-    const dw = unit.dictationWindow;
-    check(`${unit.id} 有听写停顿窗口`, !!dw);
-    if (dw) {
-      const per = (dw.endSec - dw.startSec) / count;
-      check(`${unit.id} 停顿/题 ≈ 13.5s静音+报数`, per > 16 && per < 19, `${per.toFixed(2)}s`);
+    // 题干播报窗口：音频里每段单元的构成是
+    //   原文 → "Questions N to M are based on …" → 各题英文题干 + 每题约 13.5s 的答题停顿
+    // 曾经把「答题停顿的起点」当成单元终点，于是每段只播到第一题就停，
+    // 后面几题的题干从来没人播 —— 而做题界面按考场规矩不显示题干。
+    const sw = unit.stemsWindow;
+    check(`${unit.id} 有题干播报窗口`, !!sw);
+    if (sw) {
+      check(`${unit.id} 题干窗口紧接原文结尾`, sw.startSec === unit.window.endSec,
+        `stems.start ${sw.startSec} vs window.end ${unit.window.endSec}`);
+      check(`${unit.id} 题干窗口在音频内且有正时长`,
+        sw.endSec <= duration + 1 && sw.endSec > sw.startSec, JSON.stringify(sw));
+
+      // 剩下的每一题都必须在题干窗口里被读出来
+      const expectedStems = Array.from({ length: count - 1 }, (_, i) => lo + 1 + i);
+      check(`${unit.id} 题干窗口覆盖剩余全部题号`,
+        JSON.stringify(sw.questions) === JSON.stringify(expectedStems),
+        `${JSON.stringify(sw.questions)} vs ${JSON.stringify(expectedStems)}`);
+
+      // 题干窗口的时长构成：每题 13.5s 停顿 + (count-1) 段约 5s 的题干朗读
+      const per = (sw.endSec - sw.startSec) / count;
+      check(`${unit.id} 停顿/题 ≈ 13.5s停顿+报题`, per > 16 && per < 19, `${per.toFixed(2)}s`);
     }
+
+    // 本段的完整可播区间必须越过原文结尾，盖到最后一个题号的停顿结束
+    const range = unitAudioRange(unit);
+    check(`${unit.id} 可播区间盖到最后一题`,
+      range.startSec === unit.window.startSec && range.endSec > unit.window.endSec,
+      JSON.stringify(range));
   }
   check("7 段听力", paper.listeningUnits.length === 7, `${paper.listeningUnits.length}`);
   check(
     "听写段数 4/4/3/4/3/3/4 = 25 题",
     unitQuestionTotal.join("/") === "4/4/3/4/3/3/4",
     unitQuestionTotal.join("/")
+  );
+
+  // ---- 7 段的可播区间必须首尾相接，不重不漏 ----
+  // 重了会重复听，漏了会断档；两段之间留缝的话，学生听到的是被剪过的音频。
+  const ranges = paper.listeningUnits.map((u) => unitAudioRange(u));
+  let cursor = ranges[0].startSec;
+  for (let i = 0; i < ranges.length; i += 1) {
+    check(
+      `第 ${i + 1} 段可播区间与上一段相接`,
+      Math.abs(ranges[i].startSec - cursor) < 0.01,
+      `${ranges[i].startSec} vs ${cursor}`
+    );
+    cursor = ranges[i].endSec;
+  }
+  const playableSec = cursor - ranges[0].startSec;
+  check("听力可播总时长 > 20 分钟", playableSec > 1200, `${playableSec.toFixed(1)}s`);
+  check(
+    "听力可播总时长不超考场听力时长",
+    playableSec <= EXAM_PART_LIMIT.listening.minutes * 60,
+    `${playableSec.toFixed(1)}s vs ${EXAM_PART_LIMIT.listening.minutes * 60}s`
+  );
+  // 全卷 25 道题：每段第一题的题干在原文末尾，其余都在题干窗口里
+  const stemTotal = paper.listeningUnits.reduce(
+    (n, u) => n + (u.stemsWindow?.questions.length ?? 0),
+    0
+  );
+  const questionTotal = paper.listeningUnits.reduce(
+    (n, u) => n + (u.questionRange[1] - u.questionRange[0] + 1),
+    0
+  );
+  check(
+    "每段第一题在原文末尾被读出，其余题在题干窗口",
+    stemTotal + paper.listeningUnits.length === questionTotal,
+    `${stemTotal} + ${paper.listeningUnits.length} vs ${questionTotal}`
   );
 
   // ---- 阅读 ----

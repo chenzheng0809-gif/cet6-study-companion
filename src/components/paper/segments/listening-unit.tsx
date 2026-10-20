@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/cn";
-import { getListeningUnit } from "@/lib/papers";
+import { getListeningUnit, unitAudioRange } from "@/lib/papers";
 import { partLimitSec, unitsOfPart } from "@/lib/papers/exam-clock";
 import type { ListeningUnit, Paper } from "@/lib/papers/types";
 import { AudioWindow, Collapsible, LockedPanel, PartSessionBar } from "@/components/paper/exam-shell";
@@ -43,6 +43,9 @@ export function ListeningUnitSegment({
       ),
     [paper, unit],
   );
+
+  /** 本段的完整可播区间：原文 + 全部题号播报 + 答题停顿 */
+  const audioRange = unitAudioRange(unit);
 
   if (!paper.timing) return null;
 
@@ -108,8 +111,9 @@ export function ListeningUnitSegment({
 
         <AudioWindow
           src={paper.timing.audioPath}
-          startSec={unit.window.startSec}
-          endSec={unit.window.endSec}
+          /* 播到最后一个题号的停顿结束，不停在第一题 */
+          startSec={audioRange.startSec}
+          endSec={audioRange.endSec}
           label={unit.label}
         />
 

@@ -13,7 +13,7 @@ import { TRANSLATION, WRITING } from "./2025-12-set1.writing";
  * 2025.12 第一套
  *
  * 音频窗口来自对用户提供的 MP3 的静音分析（scripts/build-paper-timing 思路）：
- * 六级的答题/听写停顿稳定在 13.3–13.7 秒，全卷检出 7 组，组数分别为 4/4/3/4/3/3/4，
+ * 六级的答题停顿稳定在 13.3–13.7 秒，全卷检出 7 组，组数分别为 4/4/3/4/3/3/4，
  * 合计 25 题，与卷面 25 道听力题一一对应 —— 这构成了单元边界可信的交叉验证。
  * 因此下列 window 是真实检测值。
  *
@@ -30,7 +30,7 @@ const PAPER_2025_12_SET_1: Paper = {
     audioPath: "/audio/cet6-2025-12-set1-listening.mp3",
     durationSec: 1546.24,
     method:
-      "静音能量分析：20ms 帧 RMS，-46 dBFS 为静音阈值，桥接 0.3s 以下间隙；识别出 7 组 13.3–13.7s 的听写停顿（4/4/3/4/3/3/4 段 = 25 题），与卷面题量一致，停顿起点即单元终点。",
+      "静音能量分析：20ms 帧 RMS，-46 dBFS 为静音阈值，桥接 0.3s 以下间隙；识别出 7 组 13.3–13.7s 的答题停顿（4/4/3/4/3/3/4 段 = 25 题），与卷面题量一致。逐段转写核对确认：每段单元在音频里的构成是 原文/对话 → “Questions N to M are based on …” → 各题英文题干 + 每题之间的答题停顿，因此单元的完整可播区间一直盖到最后一个题号的停顿结束。",
     sentenceLevelVerified: false,
     note: "单元级音频窗口为实测值；逐句时间戳尚未强制对齐，本套暂不提供逐句切片播放。",
   },
@@ -94,6 +94,22 @@ export function matchingOptionKeys(section: ReadingSection): ParagraphLabel[] {
 /** 某道听力题在原文中的定位句（解析册用 [n] 标注，真实存在） */
 export function locateSentences(unit: ListeningUnit, questionNo: number): string[] {
   return unit.transcript.filter((s) => s.marks?.includes(questionNo)).map((s) => s.en);
+}
+
+/**
+ * 一个听力单元的完整可播区间。
+ *
+ * 音频里每段单元的真实构成是：
+ *   原文/对话 → "Questions N to M are based on …" → 各题的英文题干 + 每题约 13.5s 的答题停顿
+ * 只放到原文结束（window.endSec）的话，每段就只播到第一题就停，
+ * 后面几题的题干没人播 —— 而做题界面按考场规矩又不显示题干。
+ * 所以完整区间必须一直盖到最后一个题号的停顿结束。
+ */
+export function unitAudioRange(unit: ListeningUnit): { startSec: number; endSec: number } {
+  return {
+    startSec: unit.window.startSec,
+    endSec: unit.stemsWindow?.endSec ?? unit.window.endSec,
+  };
 }
 
 export function formatTime(sec: number): string {

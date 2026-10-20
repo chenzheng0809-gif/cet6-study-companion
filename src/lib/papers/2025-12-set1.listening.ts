@@ -7,9 +7,13 @@ import type { ListeningUnit, Question } from "./types";
  * 题干/选项来自《2025年12月六级真题第1套》PDF（用户提供）。
  *
  * 音频窗口由 scripts/build-paper-timing 的静音分析得出：
- * 六级的答题/听写停顿固定为约 13.5 秒，全卷检出 7 组（4/4/3/4/3/3/4 段，共 25 题），
- * 每组停顿的起点即该听力单元的结束点，上一单元的听写终点即本单元起点。
+ * 六级的答题停顿固定为约 13.5 秒，全卷检出 7 组（4/4/3/4/3/3/4 段，共 25 题），
  * 因此单元窗口是真实检测值，不是估算。
+ *
+ * 逐段转写核对过音频，每段单元的真实构成是：
+ *   原文/对话 → "Questions N to M are based on …" → 各题英文题干 + 每题之间的答题停顿
+ * 所以 `window` 只到原文结束（含第一题题干），剩下的题干在 `stemsWindow` 里，
+ * 完整可播区间由 `unitAudioRange()` 给出 —— 见 src/lib/papers/index.ts。
  *
  * `titleEn` 是题目标题的英文版，跟同一行 `labelZh` 一一对应 ——
  * 是那份中文标题的翻译，不是另编的标题。界面上显示的是 `titleEn`。
@@ -26,7 +30,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     labelZh: "对话一 · 外交官访谈",
     questionRange: [1, 4],
     window: { startSec: 35.66, endSec: 165.28 },
-    dictationWindow: { startSec: 165.28, endSec: 234.7 },
+    stemsWindow: { startSec: 165.28, endSec: 234.7, questions: [2, 3, 4] },
     transcript: [
       { id: "c1-1", speaker: W, en: "Today's special guest is Lord Blackwell, one of our country's most experienced and distinguished career diplomats. Welcome.", marks: [1] },
       { id: "c1-2", speaker: M, en: "It's my pleasure." },
@@ -61,7 +65,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     labelZh: "对话二 · 合同项目加班",
     questionRange: [5, 8],
     window: { startSec: 234.7, endSec: 352.44 },
-    dictationWindow: { startSec: 352.44, endSec: 420.54 },
+    stemsWindow: { startSec: 352.44, endSec: 420.54, questions: [6, 7, 8] },
     transcript: [
       { id: "c2-1", speaker: M, en: "It's getting late and we're both displaying signs of weariness. I think we should call it a day and meet again tomorrow morning.", marks: [5] },
       { id: "c2-2", speaker: W, en: "Oh, come on Jeff. We are so close. Don't you think we're almost done? Let's do two more hours, please." },
@@ -96,7 +100,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     labelZh: "短文一 · 职场冲突处理",
     questionRange: [9, 11],
     window: { startSec: 420.54, endSec: 557.62 },
-    dictationWindow: { startSec: 557.62, endSec: 611.46 },
+    stemsWindow: { startSec: 557.62, endSec: 611.46, questions: [10, 11] },
     transcript: [
       { id: "b1-1", speaker: N, en: "One thing I've learned in a quarter century of management is that there are ample gray areas in human behavior and that there may not always be clear right-or-wrong solutions to employee disputes.", marks: [9] },
       { id: "b1-2", speaker: N, en: "When two people have different versions of the same event, it can be hard to know whom to believe." },
@@ -121,7 +125,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     labelZh: "短文二 · 美国人为什么不再做饭",
     questionRange: [12, 15],
     window: { startSec: 611.46, endSec: 740.66 },
-    dictationWindow: { startSec: 740.66, endSec: 809.36 },
+    stemsWindow: { startSec: 740.66, endSec: 809.36, questions: [13, 14, 15] },
     transcript: [
       { id: "b2-1", speaker: N, en: "For some Americans, going out to dinner is a treat, planned and budgeted for. For others, it's just a daily occurrence.", marks: [12] },
       { id: "b2-2", speaker: N, en: "And that second group of people is becoming the majority, as the number of Americans who enjoy cooking is declining." },
@@ -150,7 +154,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     labelZh: "讲座一 · 行李为什么会被弄丢",
     questionRange: [16, 18],
     window: { startSec: 809.36, endSec: 1002.58 },
-    dictationWindow: { startSec: 1002.58, endSec: 1053.68 },
+    stemsWindow: { startSec: 1002.58, endSec: 1053.68, questions: [17, 18] },
     transcript: [
       { id: "r1-1", speaker: N, en: "Every year, of the more than 2.5 billion bags checked onto flights worldwide, 26 million go missing. And of that 26 million, 1 million never make it back to their original owner." },
       { id: "r1-2", speaker: N, en: "Bad weather and flight delays, miscoded destination tags, and some people simply forgetting to pick up one of their bags are a few of the reasons." },
@@ -181,7 +185,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     labelZh: "讲座二 · 面对面聊天时看手机",
     questionRange: [19, 21],
     window: { startSec: 1053.68, endSec: 1241.3 },
-    dictationWindow: { startSec: 1241.3, endSec: 1296.46 },
+    stemsWindow: { startSec: 1241.3, endSec: 1296.46, questions: [20, 21] },
     transcript: [
       { id: "r2-1", speaker: N, en: "You've probably been with someone who ignored you while interacting with his or her smartphone, and you've probably engaged in this behavior yourself." },
       { id: "r2-2", speaker: N, en: "In a recent survey, nine out of ten respondents said they'd used their smartphone during their most recent social activity." },
@@ -216,7 +220,7 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     labelZh: "讲座三 · 开一家 B&B 要考虑什么",
     questionRange: [22, 25],
     window: { startSec: 1296.46, endSec: 1469.16 },
-    dictationWindow: { startSec: 1469.16, endSec: 1540.04 },
+    stemsWindow: { startSec: 1469.16, endSec: 1540.04, questions: [23, 24, 25] },
     transcript: [
       { id: "r3-1", speaker: N, en: "More and more people travel for a variety of reasons. Many are tourists, but many venture for some personal or professional business.", marks: [22] },
       { id: "r3-2", speaker: N, en: "Whatever the reason for traveling, a common complaint of travelers is the impersonal accommodations they find." },
