@@ -1,0 +1,495 @@
+@import "tailwindcss";
+
+/* ============================================================
+   CET-6 Study Companion — Unified Design System
+   Direction B · STICKER TIDE
+   Saturated colour collisions · hard offset shadows · slight tilt.
+   Single source of truth: every page consumes these tokens.
+   ============================================================ */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- Palette: Light ----------
+   Direction B was authored light-only, so this block is the reference:
+   warm cream page, pure white cards, lime/lavender/coral sticker field. */
+:root {
+  color-scheme: light;
+
+  /* surfaces */
+  --cet-bg: #fbf7ec; /* warm cream page */
+  --cet-surface: #ffffff; /* cards are pure white */
+  --cet-surface-2: #f2f2ed; /* neutral tint — chips, wells, soft buttons */
+  --cet-surface-3: #e5e2d8; /* progress tracks, dashed fields */
+
+  /* ink */
+  --cet-fg: #181818;
+  --cet-fg-muted: #6b6b65; /* AA on cream (5.3:1) and on white */
+  --cet-fg-subtle: #726f68; /* AA on cream (4.5:1) — smallest text still passes */
+  --cet-border: #181818; /* the sticker stroke: inputs, controls, outlines */
+  --cet-line: #e5e2d8; /* hairline dividers inside a card */
+  --cet-card-edge: transparent; /* cards need no outline; the hard shadow is the edge */
+  --cet-decor: #c9c5b8; /* non-text marks: dots, ticks, disabled ticks */
+  /* Ink for text sitting ON a saturated accent block (lime / lavender / coral).
+     Deliberately theme-independent: all three accents stay light and saturated
+     in dark mode too, so ink-on-accent holds in both. */
+  --cet-on-accent: #181818;
+
+  /* colour field */
+  --cet-primary: #dfff63;
+  --cet-primary-strong: #cbeb45;
+  --cet-primary-fg: #1a1c10;
+  --cet-primary-soft: #f2ffc4;
+
+  --cet-lavender: #c5bbff;
+  --cet-lavender-soft: #ece8ff;
+  --cet-lavender-fg: #3b3470;
+
+  --cet-mint: #ddf4e4;
+  --cet-mint-soft: #eefaf1;
+  --cet-mint-fg: #1f4a32;
+
+  --cet-coral: #f5a49d;
+  --cet-coral-soft: #fde7e4;
+  --cet-coral-fg: #6b2a25;
+
+  --cet-paused: #dcdcda;
+
+  /* 荧光笔：还原原书 PDF 里的黄色重点标注（/Highlight 1 1 0）。
+     和 on-accent 一样两个模式共用同一套 —— 高亮笔在暗色底上还是黄的，
+     换色就不再是「原书标黄」这件事了。 */
+  --cet-marker: #ffe45c;
+  --cet-marker-fg: #2b2200;
+
+  /* hard offset shadows — never soft or ambient.
+     --cet-ink is the shadow colour so dark mode can retint it to true black. */
+  --cet-ink: #181818;
+  --cet-shadow-hard: 4px 4px 0 var(--cet-ink);
+  --cet-shadow-hard-sm: 3px 3px 0 var(--cet-ink);
+  --cet-shadow-sheet: 0 -5px 0 var(--cet-ink);
+
+  /* physical press: a resting offset that collapses to 1px */
+  --cet-press-lime: 0 5px 0 #b7d93a;
+  --cet-press-lime-sm: 0 1px 0 #b7d93a;
+  --cet-press-ink: 0 4px 0 var(--cet-ink);
+  --cet-press-ink-sm: 0 1px 0 var(--cet-ink);
+  --cet-press-coral: 0 4px 0 #c9665f;
+  --cet-press-coral-sm: 0 1px 0 #c9665f;
+
+  --cet-overlay: rgb(24 24 24 / 0.34);
+}
+
+/* ---------- Palette: Dark ----------
+   Not an inversion: the lime stays the accent, hard shadows become a 1px
+   outline plus a 4px true-black offset, and muted ink lifts to stay readable.
+   Declared twice on purpose: once for an explicit .dark choice, once for
+   "no explicit choice + system is dark". That way a dark-mode user sees no
+   flash of light before React hydrates, and we need no inline <script>
+   (which would break hydration because React hoists it into <body>). */
+.dark {
+  color-scheme: dark;
+
+  --cet-bg: #141410;
+  --cet-surface: #1e1e19;
+  --cet-surface-2: #2a2a23;
+  --cet-surface-3: #35352d;
+
+  --cet-fg: #f4f1e6;
+  --cet-fg-muted: #a0a098;
+  --cet-fg-subtle: #8b8b83;
+  --cet-border: #45453b;
+  --cet-line: #2e2e28;
+  --cet-card-edge: #45453b;
+  --cet-decor: #45453b;
+  --cet-on-accent: #181818;
+
+  --cet-primary: #dfff63;
+  --cet-primary-strong: #ecff9b;
+  --cet-primary-fg: #1a1c10;
+  --cet-primary-soft: #2e3512;
+
+  --cet-lavender: #c5bbff;
+  --cet-lavender-soft: #272347;
+  --cet-lavender-fg: #d3cbff;
+
+  --cet-mint: #1e3a27;
+  --cet-mint-soft: #182c1f;
+  --cet-mint-fg: #a9e5bf;
+
+  --cet-coral: #4a2823;
+  --cet-coral-soft: #3a211d;
+  --cet-coral-fg: #f5b6b0;
+
+  --cet-paused: #33332c;
+
+  --cet-ink: #000000;
+  --cet-shadow-hard: 4px 4px 0 var(--cet-ink);
+  --cet-shadow-hard-sm: 3px 3px 0 var(--cet-ink);
+  --cet-shadow-sheet: 0 -5px 0 var(--cet-ink);
+
+  --cet-press-lime: 0 5px 0 #a8c42e;
+  --cet-press-lime-sm: 0 1px 0 #a8c42e;
+  --cet-press-ink: 0 4px 0 var(--cet-ink);
+  --cet-press-ink-sm: 0 1px 0 var(--cet-ink);
+  --cet-press-coral: 0 4px 0 #2e1713;
+  --cet-press-coral-sm: 0 1px 0 #2e1713;
+
+  --cet-overlay: rgb(0 0 0 / 0.62);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not(.dark) {
+    color-scheme: dark;
+
+    --cet-bg: #141410;
+    --cet-surface: #1e1e19;
+    --cet-surface-2: #2a2a23;
+    --cet-surface-3: #35352d;
+
+    --cet-fg: #f4f1e6;
+    --cet-fg-muted: #a0a098;
+    --cet-fg-subtle: #8b8b83;
+    --cet-border: #45453b;
+    --cet-line: #2e2e28;
+    --cet-card-edge: #45453b;
+    --cet-decor: #45453b;
+
+    --cet-primary: #dfff63;
+    --cet-primary-strong: #ecff9b;
+    --cet-primary-fg: #1a1c10;
+    --cet-primary-soft: #2e3512;
+
+    --cet-lavender: #c5bbff;
+    --cet-lavender-soft: #272347;
+    --cet-lavender-fg: #d3cbff;
+
+    --cet-mint: #1e3a27;
+    --cet-mint-soft: #182c1f;
+    --cet-mint-fg: #a9e5bf;
+
+    --cet-coral: #4a2823;
+    --cet-coral-soft: #3a211d;
+    --cet-coral-fg: #f5b6b0;
+
+    --cet-paused: #33332c;
+
+    --cet-ink: #000000;
+    --cet-shadow-hard: 4px 4px 0 var(--cet-ink);
+    --cet-shadow-hard-sm: 3px 3px 0 var(--cet-ink);
+    --cet-shadow-sheet: 0 -5px 0 var(--cet-ink);
+
+    --cet-press-lime: 0 5px 0 #a8c42e;
+    --cet-press-lime-sm: 0 1px 0 #a8c42e;
+    --cet-press-ink: 0 4px 0 var(--cet-ink);
+    --cet-press-ink-sm: 0 1px 0 var(--cet-ink);
+    --cet-press-coral: 0 4px 0 #2e1713;
+    --cet-press-coral-sm: 0 1px 0 #2e1713;
+
+    --cet-overlay: rgb(0 0 0 / 0.62);
+  }
+}
+
+@theme inline {
+  /* color */
+  --color-bg: var(--cet-bg);
+  --color-surface: var(--cet-surface);
+  --color-surface-2: var(--cet-surface-2);
+  --color-surface-3: var(--cet-surface-3);
+  --color-fg: var(--cet-fg);
+  --color-fg-muted: var(--cet-fg-muted);
+  --color-fg-subtle: var(--cet-fg-subtle);
+  --color-border: var(--cet-border);
+  --color-line: var(--cet-line);
+  --color-card-edge: var(--cet-card-edge);
+  --color-decor: var(--cet-decor);
+  --color-on-accent: var(--cet-on-accent);
+  --color-primary: var(--cet-primary);
+  --color-primary-strong: var(--cet-primary-strong);
+  --color-primary-fg: var(--cet-primary-fg);
+  --color-primary-soft: var(--cet-primary-soft);
+  --color-lavender: var(--cet-lavender);
+  --color-lavender-soft: var(--cet-lavender-soft);
+  --color-lavender-fg: var(--cet-lavender-fg);
+  --color-mint: var(--cet-mint);
+  --color-mint-soft: var(--cet-mint-soft);
+  --color-mint-fg: var(--cet-mint-fg);
+  --color-coral: var(--cet-coral);
+  --color-coral-soft: var(--cet-coral-soft);
+  --color-coral-fg: var(--cet-coral-fg);
+  --color-paused: var(--cet-paused);
+  --color-marker: var(--cet-marker);
+  --color-marker-fg: var(--cet-marker-fg);
+
+  /* typography */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "PingFang SC",
+    "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-display:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "PingFang SC",
+    "Noto Sans SC", system-ui, sans-serif;
+
+  --text-display: 3.75rem; /* 60px — countdown numerals */
+  --text-display--line-height: 0.94;
+  --text-hero: 2.5rem; /* 40px — welcome headline */
+  --text-hero--line-height: 1.02;
+  --text-title: 2rem; /* 32px — page title */
+  --text-title--line-height: 1.08;
+  --text-section: 1.25rem; /* 20px */
+  --text-section--line-height: 1.3;
+  --text-body: 0.9375rem; /* 15px */
+  --text-body--line-height: 1.55;
+  --text-label: 0.8125rem; /* 13px */
+  --text-label--line-height: 1.4;
+  --text-caption: 0.75rem; /* 12px */
+  --text-caption--line-height: 1.4;
+  --text-eyebrow: 0.6875rem; /* 11px uppercase labels */
+  --text-eyebrow--line-height: 1.2;
+
+  /* radius — 32 hero / 28 card / 24 row / full-round chip & pill */
+  --radius-card-lg: 32px;
+  --radius-card: 28px;
+  --radius-row: 24px;
+  --radius-btn: 999px;
+  --radius-input: 24px;
+  --radius-pill: 999px;
+
+  /* elevation — every step is a hard offset, never a soft blur.
+     e1/e2 are kept as aliases so no call site can fall back to an
+     ambient shadow while the new names roll out. */
+  --shadow-hard: var(--cet-shadow-hard);
+  --shadow-hard-sm: var(--cet-shadow-hard-sm);
+  --shadow-sheet: var(--cet-shadow-sheet);
+  --shadow-press-lime: var(--cet-press-lime);
+  --shadow-press-lime-sm: var(--cet-press-lime-sm);
+  --shadow-press-ink: var(--cet-press-ink);
+  --shadow-press-ink-sm: var(--cet-press-ink-sm);
+  --shadow-press-coral: var(--cet-press-coral);
+  --shadow-press-coral-sm: var(--cet-press-coral-sm);
+  --shadow-e1: var(--cet-shadow-hard-sm);
+  --shadow-e2: var(--cet-shadow-hard);
+  --shadow-lime: var(--cet-shadow-hard);
+
+  /* tilt — static hand-placed rotation, never animated on scroll */
+  --rotate-tilt-a: -1.2deg;
+  --rotate-tilt-b: 0.8deg;
+  --rotate-tilt-c: 0.5deg;
+  --rotate-tilt-hard: -8deg;
+
+  /* motion */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-press: cubic-bezier(0.2, 0, 0, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-press: 120ms;
+  --duration-fast: 180ms;
+  --duration-base: 240ms;
+  --duration-slow: 300ms;
+
+  /* layout */
+  --spacing-gutter: 20px;
+  --nav-height: 64px;
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--cet-bg);
+    color: var(--cet-fg);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-y: none;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+
+  /* focus ring — visible for keyboard, quiet for touch */
+  :focus-visible {
+    outline: 3px solid var(--cet-fg);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+
+  ::selection {
+    background: var(--cet-primary);
+    color: var(--cet-primary-fg);
+  }
+
+  /* inputs inherit the type system */
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+@layer utilities {
+  /* Eyebrow: 11px black uppercase, the label voice of the whole app.
+     `.eyebrow-field` is the variant for the lime colour field — a separate
+     class rather than a colour override, so nothing has to out-specify it. */
+  .eyebrow,
+  .eyebrow-field {
+    font-size: var(--text-eyebrow);
+    line-height: 1.2;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .eyebrow {
+    color: var(--cet-fg-muted);
+  }
+  .eyebrow-field {
+    color: color-mix(in oklab, var(--cet-primary-fg) 88%, var(--cet-primary));
+  }
+
+  /* bold numeric typography — big numerals are always tabular */
+  .num {
+    font-family: var(--font-display);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+    font-weight: 900;
+  }
+
+  /* tactile press: the whole app presses down, never scales */
+  .tap {
+    transition:
+      translate var(--duration-press) var(--ease-press),
+      box-shadow var(--duration-press) var(--ease-press),
+      transform var(--duration-press) var(--ease-press),
+      background-color var(--duration-fast) linear,
+      border-color var(--duration-fast) linear,
+      color var(--duration-fast) linear,
+      opacity var(--duration-fast) linear;
+  }
+  .tap:active:not(:disabled) {
+    translate: 0 2px;
+  }
+
+  /* horizontal scroller without visible scrollbar */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* vertical pane for long passages: the passage stays readable while the
+     page itself keeps its height to one screen. A short mask at the top hints
+     there is more above once you scroll down. */
+  .scroll-fade {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 14px,
+      #000 calc(100% - 10px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 14px,
+      #000 calc(100% - 10px),
+      transparent 100%
+    );
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-fade {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* skeleton shimmer */
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--cet-surface-3);
+  }
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--cet-fg) 7%, transparent),
+      transparent
+    );
+    animation: shimmer 1.4s infinite;
+  }
+
+  /* mobile safe areas */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .h-safe-nav {
+    height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
+  }
+  .mb-safe-nav {
+    margin-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* The colour field: a lime block bleeding off the top with 36px bottom
+     corners, holding the headline. One definition, used by every page. */
+  .color-field {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--cet-primary);
+    border-bottom-left-radius: 36px;
+    border-bottom-right-radius: 36px;
+  }
+
+  /* circular accent sticker that bleeds off an edge */
+  .sticker {
+    position: absolute;
+    border-radius: 9999px;
+    pointer-events: none;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* respect reduced-motion across the whole app */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
