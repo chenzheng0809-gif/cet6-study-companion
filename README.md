@@ -137,28 +137,17 @@ Practice 页面提供不同训练方向的入口，包括听力、阅读、词�
 
 ## 📱 Preview
 
-> 此处建议放入真实产品截图，而不是设计稿。
-
-建议展示：
+以下均为实际运行的产品界面。
 
 | Today's Focus | CET-6 Papers | Vocabulary |
 |:---:|:---:|:---:|
+| ![Today's Focus](public/screenshots/today.png) | ![CET-6 Papers](public/screenshots/papers.png) | ![Vocabulary](public/screenshots/vocab.png) |
 | 今日推荐 | 真题练习 | 核心词库 |
 
 | Study Journey | Learning History |
 |:---:|:---:|
+| ![Study Journey](public/screenshots/journey.png) | ![Learning History](public/screenshots/calendar.png) |
 | 备考路径 | 学习日历 |
-
-<!--
-将实际截图放入 public/screenshots/ 后，替换上方占位表格。
-
-推荐文件名：
-today.png
-papers.png
-vocab.png
-journey.png
-calendar.png
--->
 
 ---
 
