@@ -21,8 +21,14 @@ export function WritingTaskSegment({
   /** 深链页传 1，滑动浏览里嵌在 Part 里传 2 */
   headingLevel?: 1 | 2;
 }) {
-  const { drafts, sessionOf, isSubmitted, setDraft, startSession, submitSession, reset } =
+  const { drafts, sessionOf, isSubmitted, setDraft, startSession, submitSession, finishUnit, reset } =
     usePaperAttempt(paper.id);
+
+  /** 交卷：记下这一项练完了 —— 真题推荐靠这个换到下一套卷子 */
+  const submit = async () => {
+    await submitSession("writing");
+    await finishUnit("writing");
+  };
 
   const Title = headingLevel === 1 ? "h1" : "h2";
   const session = sessionOf("writing");
@@ -51,7 +57,7 @@ export function WritingTaskSegment({
           total={0}
           showCount={false}
           onStart={() => startSession("writing", partLimitSec("writing"))}
-          onSubmit={() => submitSession("writing")}
+          onSubmit={() => void submit()}
           onRestart={restart}
         />
 
@@ -95,7 +101,7 @@ export function WritingTaskSegment({
 
         {!submitted ? (
           <div className="mt-3">
-            <LockedPanel title="审题和范文还没解锁" onSubmit={() => submitSession("writing")} />
+            <LockedPanel title="审题和范文还没解锁" onSubmit={() => void submit()} />
           </div>
         ) : (
           <>

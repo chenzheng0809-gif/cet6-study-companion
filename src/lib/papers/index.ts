@@ -56,6 +56,7 @@ const PAPER_2025_12_SET_1: Paper = {
   id: "2025-12-set1",
   title: "2025 年 12 月 · 第一套",
   titleEn: "CET-6 · Dec 2025 · Paper One",
+  shortEn: "Dec 2025 · Paper One",
   examDate: "2025-12-19",
   setNumber: 1,
   timing: {
@@ -64,7 +65,7 @@ const PAPER_2025_12_SET_1: Paper = {
     method:
       "静音能量分析：20ms 帧 RMS，-46 dBFS 为静音阈值，桥接 0.3s 以下间隙；识别出 7 组 13.3–13.7s 的答题停顿（4/4/3/4/3/3/4 段 = 25 题），与卷面题量一致。逐段转写核对确认：每段单元在音频里的构成是 原文/对话 → “Questions N to M are based on …” → 各题英文题干 + 每题之间的答题停顿，因此单元的完整可播区间一直盖到最后一个题号的停顿结束。",
     sentenceLevelVerified: false,
-    note: "单元级音频窗口为实测值；逐句时间戳尚未强制对齐，本套暂不提供逐句切片播放。",
+    note: "单元级音频窗口与逐题题干区间均为实测值；逐句时间戳尚未强制对齐，本套暂不提供逐句切片播放。",
   },
   listeningUnits: LISTENING_UNITS,
   readingSections: READING_SECTIONS,
@@ -102,6 +103,7 @@ const PAPER_2024_06_SET_1: Paper = {
   id: "2024-06-set1",
   title: "2024 年 06 月 · 第一套",
   titleEn: "CET-6 · Jun 2024 · Paper One",
+  shortEn: "Jun 2024 · Paper One",
   examDate: "2024-06-15",
   setNumber: 1,
   sources: {
@@ -117,7 +119,7 @@ const PAPER_2024_06_SET_1: Paper = {
     method:
       "静音能量分析：20ms 帧 RMS，-46 dBFS 为静音阈值，桥接 0.3s 以下间隙；识别出 25 个 13.3–14.7s 的答题停顿，分组 4/4/3/4/3/3/4，与卷面「1-4 / 5-8 / 9-11 / 12-15 / 16-18 / 19-21 / 22-25」一一对应。逐段转写核对确认：每段单元的构成是 原文/对话 → “Questions N to M are based on …” → 各题英文题干 + 每题之间的答题停顿，因此单元的完整可播区间一直盖到最后一个题号的停顿结束。",
     sentenceLevelVerified: false,
-    note: "单元级音频窗口为实测值；逐句时间戳尚未强制对齐，本套暂不提供逐句切片播放。原始录音是 32 kHz / 96 kbps 的 MP3，Chrome 播不动，已按 44.1 kHz / 128 kbps 重新编码（scripts/encode-listening-mp3.py），窗口时间点一个没动。",
+    note: "单元级音频窗口与逐题题干区间均为实测值；逐句时间戳尚未强制对齐，本套暂不提供逐句切片播放。原始录音是 32 kHz / 96 kbps 的 MP3，文件头带一段编码声明有问题的 ID3 标签，Chrome 一收到就放弃播放；修法是只剥掉这段标签、不重编音频（scripts/strip-id3.py），剥完解出来的 PCM 与原始录音逐字节相同，窗口时间点一个没动。",
   },
   listeningUnits: LU_2406_SET1,
   readingSections: RS_2406_SET1,
@@ -131,6 +133,7 @@ const PAPER_2024_06_SET_2: Paper = {
   id: "2024-06-set2",
   title: "2024 年 06 月 · 第二套",
   titleEn: "CET-6 · Jun 2024 · Paper Two",
+  shortEn: "Jun 2024 · Paper Two",
   examDate: "2024-06-15",
   setNumber: 2,
   sources: {
@@ -146,7 +149,7 @@ const PAPER_2024_06_SET_2: Paper = {
     method:
       "静音能量分析：20ms 帧 RMS，-46 dBFS 为静音阈值，桥接 0.3s 以下间隙；识别出 25 个 13.2–13.8s 的答题停顿，分组 4/4/3/4/3/3/4，与卷面「1-4 / 5-8 / 9-11 / 12-15 / 16-18 / 19-21 / 22-25」一一对应。逐段转写核对确认：每段单元的构成是 原文/对话 → “Questions N to M are based on …” → 各题英文题干 + 每题之间的答题停顿，因此单元的完整可播区间一直盖到最后一个题号的停顿结束。",
     sentenceLevelVerified: false,
-    note: "单元级音频窗口为实测值；逐句时间戳尚未强制对齐，本套暂不提供逐句切片播放。原始录音是 32 kHz / 96 kbps 的 MP3，Chrome 播不动，已按 44.1 kHz / 128 kbps 重新编码（scripts/encode-listening-mp3.py），窗口时间点一个没动。",
+    note: "单元级音频窗口与逐题题干区间均为实测值；逐句时间戳尚未强制对齐，本套暂不提供逐句切片播放。原始录音是 32 kHz / 96 kbps 的 MP3，文件头带一段编码声明有问题的 ID3 标签，Chrome 一收到就放弃播放；修法是只剥掉这段标签、不重编音频（scripts/strip-id3.py），剥完解出来的 PCM 与原始录音逐字节相同，窗口时间点一个没动。",
   },
   listeningUnits: LU_2406_SET2,
   readingSections: RS_2406_SET2,
@@ -160,6 +163,7 @@ const PAPER_2024_06_SET_3: Paper = {
   id: "2024-06-set3",
   title: "2024 年 06 月 · 第三套",
   titleEn: "CET-6 · Jun 2024 · Paper Three",
+  shortEn: "Jun 2024 · Paper Three",
   examDate: "2024-06-15",
   setNumber: 3,
   sources: {

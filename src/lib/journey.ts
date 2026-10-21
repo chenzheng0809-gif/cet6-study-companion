@@ -16,7 +16,14 @@
  */
 
 import { addDays, todayKey, type DateKey } from "./date";
-import { getListeningUnit, getPaper, getReadingSection, readingKindTitle } from "./papers";
+import {
+  getListeningUnit,
+  getPaper,
+  getReadingSection,
+  PAPERS,
+  readingKindTitle,
+} from "./papers";
+import type { Paper } from "./papers/types";
 import type { Profile, TaskType, WeeklyGoalItem } from "./types";
 
 /* ------------------------------------------------------------------ 薄弱项 */
@@ -126,6 +133,14 @@ export function daysUntilExam(examDate: DateKey, from: DateKey = todayKey()): nu
 export interface PracticeCoverage {
   /** 已交卷并做完题段的题段 id 集合 */
   finishedUnits: string[];
+  /**
+   * 各套卷子分别做完的题段。
+   *
+   * 必须按卷分开记：不同卷的题段 id 会重名（每套的对话都叫 `l-c1`），
+   * 只看一个扁平的 id 集合，「这套练过了」就会被误当成「每套都练过了」，
+   * 推荐也就永远不会换到下一套卷子。
+   */
+  finishedUnitsByPaper: Record<string, string[]>;
   /** 已完成的写作次数 */
   writings: number;
   /** 已完成的翻译次数 */
@@ -179,24 +194,8 @@ export function areaCoverage(coverage: PracticeCoverage, stage: JourneyStage): A
 
 /* -------------------------------------------------------------- 推荐 */
 
-/** 一组练习在系统里的唯一定位，指回真实题段 id。 */
-export const PRACTICE_UNITS = {
-  "listening-A": { id: "l-r1", part: "listening" },
-  "listening-A2": { id: "l-r2", part: "listening" },
-  "listening-B": { id: "l-c1", part: "listening" },
-  "listening-B2": { id: "l-c2", part: "listening" },
-  "listening-C": { id: "l-b1", part: "listening" },
-  "listening-C2": { id: "l-b2", part: "listening" },
-  "reading-A": { id: "r-a", part: "reading" },
-  "reading-B": { id: "r-b", part: "reading" },
-  "reading-C": { id: "r-c1", part: "reading" },
-  "reading-C2": { id: "r-c2", part: "reading" },
-} as const;
-
-export type PracticeSlot = keyof typeof PRACTICE_UNITS;
-
 /** 能对应到真题题段的四个考试板块。vocabulary / speed 没有题段，不走这条路。 */
-type PaperArea = "listening" | "reading" | "writing" | "translation";
+export type PaperArea = "listening" | "reading" | "writing" | "translation";
 
 /** 每个板块用什么量词：听力按「篇」，阅读按「段」，写作和翻译按「次」。 */
 const AREA_UNIT: Record<PaperArea, string> = {
@@ -349,11 +348,115 @@ export function practiceUnitLabel(paperId: string, unitId: string | undefined): 
   return section ? readingKindTitle(section.kind) : "";
 }
 
-interface Recipe {
-  title: string;
-  type: TaskType;
-  units: number;
-  slot?: PracticeSlot;
+/* ------------------------------------------------------- 下一段该练哪套卷 */
+
+/** 一次练习的落点：哪套卷子的哪一段。 */
+export interface PracticeTarget {
+  paperId: string;
+  /** 听力 / 阅读是题段 id；写作 / 翻译是 "writing" / "translation" */
+  unitId: string;
+  /** 给学生看的一行：卷子 + 题段 */
+  label: string;
+}
+
+/** 这套卷子在这个板块上有哪些可练的段落（题段 id）。没有就是没有，不编。 */
+function unitsOfArea(paper: Paper, area: PaperArea): string[] {
+  if (area === "listening") return paper.listeningUnits.map((u) => u.id);
+  if (area === "reading") return paper.readingSections.map((s) => s.id);
+  if (area === "writing") return paper.writing ? ["writing"] : [];
+  if (area === "translation") return paper.translation ? ["translation"] : [];
+  return [];
+}
+
+/**
+ * 某个板块下一段该练什么。
+ *
+ * **按卷推进**：先把手上这套的该板块练完，再换下一套 ——
+ * 一套卷子的听力连着做完，才接近考场里连着做一整套的节奏。
+ * 卷的顺序是考试时间从新到旧（题库注册表 `PAPERS` 的顺序）。
+ *
+ * 落点一律来自真题数据本身：哪套卷子有这个板块、这个板块有几段，
+ * 都数得出来，不在这里另抄一份。官方第三套没有听力，
+ * 听力这一栏就自动跳过它，不会推荐一个不存在的段落。
+ */
+export function nextPracticeTarget(
+  area: PaperArea,
+  coverage: PracticeCoverage,
+): PracticeTarget | null {
+  /** 这个板块全练完的卷子：所有卷子都练完时才回来看它 */
+  const exhausted: PracticeTarget[] = [];
+
+  for (const paper of PAPERS) {
+    const units = unitsOfArea(paper, area);
+    if (units.length === 0) continue;
+    const done = new Set(coverage.finishedUnitsByPaper[paper.id] ?? []);
+    const unitId = units.find((u) => !done.has(u));
+    if (unitId) {
+      // 第一个还有没练过的题段的卷子 —— 这就是下一段该练的
+      return { paperId: paper.id, unitId, label: practiceTargetLabel(paper, unitId) };
+    }
+    exhausted.push({
+      paperId: paper.id,
+      unitId: units[0],
+      label: practiceTargetLabel(paper, units[0]),
+    });
+  }
+
+  // 每个卷子这个板块都练完了：回到第一套的第一段（复习）
+  return exhausted[0] ?? null;
+}
+
+/** 落点的一行字：卷子 + 题段名。卷名不能省 —— 不同卷的题段名会重名。 */
+export function practiceTargetLabel(paper: Paper, unitId: string): string {
+  const unit = getListeningUnit(paper, unitId);
+  if (unit) return `${paper.shortEn} · ${unit.label}`;
+  const section = getReadingSection(paper, unitId);
+  if (section) return `${paper.shortEn} · ${readingKindTitle(section.kind)}`;
+  return paper.shortEn;
+}
+
+/** 落点的那一行字。跟推荐生成时同一套写法 —— 两边不是一套规则就会写出不一样的字。 */
+function targetDetail(area: PaperArea, target: PracticeTarget): string {
+  if (area === "writing" || area === "translation") {
+    const hint = area === "writing" ? "审题 + 写完对一遍范文" : "先自己译，再看参考译文";
+    return `${target.label} · ${hint}`;
+  }
+  return target.label;
+}
+
+/**
+ * 落点也跟着当前状态重算。
+ *
+ * 真题推荐是跟着卷子轮换的：这套练完换下一套。落点要是写进计划时就锁死，
+ * 学生练完一段、计划还指着那一段 —— 轮换等于没做。
+ * 所以跟 basis 一起重算：只动系统给的落点，学生自己加的项不动。
+ */
+export function recomputeTarget(
+  items: Pick<WeeklyGoalItem, "type" | "examPart" | "source" | "paperId" | "paperUnitId" | "detail">[],
+  coverage: PracticeCoverage,
+): { paperId?: string; paperUnitId?: string; detail: string }[] {
+  /** 同一个板块只算一次落点：推荐目标组里一个板块只有一项 */
+  const cache = new Map<PaperArea, PracticeTarget | null>();
+  const targetOf = (area: PaperArea) => {
+    if (!cache.has(area)) cache.set(area, nextPracticeTarget(area, coverage));
+    return cache.get(area) ?? null;
+  };
+
+  return items.map((g) => {
+    const keep = { paperId: g.paperId, paperUnitId: g.paperUnitId, detail: g.detail };
+    if (g.source !== "system") return keep;
+    const area = goalArea(g);
+    if (area === null || area === "vocab" || area === "vocabulary" || area === "speed") {
+      return keep;
+    }
+    const target = targetOf(area as PaperArea);
+    if (!target) return keep;
+    return {
+      paperId: target.paperId,
+      paperUnitId: target.unitId,
+      detail: targetDetail(area as PaperArea, target),
+    };
+  });
 }
 
 export interface RecommendInput {
@@ -402,16 +505,10 @@ export function recommendWeeklyGoals(input: RecommendInput): {
 
   const count = stage.id === "explore" ? 3 : stage.id === "final" ? 2 : 4;
   const goals: Omit<WeeklyGoalItem, "id" | "done">[] = [];
-  const doneUnits = new Set(input.coverage.finishedUnits);
 
-  const slotsByArea: Record<PaperArea, PracticeSlot[]> = {
-    listening: ["listening-A", "listening-B", "listening-C", "listening-A2", "listening-B2", "listening-C2"],
-    reading: ["reading-A", "reading-B", "reading-C", "reading-C2"],
-    writing: [],
-    translation: [],
-  };
-
-  const picked = ranked.filter((a) => a.area in slotsByArea).slice(0, count);
+  // 能推荐真题的板块：题库里真有这个板块的段落才推
+  const PAPER_AREAS: PaperArea[] = ["listening", "reading", "writing", "translation"];
+  const picked = ranked.filter((a) => PAPER_AREAS.includes(a.area as PaperArea)).slice(0, count);
 
   /*
    * 弱项尾巴最多一条，不叠加：
@@ -430,15 +527,18 @@ export function recommendWeeklyGoals(input: RecommendInput): {
     const paperArea = area.area as PaperArea;
     const unit = AREA_UNIT[paperArea];
     const tail = tailFor(paperArea);
+    // 落点跟着真题库轮换：这套练完换下一套，不锁死在第一套上
+    const target = nextPracticeTarget(paperArea, input.coverage);
+    if (!target) continue;
 
     if (paperArea === "writing" || paperArea === "translation") {
       goals.push({
         title: paperArea === "writing" ? "写作一篇" : "翻译一段",
-        detail: paperArea === "writing" ? "审题 + 写完对一遍范文" : "先自己译，再看参考译文",
+        detail: targetDetail(paperArea, target),
         type: paperArea,
         units: 1,
-        paperId: "2025-12-set1",
-        paperUnitId: paperArea,
+        paperId: target.paperId,
+        paperUnitId: target.unitId,
         examPart: paperArea,
         basis: basisFor({
           days,
@@ -452,20 +552,13 @@ export function recommendWeeklyGoals(input: RecommendInput): {
       continue;
     }
 
-    const pool = slotsByArea[paperArea];
-    const next = pool.find((s) => !doneUnits.has(PRACTICE_UNITS[s].id)) ?? pool[0];
-    const rec: Recipe =
-      paperArea === "listening"
-        ? { title: "听力真题", type: "listening-paper", units: 1, slot: next }
-        : { title: "阅读真题", type: "reading-paper", units: 1, slot: next };
-
     goals.push({
-      title: rec.title,
-      detail: next ? practiceUnitLabel("2025-12-set1", PRACTICE_UNITS[next].id) : "",
-      type: rec.type,
-      units: rec.units,
-      paperId: "2025-12-set1",
-      paperUnitId: rec.slot ? PRACTICE_UNITS[rec.slot].id : undefined,
+      title: paperArea === "listening" ? "听力真题" : "阅读真题",
+      detail: target.label,
+      type: paperArea === "listening" ? "listening-paper" : "reading-paper",
+      units: 1,
+      paperId: target.paperId,
+      paperUnitId: target.unitId,
       examPart: paperArea,
       basis: basisFor({
         days,

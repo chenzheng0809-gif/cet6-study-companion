@@ -32,7 +32,11 @@ import { PageSkeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/toast";
 import { OffsiteSheet } from "@/components/today/offsite-sheet";
 import { logStudy } from "@/lib/repo";
-import { useRequireProfile } from "@/hooks/use-study";
+import { useCoverage, useRequireProfile } from "@/hooks/use-study";
+import { nextPracticeTarget, type PaperArea, type PracticeTarget } from "@/lib/journey";
+import { getPaper } from "@/lib/papers";
+import { listeningSummary } from "@/lib/papers/nav";
+import type { Paper } from "@/lib/papers/types";
 import type { TaskType } from "@/lib/types";
 
 interface Block {
@@ -47,7 +51,28 @@ interface Block {
   examPart?: string;
 }
 
-const BLOCKS: Block[] = [
+/**
+ * 入口指向哪一套卷子，由「下一段该练什么」决定 ——
+ * 这套练完就换下一套，不锁死在第一套卷子上。
+ *
+ * 提示语也按那套卷子的真实内容写：段数、范文点评还是参考范文、
+ * 译点精析还是参考译文，都从数据里取，不写死一套的话给所有卷子。
+ */
+function blocksFor(targets: Partial<Record<PaperArea, PracticeTarget>>): Block[] {
+  const paperOf = (area: PaperArea): Paper | undefined => {
+    const t = targets[area];
+    return t ? getPaper(t.paperId) : undefined;
+  };
+  const listening = paperOf("listening");
+  const reading = paperOf("reading");
+  const writing = paperOf("writing");
+  const translation = paperOf("translation");
+  const hrefOf = (area: PaperArea): string | undefined => {
+    const t = targets[area];
+    return t ? `/papers/${t.paperId}?unit=${t.unitId}` : undefined;
+  };
+
+  return [
   {
     key: "vocab",
     title: "核心词汇",
@@ -63,16 +88,16 @@ const BLOCKS: Block[] = [
     hint: "挑一小段，听完看原文",
     icon: <Headphones className="size-[18px]" strokeWidth={2.6} />,
     tint: "lavender",
-    href: "/papers/2025-12-set1?unit=l-r1",
+    href: hrefOf("listening"),
     type: "intensive-listen",
   },
   {
     key: "listen-paper",
     title: "听力真题",
-    hint: "新闻 / 对话 / 讲座，七段",
+    hint: listening ? listeningSummary(listening) : "对话 / 短文 / 讲座",
     icon: <Headphones className="size-[18px]" strokeWidth={2.6} />,
     tint: "primary",
-    href: "/papers/2025-12-set1",
+    href: listening ? `/papers/${listening.id}` : undefined,
     type: "listening-paper",
     examPart: "listening",
   },
@@ -82,7 +107,7 @@ const BLOCKS: Block[] = [
     hint: "选词 / 匹配 / 仔细阅读",
     icon: <LibraryBig className="size-[18px]" strokeWidth={2.6} />,
     tint: "coral",
-    href: "/papers/2025-12-set1",
+    href: reading ? `/papers/${reading.id}` : undefined,
     type: "reading-paper",
     examPart: "reading",
   },
@@ -97,10 +122,12 @@ const BLOCKS: Block[] = [
   {
     key: "translation",
     title: "翻译",
-    hint: "一段汉译英，含参考译文",
+    hint: translation?.translation?.points
+      ? "一段汉译英，含译点精析"
+      : "一段汉译英，含参考译文",
     icon: <Languages className="size-[18px]" strokeWidth={2.6} />,
     tint: "lavender",
-    href: "/papers/2025-12-set1?unit=translation",
+    href: hrefOf("translation"),
     type: "translation",
     paperUnitId: "translation",
     examPart: "translation",
@@ -108,10 +135,12 @@ const BLOCKS: Block[] = [
   {
     key: "writing",
     title: "写作",
-    hint: "审题 + 范文 + 点评",
+    hint: writing?.writing?.comments
+      ? "审题 + 范文 + 点评"
+      : "审题 + 写完对一遍参考范文",
     icon: <PenLine className="size-[18px]" strokeWidth={2.6} />,
     tint: "mint",
-    href: "/papers/2025-12-set1?unit=writing",
+    href: hrefOf("writing"),
     type: "writing",
     paperUnitId: "writing",
     examPart: "writing",
@@ -124,12 +153,14 @@ const BLOCKS: Block[] = [
     tint: "coral",
     type: "review",
   },
-];
+  ];
+}
 
 export default function PracticePage() {
   const router = useRouter();
   const { toast } = useToast();
   const { profile, loaded } = useRequireProfile();
+  const coverage = useCoverage();
   const [offsiteOpen, setOffsiteOpen] = useState(false);
   const [logging, setLogging] = useState<Block | null>(null);
   const [note, setNote] = useState("");
@@ -141,6 +172,14 @@ export default function PracticePage() {
       </AppShell>
     );
   }
+
+  /* 四个板块各自下一段该练什么：跟着真题库轮换，这套练完换下一套 */
+  const targets: Partial<Record<PaperArea, PracticeTarget>> = {};
+  for (const area of ["listening", "reading", "writing", "translation"] as PaperArea[]) {
+    const t = coverage ? nextPracticeTarget(area, coverage) : null;
+    if (t) targets[area] = t;
+  }
+  const blocks = blocksFor(targets);
 
   async function submitLog() {
     if (!logging) return;
@@ -169,7 +208,7 @@ export default function PracticePage() {
 
       <div className="px-5 pt-6 pb-9">
         <ul className="grid grid-cols-2 gap-3">
-          {BLOCKS.map((b, i) => (
+          {blocks.map((b, i) => (
             <li key={b.key}>
               <button
                 type="button"

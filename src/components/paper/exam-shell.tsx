@@ -4,9 +4,10 @@ import { useEffect, useState, type ReactNode } from "react";
 import { ChevronDown, Lock, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { clock, EXAM_PART_LIMIT, remainingSec, type ExamPart, type ExamSession } from "@/lib/papers/exam-clock";
-import { AudioWindow } from "./parts";
+import { AudioWindow, type AudioWindowHandle } from "./parts";
 
 export { AudioWindow };
+export type { AudioWindowHandle };
 
 /* ------------------------------------------------------------- 考场倒计时 */
 

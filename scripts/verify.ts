@@ -14,9 +14,10 @@ import { readdirSync, readFileSync } from "node:fs";
 import { addDays, startOfWeek, todayKey } from "../src/lib/date";
 import { countdownTo, defaultSession, upcomingSessions } from "../src/lib/exam";
 import {
-  PRACTICE_UNITS,
+  nextPracticeTarget,
   areaCoverage,
   daysUntilExam,
+  recomputeTarget,
   recommendWeeklyGoals,
   stageFor,
 } from "../src/lib/journey";
@@ -65,6 +66,7 @@ const today = todayKey();
 
 const NO_COVERAGE = {
   finishedUnits: [] as string[],
+  finishedUnitsByPaper: {} as Record<string, string[]>,
   writings: 0,
   translations: 0,
   vocabTouched: 0,
@@ -127,21 +129,96 @@ assert(
 
 section("2. 推荐里的真题槽位必须指向已入库的真实题段");
 const paper = PAPERS[0];
-for (const [slot, unit] of Object.entries(PRACTICE_UNITS)) {
-  assert(Boolean(unit.id), `槽位 ${slot} 没有绑定题段 id`);
-  assert(
-    EXAM_PART_LIMIT[unit.part] !== undefined,
-    `槽位 ${slot} 引用了不存在的 Part：${unit.part}`,
-  );
-  const exists =
-    getListeningUnit(paper, unit.id) !== undefined ||
-    getReadingSection(paper, unit.id) !== undefined;
-  assert(exists, `槽位 ${slot} 绑定了题库中不存在的题段：${unit.id}`);
+
+/*
+ * 轮换规则：**按卷推进** —— 先把手上这套的该板块练完，再换下一套。
+ *
+ * 这里盯住四件事：
+ *   1. 落点必须来自真题数据本身（哪套卷子有这个板块、这个板块有几段）；
+ *   2. 这套练完了真的会换到下一套；
+ *   3. 没有该板块的卷子（官方第三套没有听力）永远不会被推荐到；
+ *   4. 不同卷的题段 id 会重名，覆盖度必须按卷分开记 —— 不然「换卷」永远不会发生。
+ */
+for (const area of ["listening", "reading", "writing", "translation"] as const) {
+  const first = nextPracticeTarget(area, NO_COVERAGE);
+  assert(first !== null, `${area} 没有任何可推荐的真题落点`);
+  if (!first) continue;
+
+  const firstPaper = PAPERS.find((p) => p.id === first.paperId);
+  assert(Boolean(firstPaper), `${area} 的落点指向了不存在的卷子：${first.paperId}`);
+  if (!firstPaper) continue;
+
+  // 这个板块在落点卷子里必须真的存在
+  if (area === "listening") {
+    assert(
+      firstPaper.listeningUnits.some((u) => u.id === first.unitId),
+      `${area} 指向了 ${firstPaper.id} 里不存在的题段：${first.unitId}`,
+    );
+  }
+  if (area === "reading") {
+    assert(
+      firstPaper.readingSections.some((s) => s.id === first.unitId),
+      `${area} 指向了 ${firstPaper.id} 里不存在的题段：${first.unitId}`,
+    );
+  }
+  if (area === "writing") {
+    assert(Boolean(firstPaper.writing), `${area} 指向了没有写作题的卷子：${first.paperId}`);
+  }
+  if (area === "translation") {
+    assert(Boolean(firstPaper.translation), `${area} 指向了没有翻译题的卷子：${first.paperId}`);
+  }
+
+  // 官方第三套不提供听力，听力这一栏永远轮不到它
+  if (area === "listening") {
+    assert(
+      firstPaper.listeningUnits.length > 0,
+      `听力落点不能落在没有听力的卷子上：${firstPaper.id}`,
+    );
+  }
+
+  // 练完这一段以后，落点必须往前走
+  const done: Record<string, string[]> = { [first.paperId]: [first.unitId] };
+  const after = nextPracticeTarget(area, {
+    ...NO_COVERAGE,
+    finishedUnits: [first.unitId],
+    finishedUnitsByPaper: done,
+  });
+  assert(after !== null, `${area} 练完一段之后就没有落点了`);
+  if (after) {
+    const moved =
+      after.paperId !== first.paperId || after.unitId !== first.unitId;
+    assert(moved, `${area} 练完「${first.unitId}」之后落点还停在原地`);
+  }
 }
-assert(
-  Object.values(PRACTICE_UNITS).every((u) => u.part === "listening" || u.part === "reading"),
-  "练习槽位只应覆盖听力与阅读，写作/翻译走单篇入口",
-);
+
+// 整套练完以后必须换到下一套卷子（而不是停在最后一段）
+for (const area of ["listening", "reading"] as const) {
+  const all: Record<string, string[]> = {};
+  for (const p of PAPERS) {
+    const ids =
+      area === "listening"
+        ? p.listeningUnits.map((u) => u.id)
+        : p.readingSections.map((s) => s.id);
+    if (ids.length > 0) all[p.id] = ids;
+  }
+  const t = nextPracticeTarget(area, {
+    ...NO_COVERAGE,
+    finishedUnits: Object.values(all).flat(),
+    finishedUnitsByPaper: all,
+  });
+  assert(t !== null, `${area} 全部练完就没有落点了`);
+  if (t) {
+    const p = PAPERS.find((x) => x.id === t.paperId);
+    assert(Boolean(p), `${area} 全部练完后指向了不存在的卷子：${t.paperId}`);
+    // 全部练完以后回到第一套的第一段，但不能是官方第三套的听力
+    if (area === "listening" && p) {
+      assert(
+        p.listeningUnits.some((u) => u.id === t.unitId),
+        `听力全部练完后落点不在任何一套卷子里：${t.unitId}`,
+      );
+    }
+  }
+}
 
 // 推荐生成的真题目标必须真的指向已入库的套卷与题段
 for (const daysOut of [200, 120, 60, 30]) {
@@ -155,15 +232,79 @@ for (const daysOut of [200, 120, 60, 30]) {
   for (const g of rec.goals) {
     if (!g.paperUnitId) continue;
     parts.add(g.examPart ?? "");
+    const p = PAPERS.find((x) => x.id === g.paperId);
+    assert(Boolean(p), `距考 ${daysOut} 天的推荐指向了不存在的卷子：${g.paperId}`);
+    if (!p) continue;
     if (g.paperUnitId === "writing" || g.paperUnitId === "translation") continue;
     const ok =
-      getListeningUnit(paper, g.paperUnitId) !== undefined ||
-      getReadingSection(paper, g.paperUnitId) !== undefined;
+      getListeningUnit(p, g.paperUnitId) !== undefined ||
+      getReadingSection(p, g.paperUnitId) !== undefined;
     assert(ok, `距考 ${daysOut} 天的推荐指向了不存在的题段：${g.paperUnitId}`);
   }
   assert(parts.size >= 2, `距考 ${daysOut} 天的推荐只覆盖了 ${parts.size} 个 Part`);
 }
-console.log(`  ${Object.keys(PRACTICE_UNITS).length} 个练习槽位全部指向真实题段`);
+console.log(`  四个板块的轮换落点全部指向真实题段`);
+
+/*
+ * 落点重算：计划里存下来的落点必须跟着当前状态走。
+ *
+ * 不重算的话，学生练完一段、计划还指着那一段 —— 轮换等于没做。
+ * 学生自己加的项不受影响（那不是系统给的落点）。
+ */
+section("2b. 计划里存下来的落点会跟着当前状态重算");
+{
+  const rec = recommendWeeklyGoals({
+    profile: { examDate: addDays(today, 90), weakAreas: [] },
+    coverage: NO_COVERAGE,
+    today,
+  });
+  const paperGoal = rec.goals.find((g) => g.paperUnitId && g.examPart === "listening");
+  assert(Boolean(paperGoal), "推荐里没有听力真题目标");
+
+  if (paperGoal) {
+    const start = nextPracticeTarget("listening", NO_COVERAGE);
+    assert(start !== null, "听力没有可推荐的落点");
+
+    // 学生自己加的项：重算不能动它
+    const studentItem = {
+      ...paperGoal,
+      id: "student-1",
+      source: "student" as const,
+      paperId: "2024-06-set2",
+      paperUnitId: "l-b2",
+      detail: "我自己加的",
+    };
+    const mixed = recomputeTarget([paperGoal, studentItem], NO_COVERAGE);
+    assert(
+      mixed[1].paperId === "2024-06-set2" &&
+        mixed[1].paperUnitId === "l-b2" &&
+        mixed[1].detail === "我自己加的",
+      `重算动了学生自己加的项：${JSON.stringify(mixed[1])}`,
+    );
+
+    if (start) {
+      // 练完一段以后重算，落点必须往前走
+      const moved = recomputeTarget([paperGoal], {
+        ...NO_COVERAGE,
+        finishedUnits: [start.unitId],
+        finishedUnitsByPaper: { [start.paperId]: [start.unitId] },
+      });
+      assert(
+        moved[0].paperUnitId !== start.unitId || moved[0].paperId !== start.paperId,
+        `练完「${start.unitId}」之后重算的落点还停在原地`,
+      );
+      assert(
+        Boolean(moved[0].detail),
+        "重算后的落点没有写明是哪一套的哪一段",
+      );
+      assert(
+        moved[0].detail.includes(PAPERS.find((p) => p.id === moved[0].paperId)?.shortEn ?? "@@"),
+        `重算后的落点没写卷名：${moved[0].detail}`,
+      );
+    }
+  }
+}
+console.log(`  计划里存下来的落点会跟着当前状态重算`);
 
 /* ------------------------------ 2b. 听力只看选项 —— 藏题干的前提是选项齐全 */
 

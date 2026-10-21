@@ -1,5 +1,5 @@
 import { EXAM_PART_LIMIT, type ExamPart } from "./exam-clock";
-import type { ListeningUnit, ReadingSection } from "./types";
+import type { ListeningUnit, Paper, ReadingSection } from "./types";
 
 /**
  * 真题页的两层导航模型：Part → Section → 题段。
@@ -68,6 +68,34 @@ const LISTENING_TYPE_NAME: Record<string, string> = {
   lecture: "Recordings",
   talk: "Recordings",
 };
+
+/** 中文题型名：段标题的首个词就是题型 */
+const LISTENING_TYPE_ZH: Record<string, string> = {
+  conversation: "对话",
+  passage: "短文",
+  recording: "讲座",
+  lecture: "讲座",
+  talk: "讲座",
+  news: "新闻",
+};
+
+/**
+ * 一套卷子的听力有哪几类、几段。
+ *
+ * 入口上的提示语不能写死：轮换到别的卷子以后，题型顺序和段数都会变，
+ * 写死的话就跟卷面对不上了。顺序按 Section 排（卷面印的顺序）。
+ */
+export function listeningSummary(paper: Paper): string {
+  const names: string[] = [];
+  const ordered = [...paper.listeningUnits].sort((a, b) => a.section.localeCompare(b.section));
+  for (const unit of ordered) {
+    const head = (unit.label.split(/[\s·—-]+/)[0] ?? "").toLowerCase();
+    const zh = LISTENING_TYPE_ZH[head];
+    if (zh && !names.includes(zh)) names.push(zh);
+  }
+  const kinds = names.length > 0 ? names.join(" / ") : "听力";
+  return `${kinds} · ${paper.listeningUnits.length} 段`;
+}
 
 function listeningSection(unit: ListeningUnit): { key: string; label: string } {
   const head = (unit.label.split(/[\s·—-]+/)[0] ?? "").toLowerCase();

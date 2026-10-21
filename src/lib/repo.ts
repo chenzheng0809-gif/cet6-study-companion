@@ -19,6 +19,7 @@ import {
   daysUntilExam,
   planRationale,
   recomputeBasis,
+  recomputeTarget,
   recommendWeeklyGoals,
   stageFor,
   weeklyFocus,
@@ -76,10 +77,22 @@ export async function saveSettings(patch: Partial<Settings>): Promise<void> {
 export async function practiceCoverage(): Promise<PracticeCoverage> {
   const attempts = await db.paperAttempts.toArray();
   const finishedUnits: string[] = [];
+  /**
+   * 按卷分开记：不同卷的题段 id 会重名（每套的对话都叫 l-c1）。
+   * 合成一个扁平集合的话，「这套练过了」会被当成「每套都练过了」，
+   * 推荐就永远停在第一套卷子上。
+   */
+  const finishedUnitsByPaper: Record<string, string[]> = {};
   let writings = 0;
   let translations = 0;
   for (const a of attempts) {
     finishedUnits.push(...a.finishedUnits);
+    if (a.finishedUnits.length > 0) {
+      finishedUnitsByPaper[a.paperId] = [
+        ...(finishedUnitsByPaper[a.paperId] ?? []),
+        ...a.finishedUnits,
+      ];
+    }
     if (a.finishedUnits.includes("writing")) writings += 1;
     if (a.finishedUnits.includes("translation")) translations += 1;
   }
@@ -88,6 +101,7 @@ export async function practiceCoverage(): Promise<PracticeCoverage> {
   for (const l of logs) if (l.type === "vocab") vocabTouched.add(l.title);
   return {
     finishedUnits,
+    finishedUnitsByPaper,
     writings,
     translations,
     vocabTouched: vocabTouched.size + (await db.vocab.count()),
@@ -238,13 +252,16 @@ export async function updateWeeklyGoal(
 }
 
 /**
- * 把计划里的系统话术按当前状态重算一遍：标题那句话和每一项的依据。
+ * 把计划里的系统话术按当前状态重算一遍：标题那句话、每一项的依据，还有每一项的落点。
  *
  * 这些话有两样东西会让它变：文案改了版，学生又练了新的题（还有日子本身在走）。
  * 计划是存下来的，存下来的话就容易锁死在生成那一刻的样子上 ——
  * 所以每次打开这一周的计划都重算一次。
  *
- * 只动话术：学生自己加的项、删掉的项、顺序、数量、已完成标记都不动。
+ * 落点也要重算：真题推荐是跟着卷子轮换的（这套练完换下一套），
+ * 落点锁死的话，学生练完一段、计划还指着那一段，轮换就等于没做。
+ *
+ * 只动话术和落点：学生自己加的项、删掉的项、顺序、数量、已完成标记都不动。
  * 算出来跟原来一模一样时就不写库，免得每次打开都白写一次。
  */
 export async function refreshWeeklyPlanText(planId: string): Promise<void> {
@@ -264,11 +281,24 @@ export async function refreshWeeklyPlanText(planId: string): Promise<void> {
     },
     stage,
   );
-  const goals = plan.goals.map((g, i) => ({ ...g, basis: basis[i] }));
+  const target = recomputeTarget(plan.goals, coverage);
+  const goals = plan.goals.map((g, i) => ({
+    ...g,
+    basis: basis[i],
+    paperId: target[i].paperId,
+    paperUnitId: target[i].paperUnitId,
+    detail: target[i].detail,
+  }));
   const rationale = planRationale(days, stage);
   const same =
     rationale === plan.rationale &&
-    goals.every((g, i) => g.basis === plan.goals[i].basis);
+    goals.every(
+      (g, i) =>
+        g.basis === plan.goals[i].basis &&
+        g.detail === plan.goals[i].detail &&
+        g.paperId === plan.goals[i].paperId &&
+        g.paperUnitId === plan.goals[i].paperUnitId,
+    );
   if (same) return;
   await db.weeklyPlans.update(planId, { goals, rationale });
 }

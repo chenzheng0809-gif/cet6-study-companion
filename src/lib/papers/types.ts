@@ -68,6 +68,26 @@ export interface TranscriptSentence {
  */
 export type ListeningSection = "A" | "B" | "C";
 
+/**
+ * 一道听力题的「题干」在音频里的区间。
+ *
+ * 考场规矩是听的时候不看卷面，所以学生做完一题想再听一次那道题的题干，
+ * 界面上必须给得出入口 —— 给得出入口就得知道这段声音在哪。
+ *
+ * 两个边界都是实测值，不是估的：
+ *   起点 = 这道题前面那段答题停顿的结束时刻（第 2 题往后都是）；
+ *          每段第一题的题干紧跟在 "Question N." 后面，由逐段转写定位。
+ *   终点 = 这道题后面那段答题停顿的开始时刻，也就是题干念完的那一刻。
+ *
+ * 念不出本题题号、或念出了别的题号的区间一律不入库（见 scripts/measure-question-windows.py）。
+ */
+export interface QuestionWindow {
+  /** 卷面题号 */
+  n: number;
+  startSec: number;
+  endSec: number;
+}
+
 export interface ListeningUnit {
   id: string;
   /** "Conversation One" / "Passage Two" / "Recording Three" */
@@ -95,6 +115,12 @@ export interface ListeningUnit {
     /** 在这段里被读出来的题号（第一题的题干在 window 末尾，不在这里面） */
     questions: number[];
   };
+  /**
+   * 逐题的题干播报区间（真实检测值）。
+   * 没有这一项就没有「重听本题」的入口 —— 题干是藏起来的，
+   * 学生没法只靠"从头再听一遍"找回某一道题。
+   */
+  questionWindows?: QuestionWindow[];
   transcript: TranscriptSentence[];
   /** 单元内出现的生词/短语标注（来自解析册） */
   notes?: VocabNote[];
@@ -194,6 +220,12 @@ export interface Paper {
   /** "2025.12 第一套" */
   title: string;
   titleEn: string;
+  /**
+   * 短标题：推荐语里卷名要跟题段名并排放，"CET-6 · " 前缀是多余的。
+   *
+   * 单独写一份，不靠字符串截取 —— 题目标题改了，截出来的半截会跟着变。
+   */
+  shortEn: string;
   /** ISO 日期 2025-12-19 */
   examDate: string;
   /** 场次序号：1 */

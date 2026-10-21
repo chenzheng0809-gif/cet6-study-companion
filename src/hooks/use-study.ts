@@ -178,6 +178,8 @@ export interface FocusCandidate {
   /** 这项是从哪儿来的：周目标 / 习惯 / 练习 */
   from: "weekly-goal" | "habit" | "practice";
   basis?: string;
+  /** 练的是哪一套的哪一段（真题推荐会跟着卷子轮换） */
+  detail?: string;
 }
 
 /**
@@ -210,6 +212,7 @@ export function buildFocus(
       examPart: g.examPart,
       from: "weekly-goal",
       basis: g.basis,
+      detail: g.detail,
     });
   }
 
@@ -280,6 +283,7 @@ export function useTodayData(): TodayBundle | undefined {
   const focusOptions = buildFocus(plan, habits, offset);
   const EMPTY_COVERAGE: PracticeCoverage = {
     finishedUnits: [],
+    finishedUnitsByPaper: {},
     writings: 0,
     translations: 0,
     vocabTouched: 0,

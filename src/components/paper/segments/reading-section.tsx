@@ -40,7 +40,7 @@ export function ReadingSectionSegment({
   /** 滑动浏览里已经有 chip 行做跳转，不用再塞一份"其他题段" */
   showSiblings?: boolean;
 }) {
-  const { answers, revealed, sessionOf, isSubmitted, setAnswer, clearAnswer, placeAnswer, markPos, posMarks, revealMany, startSession, submitSession, reset } =
+  const { answers, revealed, sessionOf, isSubmitted, setAnswer, clearAnswer, placeAnswer, markPos, posMarks, revealMany, startSession, submitSession, finishUnit, reset } =
     usePaperAttempt(paper.id);
   const [vocabSeed, setVocabSeed] = useState<VocabSeed | null>(null);
   /** 选词填空：当前选中的是哪一个空，等着被词库里的选项填上 */
@@ -102,6 +102,8 @@ export function ReadingSectionSegment({
 
   const submit = async () => {
     await submitSession("reading");
+    /* 这一段练完了 —— 真题推荐靠这个换到下一段 / 下一套 */
+    await finishUnit(section.id);
     await revealMany(questionNos);
   };
 

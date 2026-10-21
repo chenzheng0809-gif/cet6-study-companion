@@ -210,6 +210,32 @@ function verifyPaper(paper: Paper) {
     check(`${unit.id} 可播区间盖到最后一题`,
       range_.startSec === unit.window.startSec && range_.endSec > unit.window.endSec,
       JSON.stringify(range_));
+
+    // ---- 逐题题干区间（"重听本题"的依据）----
+    // 听力卷面不印题干，学生做完想回头再听某一道题，界面上得给得出入口；
+    // 给得出入口就得知道这段声音在音频的哪儿。这个区间必须是实测值，
+    // 而且必须落在这段的可播区间里 —— 越界就播不出来。
+    const qw = unit.questionWindows ?? [];
+    check(`${unit.id} 有逐题题干区间`, qw.length > 0);
+    check(`${unit.id} 逐题区间覆盖本段全部题`,
+      qw.length === count && qw.every((w, i) => w.n === lo + i),
+      `${qw.length} vs ${count}`);
+    let prevWindowEnd = -1;
+    for (const win of qw) {
+      check(`${unit.id} Q${win.n} 题干区间在可播区间内`,
+        win.startSec >= range_.startSec && win.endSec <= range_.endSec + 0.01,
+        `${win.startSec}–${win.endSec} vs ${range_.startSec}–${range_.endSec}`);
+      check(`${unit.id} Q${win.n} 题干区间有正时长`, win.endSec > win.startSec,
+        `${(win.endSec - win.startSec).toFixed(2)}s`);
+      check(`${unit.id} Q${win.n} 题干区间不与上一题重叠`, win.startSec > prevWindowEnd,
+        `${win.startSec} vs prevEnd ${prevWindowEnd}`);
+      prevWindowEnd = win.endSec;
+    }
+    // 题干之间那段是答题停顿（考场里给你时间答题），不能短到几乎没有
+    for (let i = 1; i < qw.length; i += 1) {
+      const gap = qw[i].startSec - qw[i - 1].endSec;
+      check(`${unit.id} Q${qw[i].n} 前面有答题停顿`, gap > 5, `${gap.toFixed(2)}s`);
+    }
   }
 
   if (paper.listeningUnits.length > 0) {
@@ -245,6 +271,19 @@ function verifyPaper(paper: Paper) {
       `${paper.id} 每段第一题在原文末尾被读出，其余题在题干窗口`,
       stemTotal + paper.listeningUnits.length === listenList.length,
       `${stemTotal} + ${paper.listeningUnits.length} vs ${listenList.length}`
+    );
+
+    // ---- 全卷每一道听力题都得有可重听的区间 ----
+    // 只要有一道题缺区间，那道题的"重听本题"就是死按钮 ——
+    // 宁可整道功能不上，也不能留一个按了没反应的按钮。
+    const windowTotal = paper.listeningUnits.reduce(
+      (n, u) => n + (u.questionWindows?.length ?? 0),
+      0
+    );
+    check(
+      `${paper.id} 每道听力题都有可重听区间`,
+      windowTotal === listenList.length,
+      `${windowTotal} vs ${listenList.length}`
     );
   }
 

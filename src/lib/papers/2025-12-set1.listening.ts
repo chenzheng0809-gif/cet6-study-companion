@@ -17,6 +17,12 @@ import type { ListeningUnit, Question } from "./types";
  *
  * `titleEn` 是题目标题的英文版，跟同一行 `labelZh` 一一对应 ——
  * 是那份中文标题的翻译，不是另编的标题。界面上显示的是 `titleEn`。
+ *
+ * questionWindows 是每一道题的题干在录音里的起止时刻：
+ * 起点取上一段答题停顿的结束（第 1 题取 "Question N." 那一段的起点，由转写定位），
+ * 终点取这道题后面那段答题停顿的开始。每道题都单独转写校验过 ——
+ * 必须念出本题题号、且不能念出别的题号，才写进数据。
+ * 测量脚本：scripts/measure-question-windows.py
  */
 
 const W = "W";
@@ -32,6 +38,12 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     questionRange: [1, 4],
     window: { startSec: 35.66, endSec: 165.28 },
     stemsWindow: { startSec: 165.28, endSec: 234.7, questions: [2, 3, 4] },
+    questionWindows: [
+      { n: 1, startSec: 161.36, endSec: 165.26 },
+      { n: 2, startSec: 178.74, endSec: 184.08 },
+      { n: 3, startSec: 197.48, endSec: 202.8 },
+      { n: 4, startSec: 216.4, endSec: 221.2 },
+    ],
     transcript: [
       { id: "c1-1", speaker: W, en: "Today's special guest is Lord Blackwell, one of our country's most experienced and distinguished career diplomats. Welcome.", marks: [1] },
       { id: "c1-2", speaker: M, en: "It's my pleasure." },
@@ -68,6 +80,12 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     questionRange: [5, 8],
     window: { startSec: 234.7, endSec: 352.44 },
     stemsWindow: { startSec: 352.44, endSec: 420.54, questions: [6, 7, 8] },
+    questionWindows: [
+      { n: 5, startSec: 348.84, endSec: 352.44 },
+      { n: 6, startSec: 365.84, endSec: 369.16 },
+      { n: 7, startSec: 382.62, endSec: 388.12 },
+      { n: 8, startSec: 401.64, endSec: 407.04 },
+    ],
     transcript: [
       { id: "c2-1", speaker: M, en: "It's getting late and we're both displaying signs of weariness. I think we should call it a day and meet again tomorrow morning.", marks: [5] },
       { id: "c2-2", speaker: W, en: "Oh, come on Jeff. We are so close. Don't you think we're almost done? Let's do two more hours, please." },
@@ -104,6 +122,11 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     questionRange: [9, 11],
     window: { startSec: 420.54, endSec: 557.62 },
     stemsWindow: { startSec: 557.62, endSec: 611.46, questions: [10, 11] },
+    questionWindows: [
+      { n: 9, startSec: 553.66, endSec: 557.62 },
+      { n: 10, startSec: 571.08, endSec: 577.34 },
+      { n: 11, startSec: 590.64, endSec: 597.94 },
+    ],
     transcript: [
       { id: "b1-1", speaker: N, en: "One thing I've learned in a quarter century of management is that there are ample gray areas in human behavior and that there may not always be clear right-or-wrong solutions to employee disputes.", marks: [9] },
       { id: "b1-2", speaker: N, en: "When two people have different versions of the same event, it can be hard to know whom to believe." },
@@ -130,6 +153,12 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     questionRange: [12, 15],
     window: { startSec: 611.46, endSec: 740.66 },
     stemsWindow: { startSec: 740.66, endSec: 809.36, questions: [13, 14, 15] },
+    questionWindows: [
+      { n: 12, startSec: 735.6, endSec: 740.64 },
+      { n: 13, startSec: 754.12, endSec: 758.22 },
+      { n: 14, startSec: 771.72, endSec: 776.12 },
+      { n: 15, startSec: 789.5, endSec: 795.82 },
+    ],
     transcript: [
       { id: "b2-1", speaker: N, en: "For some Americans, going out to dinner is a treat, planned and budgeted for. For others, it's just a daily occurrence.", marks: [12] },
       { id: "b2-2", speaker: N, en: "And that second group of people is becoming the majority, as the number of Americans who enjoy cooking is declining." },
@@ -160,6 +189,11 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     questionRange: [16, 18],
     window: { startSec: 809.36, endSec: 1002.58 },
     stemsWindow: { startSec: 1002.58, endSec: 1053.68, questions: [17, 18] },
+    questionWindows: [
+      { n: 16, startSec: 996.84, endSec: 1002.4 },
+      { n: 17, startSec: 1015.88, endSec: 1022.22 },
+      { n: 18, startSec: 1035.66, endSec: 1040.24 },
+    ],
     transcript: [
       { id: "r1-1", speaker: N, en: "Every year, of the more than 2.5 billion bags checked onto flights worldwide, 26 million go missing. And of that 26 million, 1 million never make it back to their original owner." },
       { id: "r1-2", speaker: N, en: "Bad weather and flight delays, miscoded destination tags, and some people simply forgetting to pick up one of their bags are a few of the reasons." },
@@ -192,6 +226,11 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     questionRange: [19, 21],
     window: { startSec: 1053.68, endSec: 1241.3 },
     stemsWindow: { startSec: 1241.3, endSec: 1296.46, questions: [20, 21] },
+    questionWindows: [
+      { n: 19, startSec: 1235.12, endSec: 1241.28 },
+      { n: 20, startSec: 1254.74, endSec: 1261.32 },
+      { n: 21, startSec: 1274.98, endSec: 1282.74 },
+    ],
     transcript: [
       { id: "r2-1", speaker: N, en: "You've probably been with someone who ignored you while interacting with his or her smartphone, and you've probably engaged in this behavior yourself." },
       { id: "r2-2", speaker: N, en: "In a recent survey, nine out of ten respondents said they'd used their smartphone during their most recent social activity." },
@@ -228,6 +267,12 @@ export const LISTENING_UNITS: ListeningUnit[] = [
     questionRange: [22, 25],
     window: { startSec: 1296.46, endSec: 1469.16 },
     stemsWindow: { startSec: 1469.16, endSec: 1540.04, questions: [23, 24, 25] },
+    questionWindows: [
+      { n: 22, startSec: 1464.2, endSec: 1469.14 },
+      { n: 23, startSec: 1482.62, endSec: 1486.84 },
+      { n: 24, startSec: 1500.3, endSec: 1506.68 },
+      { n: 25, startSec: 1520.06, endSec: 1526.4 },
+    ],
     transcript: [
       { id: "r3-1", speaker: N, en: "More and more people travel for a variety of reasons. Many are tourists, but many venture for some personal or professional business.", marks: [22] },
       { id: "r3-2", speaker: N, en: "Whatever the reason for traveling, a common complaint of travelers is the impersonal accommodations they find." },

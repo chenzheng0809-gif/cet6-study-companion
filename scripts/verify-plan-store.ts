@@ -56,6 +56,7 @@ function fakeProfile(overrides: Partial<Profile> = {}): Profile {
 
 const EMPTY_COVERAGE = {
   finishedUnits: [] as string[],
+  finishedUnitsByPaper: {} as Record<string, string[]>,
   writings: 0,
   translations: 0,
   vocabTouched: 0,
@@ -246,6 +247,10 @@ async function main(): Promise<void> {
   });
   const cov2 = await practiceCoverage();
   assert(cov2.finishedUnits.includes("l-r1"), "交过卷的题段进入覆盖度");
+  assert(
+    cov2.finishedUnitsByPaper["2025-12-set1"]?.includes("l-r1") === true,
+    "练过的题段没有按卷分开记 —— 「这套练过了」会被当成「每套都练过了」，换卷永远不会发生",
+  );
   assert(cov2.writings === 1, "写作做过一次被计入");
   assert(
     !("cet4Score" in (cov2 as unknown as Record<string, unknown>)),

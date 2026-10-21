@@ -30,6 +30,12 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 239.24,
       questions: [2, 3, 4],
     },
+    questionWindows: [
+      { n: 1, startSec: 168.06, endSec: 172.66 },
+      { n: 2, startSec: 186.0, endSec: 190.04 },
+      { n: 3, startSec: 203.3, endSec: 207.54 },
+      { n: 4, startSec: 220.78, endSec: 225.76 },
+    ],
     transcript: [
       {
         id: "c1-1",
@@ -222,6 +228,12 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 440.6,
       questions: [6, 7, 8],
     },
+    questionWindows: [
+      { n: 5, startSec: 365.2, endSec: 370.66 },
+      { n: 6, startSec: 384.12, endSec: 388.18 },
+      { n: 7, startSec: 401.74, endSec: 408.76 },
+      { n: 8, startSec: 422.34, endSec: 426.96 },
+    ],
     transcript: [
       {
         id: "c2-1",
@@ -384,6 +396,11 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 642.68,
       questions: [10, 11],
     },
+    questionWindows: [
+      { n: 9, startSec: 586.9, endSec: 592.84 },
+      { n: 10, startSec: 606.34, endSec: 610.78 },
+      { n: 11, startSec: 624.28, endSec: 629.24 },
+    ],
     transcript: [
       {
         id: "b1-1",
@@ -470,6 +487,12 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 827.24,
       questions: [13, 14, 15],
     },
+    questionWindows: [
+      { n: 12, startSec: 751.24, endSec: 756.48 },
+      { n: 13, startSec: 770.22, endSec: 775.18 },
+      { n: 14, startSec: 788.64, endSec: 793.84 },
+      { n: 15, startSec: 807.44, endSec: 813.68 },
+    ],
     transcript: [
       {
         id: "b2-1",
@@ -557,6 +580,11 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 1078.52,
       questions: [17, 18],
     },
+    questionWindows: [
+      { n: 16, startSec: 1019.36, endSec: 1026.38 },
+      { n: 17, startSec: 1039.88, endSec: 1046.66 },
+      { n: 18, startSec: 1060.14, endSec: 1064.92 },
+    ],
     transcript: [
       {
         id: "r1-1",
@@ -673,6 +701,11 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 1306.74,
       questions: [20, 21],
     },
+    questionWindows: [
+      { n: 19, startSec: 1247.74, endSec: 1253.66 },
+      { n: 20, startSec: 1267.1, endSec: 1273.52 },
+      { n: 21, startSec: 1287.04, endSec: 1292.96 },
+    ],
     transcript: [
       {
         id: "r2-1",
@@ -784,6 +817,12 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 1559.54,
       questions: [23, 24, 25],
     },
+    questionWindows: [
+      { n: 22, startSec: 1477.06, endSec: 1483.42 },
+      { n: 23, startSec: 1496.84, endSec: 1504.04 },
+      { n: 24, startSec: 1517.6, endSec: 1524.42 },
+      { n: 25, startSec: 1537.98, endSec: 1546.1 },
+    ],
     transcript: [
       {
         id: "r3-1",

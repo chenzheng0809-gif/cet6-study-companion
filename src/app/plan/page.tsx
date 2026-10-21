@@ -406,6 +406,13 @@ function GoalRow({
             </span>
             {item.source === "student" ? <Chip tone="lavender">你自己加的</Chip> : null}
           </div>
+          {/*
+            detail 说的是「练哪一套的哪一段」——
+            真题推荐是跟着卷子轮换的，不写出来学生根本看不出它换没换。
+          */}
+          {item.detail && item.source === "system" ? (
+            <p className="mt-1 text-caption font-bold text-fg-muted">{item.detail}</p>
+          ) : null}
           {item.basis && item.source === "system" ? (
             <button
               type="button"

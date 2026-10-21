@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Pause, Play, RotateCcw, Square } from "lucide-react";
+import { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { Headphones, Pause, Play, RotateCcw, Square } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { formatTime } from "@/lib/papers";
 import type { AnswerKey, Choice, Question, ReadingSection } from "@/lib/papers/types";
@@ -11,18 +11,36 @@ import type { AnswerKey, Choice, Question, ReadingSection } from "@/lib/papers/t
 /** 倍速档：慢一点听清 / 原速 / 快一点对答案。学生自己选，不替他决定。 */
 const PLAYBACK_RATES = [0.8, 1, 1.5] as const;
 
+/**
+ * 播放器对外的动作。
+ *
+ * 听力题按考场规矩是不显示题干的，做题时想再听一次某一道题的题干，
+ * 就得让播放器能只播那一小段 —— 整段从头听是找不到的。
+ */
+export interface AudioWindowHandle {
+  /** 只播这一段，播完自动停 */
+  playRange: (startSec: number, endSec: number, label?: string) => void;
+  /** 退出聚焦，回到整段 */
+  clearFocus: () => void;
+}
+
 export function AudioWindow({
   src,
   startSec,
   endSec,
   label,
+  ref,
+  onFocusEnd,
 }: {
   src: string;
   startSec: number;
   endSec: number;
   label: string;
+  ref?: React.Ref<AudioWindowHandle>;
+  /** 聚焦区间播完时通知外面（题卡上"正在重听"的状态要跟着收） */
+  onFocusEnd?: () => void;
 }) {
-  const ref = useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   /** 拖动中：用 ref 存，pointermove 里读到的必须是当下的值，不能是渲染那一刻的旧值 */
   const draggingRef = useRef(false);
@@ -30,24 +48,38 @@ export function AudioWindow({
   const [pos, setPos] = useState(startSec);
   const [rate, setRate] = useState<number>(1);
   const [dragging, setDragging] = useState(false);
+  /** 正在重听的那一小段。非空时只播这一段，轨道上用一条带标出来。 */
+  const [focus, setFocus] = useState<{ startSec: number; endSec: number; label: string } | null>(null);
 
   useEffect(() => {
-    const el = ref.current;
+    const el = audioRef.current;
     if (!el) return;
     const onTime = () => {
-      if (el.currentTime >= endSec) {
+      /* 有聚焦就播到聚焦的尾巴，没有就播到整段的尾巴 */
+      const stopAt = focus ? focus.endSec : endSec;
+      if (el.currentTime >= stopAt) {
         el.pause();
-        el.currentTime = startSec;
+        const backTo = focus ? focus.startSec : startSec;
+        el.currentTime = backTo;
         setPlaying(false);
-        setPos(startSec);
+        setPos(backTo);
+        if (focus) {
+          setFocus(null);
+          onFocusEnd?.();
+        }
         return;
       }
       setPos(el.currentTime);
     };
     const onEnd = () => {
-      el.currentTime = startSec;
+      const backTo = focus ? focus.startSec : startSec;
+      el.currentTime = backTo;
       setPlaying(false);
-      setPos(startSec);
+      setPos(backTo);
+      if (focus) {
+        setFocus(null);
+        onFocusEnd?.();
+      }
     };
     el.addEventListener("timeupdate", onTime);
     el.addEventListener("ended", onEnd);
@@ -55,35 +87,64 @@ export function AudioWindow({
       el.removeEventListener("timeupdate", onTime);
       el.removeEventListener("ended", onEnd);
     };
-  }, [endSec, startSec]);
+  }, [endSec, startSec, focus, onFocusEnd]);
 
   /* 倍速：改的是播放器自己，播放途中改立刻生效 */
   useEffect(() => {
-    const el = ref.current;
+    const el = audioRef.current;
     if (!el) return;
     el.playbackRate = rate;
   }, [rate]);
 
-  const play = async () => {
-    const el = ref.current;
+  /**
+   * 只播这一段。
+   *
+   * 全部在事件回调里做（不是 effect 里），所以不会踩"effect 里同步 setState"那条线。
+   */
+  const playRange = (from: number, to: number, text?: string) => {
+    const el = audioRef.current;
     if (!el) return;
-    if (el.currentTime < startSec || el.currentTime >= endSec) el.currentTime = startSec;
+    setFocus({ startSec: from, endSec: to, label: text ?? "" });
+    el.currentTime = from;
+    setPos(from);
+    void el.play();
+    setPlaying(true);
+  };
+
+  const clearFocus = () => setFocus(null);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      playRange,
+      clearFocus,
+    }),
+    [],
+  );
+
+  const play = async () => {
+    const el = audioRef.current;
+    if (!el) return;
+    const from = focus ? focus.startSec : startSec;
+    const until = focus ? focus.endSec : endSec;
+    if (el.currentTime < from || el.currentTime >= until) el.currentTime = from;
     await el.play();
     setPlaying(true);
   };
 
   const stop = () => {
-    const el = ref.current;
+    const el = audioRef.current;
     if (!el) return;
     el.pause();
     el.currentTime = startSec;
     setPos(startSec);
     setPlaying(false);
+    setFocus(null);
   };
 
   /** 跳到本段里的某个时间点。 */
   const seekTo = (t: number) => {
-    const el = ref.current;
+    const el = audioRef.current;
     if (!el) return;
     const clamped = Math.max(startSec, Math.min(endSec, t));
     el.currentTime = clamped;
@@ -139,10 +200,18 @@ export function AudioWindow({
   };
 
   const pct = Math.max(0, Math.min(1, (pos - startSec) / (endSec - startSec)));
+  const span = Math.max(1, endSec - startSec);
+  /** 聚焦区间在轨道上的位置：正在重听的那一小段用高亮笔标出来 */
+  const focusPct = focus
+    ? {
+        left: Math.max(0, Math.min(100, ((focus.startSec - startSec) / span) * 100)),
+        width: Math.max(1, Math.min(100, ((focus.endSec - focus.startSec) / span) * 100)),
+      }
+    : null;
 
   return (
     <div className="rounded-card bg-surface p-5 shadow-hard">
-      <audio ref={ref} src={src} preload="metadata" />
+      <audio ref={audioRef} src={src} preload="metadata" />
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="eyebrow text-fg-muted">LISTENING</p>
@@ -155,7 +224,7 @@ export function AudioWindow({
             className={cn(
               "tap grid size-12 place-items-center rounded-btn bg-primary text-on-accent shadow-hard-sm",
             )}
-            aria-label={playing ? "停止" : "播放本段"}
+            aria-label={playing ? "停止" : focus ? "重听这一小段" : "播放本段"}
           >
             {playing ? <Pause className="size-5" strokeWidth={3} /> : <Play className="size-5" strokeWidth={3} />}
           </button>
@@ -169,6 +238,22 @@ export function AudioWindow({
           </button>
         </div>
       </div>
+
+      {/* 正在重听哪一道题，得说清楚 —— 不然学生不知道自己在听什么 */}
+      {focus ? (
+        <div className="mt-3 flex items-center justify-between gap-2 rounded-row bg-marker px-3 py-2">
+          <p className="num truncate text-caption font-black text-marker-fg">
+            正在重听{focus.label || "这一段"} · {formatTime(focus.startSec)} – {formatTime(focus.endSec)}
+          </p>
+          <button
+            type="button"
+            onClick={clearFocus}
+            className="tap shrink-0 text-caption font-black text-marker-fg underline underline-offset-4"
+          >
+            退出
+          </button>
+        </div>
+      ) : null}
 
       {/*
         进度条可以直接拖：解析的时候反复回听某一句是最常见的动作，
@@ -195,6 +280,18 @@ export function AudioWindow({
             className={cn("h-full bg-primary", dragging ? "" : "transition-[width] duration-150")}
             style={{ width: `${pct * 100}%` }}
           />
+          {/*
+            正在重听的那一小段。
+            一道题的题干只有 3–6 秒，整段却有三四分钟 —— 按比例画出来只有 2% 宽，
+            等于看不见。所以给它一个最小宽度并压一道黑边，窄也看得出是个记号。
+          */}
+          {focusPct ? (
+            <div
+              aria-hidden
+              className="absolute inset-y-0 min-w-[8px] border-2 border-fg bg-marker"
+              style={{ left: `${focusPct.left}%`, width: `${focusPct.width}%` }}
+            />
+          ) : null}
         </div>
         <div
           aria-hidden
@@ -320,6 +417,8 @@ export function QuestionBlock({
   hideChinese = false,
   hideStem = false,
   collapseExplain = false,
+  onReplay,
+  replayActive = false,
 }: {
   q: Question;
   answer?: string;
@@ -339,6 +438,14 @@ export function QuestionBlock({
   hideStem?: boolean;
   /** 中文解析先收起来，想看再点 */
   collapseExplain?: boolean;
+  /**
+   * 听力用：只重听这一道题的题干。
+   * 题干是按考场规矩藏起来的，学生想回头再听一次那道题，
+   * 没有这个入口就只能整段从头听 —— 那等于没有。
+   */
+  onReplay?: () => void;
+  /** 这一题是不是正在重听 */
+  replayActive?: boolean;
 }) {
   const [showExplain, setShowExplain] = useState(false);
 
@@ -358,6 +465,23 @@ export function QuestionBlock({
           )}
           {!hideStem && q.stemZh && !hideChinese ? (
             <p className="mt-1 text-label text-fg-muted">{q.stemZh}</p>
+          ) : null}
+          {onReplay ? (
+            <button
+              type="button"
+              onClick={onReplay}
+              aria-pressed={replayActive}
+              aria-label={`重听第 ${q.n} 题的题干`}
+              className={cn(
+                "tap mt-2 inline-flex items-center gap-1.5 rounded-pill border-2 px-2.5 py-1 text-caption font-bold",
+                replayActive
+                  ? "border-marker bg-marker text-marker-fg"
+                  : "border-fg/20 bg-surface-2 text-fg-muted",
+              )}
+            >
+              <Headphones className="size-3.5" strokeWidth={3} />
+              重听本题
+            </button>
           ) : null}
         </div>
       </div>

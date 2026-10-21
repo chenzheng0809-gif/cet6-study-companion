@@ -12,6 +12,12 @@ import type { ListeningUnit, Question } from "./types";
  * 听力原文是录音的机器转写（listen_audio），可能有极少数识别误差；
  * 单元窗口来自对同一段 MP3 的静音能量分析，答题停顿固定在 13.3–13.8 秒，
  * 全卷检出 25 个，与卷面 25 道题一一对应。
+ *
+ * questionWindows 是每一道题的题干在录音里的起止时刻：
+ * 起点取上一段答题停顿的结束（第 1 题取 "Question N." 那一段的起点，由转写定位），
+ * 终点取这道题后面那段答题停顿的开始。每道题都单独转写校验过 ——
+ * 必须念出本题题号、且不能念出别的题号，才写进数据。
+ * 测量脚本：scripts/measure-question-windows.py
  */
 
 export const LISTENING_UNITS: ListeningUnit[] = [
@@ -30,6 +36,12 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 238.14,
       questions: [2, 3, 4],
     },
+    questionWindows: [
+      { n: 1, startSec: 166.06, endSec: 169.44 },
+      { n: 2, startSec: 183.08, endSec: 187.38 },
+      { n: 3, startSec: 201.32, endSec: 207.26 },
+      { n: 4, startSec: 220.36, endSec: 224.56 },
+    ],
     transcript: [
       {
         id: "c1-1",
@@ -192,6 +204,12 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 444.24,
       questions: [6, 7, 8],
     },
+    questionWindows: [
+      { n: 5, startSec: 364.04, endSec: 370.34 },
+      { n: 6, startSec: 383.88, endSec: 389.08 },
+      { n: 7, startSec: 402.82, endSec: 408.8 },
+      { n: 8, startSec: 422.44, endSec: 430.6 },
+    ],
     transcript: [
       {
         id: "c2-1",
@@ -339,6 +357,11 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 674.22,
       questions: [10, 11],
     },
+    questionWindows: [
+      { n: 9, startSec: 614.1, endSec: 618.82 },
+      { n: 10, startSec: 632.5, endSec: 638.82 },
+      { n: 11, startSec: 653.54, endSec: 660.3 },
+    ],
     transcript: [
       {
         id: "b1-1",
@@ -415,6 +438,12 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 879.3,
       questions: [13, 14, 15],
     },
+    questionWindows: [
+      { n: 12, startSec: 803.72, endSec: 809.5 },
+      { n: 13, startSec: 823.26, endSec: 827.2 },
+      { n: 14, startSec: 840.74, endSec: 846.76 },
+      { n: 15, startSec: 860.44, endSec: 865.32 },
+    ],
     transcript: [
       {
         id: "b2-1",
@@ -517,6 +546,11 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 1142.86,
       questions: [17, 18],
     },
+    questionWindows: [
+      { n: 16, startSec: 1082.56, endSec: 1088.96 },
+      { n: 17, startSec: 1102.78, endSec: 1108.02 },
+      { n: 18, startSec: 1121.9, endSec: 1129.02 },
+    ],
     transcript: [
       {
         id: "r1-1",
@@ -698,6 +732,11 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 1386.4,
       questions: [20, 21],
     },
+    questionWindows: [
+      { n: 19, startSec: 1325.84, endSec: 1332.26 },
+      { n: 20, startSec: 1346.06, endSec: 1350.42 },
+      { n: 21, startSec: 1364.3, endSec: 1372.64 },
+    ],
     transcript: [
       {
         id: "r2-1",
@@ -809,6 +848,12 @@ export const LISTENING_UNITS: ListeningUnit[] = [
       endSec: 1647.54,
       questions: [23, 24, 25],
     },
+    questionWindows: [
+      { n: 22, startSec: 1565.22, endSec: 1570.68 },
+      { n: 23, startSec: 1584.12, endSec: 1593.04 },
+      { n: 24, startSec: 1606.44, endSec: 1613.24 },
+      { n: 25, startSec: 1626.66, endSec: 1634.14 },
+    ],
     transcript: [
       {
         id: "r3-1",

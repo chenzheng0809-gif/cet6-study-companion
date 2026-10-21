@@ -38,9 +38,9 @@ import { useToast } from "@/components/ui/toast";
 import { OffsiteSheet } from "@/components/today/offsite-sheet";
 import { BottomLineLyric, Mood, StreakMood } from "@/components/mood/mood-line";
 import { logStudy } from "@/lib/repo";
-import { WEAK_AREA_LABEL, type WeakArea } from "@/lib/journey";
+import { nextPracticeTarget, WEAK_AREA_LABEL, type WeakArea } from "@/lib/journey";
 import type { FocusCandidate } from "@/hooks/use-study";
-import { greeting, useRequireProfile, useTodayData } from "@/hooks/use-study";
+import { greeting, useCoverage, useRequireProfile, useTodayData } from "@/hooks/use-study";
 import { taskTypeMeta } from "@/lib/journey-types";
 
 export default function TodayPage() {
@@ -48,8 +48,15 @@ export default function TodayPage() {
   const { toast } = useToast();
   const { profile, loaded } = useRequireProfile();
   const data = useTodayData();
+  const coverage = useCoverage();
   const [offsiteOpen, setOffsiteOpen] = useState(false);
   const [lightOpen, setLightOpen] = useState(false);
+
+  // 精听挑哪一段：跟着真题库轮换，不锁死在第一套卷子的某一段上
+  const listenTarget = coverage ? nextPracticeTarget("listening", coverage) : null;
+  const intensiveListenHref = listenTarget
+    ? `/papers/${listenTarget.paperId}?unit=${listenTarget.unitId}`
+    : "/papers";
 
   if (!loaded || !profile || !data) {
     return (
@@ -66,7 +73,8 @@ export default function TodayPage() {
   async function startFocus(candidate: FocusCandidate | undefined) {
     if (!candidate) return;
     if (candidate.paperUnitId) {
-      router.push(`/papers/2025-12-set1?unit=${candidate.paperUnitId}`);
+      // 落点跟着周目标走：周目标是哪套卷子，这里就是哪套，不写死第一套
+      router.push(`/papers/${candidate.paperId ?? "2025-12-set1"}?unit=${candidate.paperUnitId}`);
       return;
     }
     if (candidate.type === "vocab") {
@@ -74,7 +82,7 @@ export default function TodayPage() {
       return;
     }
     if (candidate.type === "intensive-listen") {
-      router.push(`/papers/2025-12-set1?unit=l-r1`);
+      router.push(intensiveListenHref);
       return;
     }
     router.push("/practice");
@@ -125,6 +133,10 @@ export default function TodayPage() {
             <h2 className="mt-3 text-[26px] leading-tight font-black tracking-[-0.03em]">
               {focus.title}
             </h2>
+            {/* 练的是哪一套的哪一段 —— 真题推荐跟着卷子轮换，得写出来 */}
+            {focus.detail ? (
+              <p className="mt-1.5 text-caption font-bold text-fg-muted">{focus.detail}</p>
+            ) : null}
             {focus.basis ? (
               <p className="mt-2 rounded-row bg-surface-2 p-2.5 text-caption leading-relaxed text-fg-muted">
                 <span className="font-black">为什么是这个 · </span>
@@ -200,7 +212,7 @@ export default function TodayPage() {
               done={habits.listening}
               title="精听"
               icon={<Headphones className="size-4" strokeWidth={2.6} />}
-              onOpen={() => router.push("/papers/2025-12-set1?unit=l-r1")}
+              onOpen={() => router.push(intensiveListenHref)}
               onLog={() =>
                 void logStudy({ title: "精听", type: "intensive-listen", source: "habit" })
               }

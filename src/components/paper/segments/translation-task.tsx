@@ -21,8 +21,14 @@ export function TranslationTaskSegment({
   /** 深链页传 1，滑动浏览里嵌在 Part 里传 2 */
   headingLevel?: 1 | 2;
 }) {
-  const { drafts, sessionOf, isSubmitted, setDraft, startSession, submitSession, reset } =
+  const { drafts, sessionOf, isSubmitted, setDraft, startSession, submitSession, finishUnit, reset } =
     usePaperAttempt(paper.id);
+
+  /** 交卷：记下这一项练完了 —— 真题推荐靠这个换到下一套卷子 */
+  const submit = async () => {
+    await submitSession("translation");
+    await finishUnit("translation");
+  };
 
   const Title = headingLevel === 1 ? "h1" : "h2";
   const session = sessionOf("translation");
@@ -50,7 +56,7 @@ export function TranslationTaskSegment({
           total={0}
           showCount={false}
           onStart={() => startSession("translation", partLimitSec("translation"))}
-          onSubmit={() => submitSession("translation")}
+          onSubmit={() => void submit()}
           onRestart={restart}
         />
 
@@ -83,7 +89,7 @@ export function TranslationTaskSegment({
 
         {!submitted ? (
           <div className="mt-3">
-            <LockedPanel title="参考译文还没解锁" onSubmit={() => submitSession("translation")} />
+            <LockedPanel title="参考译文还没解锁" onSubmit={() => void submit()} />
           </div>
         ) : (
           <>

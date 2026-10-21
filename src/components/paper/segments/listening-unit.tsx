@@ -1,11 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { getListeningUnit, unitAudioRange } from "@/lib/papers";
 import { partLimitSec, unitsOfPart } from "@/lib/papers/exam-clock";
 import type { ListeningUnit, Paper } from "@/lib/papers/types";
-import { AudioWindow, Collapsible, LockedPanel, PartSessionBar } from "@/components/paper/exam-shell";
+import { AudioWindow, Collapsible, LockedPanel, PartSessionBar, type AudioWindowHandle } from "@/components/paper/exam-shell";
 import { QuestionBlock } from "@/components/paper/parts";
 import { TappableText } from "@/components/paper/tappable-text";
 import { VocabSheet, type VocabSeed } from "@/components/paper/vocab-sheet";
@@ -32,9 +32,13 @@ export function ListeningUnitSegment({
   /** 滑动浏览里已经有 chip 行做跳转，不用再塞一份"其他段" */
   showSiblings?: boolean;
 }) {
-  const { answers, revealed, sessionOf, isSubmitted, setAnswer, revealMany, startSession, submitSession, reset } =
+  const { answers, revealed, sessionOf, isSubmitted, setAnswer, revealMany, startSession, submitSession, finishUnit, reset } =
     usePaperAttempt(paper.id);
   const [vocabSeed, setVocabSeed] = useState<VocabSeed | null>(null);
+  /** 播放器：重听某道题时要命令它跳到那一小段 */
+  const audioRef = useRef<AudioWindowHandle | null>(null);
+  /** 正在重听哪一道题 */
+  const [replaying, setReplaying] = useState<number | null>(null);
 
   const questions = useMemo(
     () =>
@@ -46,6 +50,24 @@ export function ListeningUnitSegment({
 
   /** 本段的完整可播区间：原文 + 全部题号播报 + 答题停顿 */
   const audioRange = unitAudioRange(unit);
+
+  /** 每一道题的题干在音频里的区间（真实检测值，没有这一项就没有重听入口） */
+  const windows = useMemo(() => {
+    const map = new Map<number, { startSec: number; endSec: number }>();
+    for (const w of unit.questionWindows ?? []) map.set(w.n, w);
+    return map;
+  }, [unit]);
+
+  /** 播放器放完这一小段，题卡上的"正在重听"要跟着收 */
+  const clearReplay = useCallback(() => setReplaying(null), []);
+
+  /** 只重听这一道题的题干 */
+  const replay = (n: number) => {
+    const w = windows.get(n);
+    if (!w) return;
+    setReplaying(n);
+    audioRef.current?.playRange(w.startSec, w.endSec, `第 ${n} 题`);
+  };
 
   if (!paper.timing) return null;
 
@@ -59,6 +81,8 @@ export function ListeningUnitSegment({
   /** 交卷 = 解锁：一次开考记录里所有题的解析 */
   const submit = async () => {
     await submitSession("listening");
+    /* 这一段练完了 —— 真题推荐靠这个换到下一段 / 下一套 */
+    await finishUnit(unit.id);
     await revealMany(questionNos);
   };
 
@@ -110,11 +134,13 @@ export function ListeningUnitSegment({
         />
 
         <AudioWindow
+          ref={audioRef}
           src={paper.timing.audioPath}
           /* 播到最后一个题号的停顿结束，不停在第一题 */
           startSec={audioRange.startSec}
           endSec={audioRange.endSec}
           label={unit.label}
+          onFocusEnd={clearReplay}
         />
 
         <div className="mt-3 grid gap-3">
@@ -133,6 +159,9 @@ export function ListeningUnitSegment({
               hideStem
               /* 中文解析先收起来，想看再点 */
               collapseExplain
+              /* 题干藏起来了，得给一个单独重听它的入口 */
+              onReplay={windows.has(q.n) ? () => replay(q.n) : undefined}
+              replayActive={replaying === q.n}
             />
           ))}
         </div>
