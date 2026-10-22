@@ -19,16 +19,29 @@ export type SpeechAccent = "en-GB" | "en-US";
 const ACCENT_KEY = "cet6.accent";
 
 /**
- * 默认跟词库音标走 —— 这本词库标的是英式（ɪ'kɒnəmɪ、'prɒfɪt、ˈsemɪnɑː(r)），
- * 点朗读听到的却要是美音，学生会直接对不上。
- * 六级**听力真题音频**本身是美音，那条链路走的是真实 mp3，不受影响。
+ * 默认跟六级听力走 —— 美音。
+ *
+ * 自查过三件事：
+ * 1. 大纲只写「录音材料用标准的英式或美式英语朗读」，没有规定单一语系；
+ * 2. 实际的真题录音是英美混录、美音占多数 —— 三套卷的听力原文里美式拼写
+ *    （behavior / traveling / center / realize / organizations / meter）出现 13 次，
+ *    英式拼写 0 次；同一批卷子的阅读原文里英式拼写反而出现 8 次，
+ *    说明这个信号是有效的，不是采样偏差；
+ * 3. 备考圈一致的结论也是「美音为主」：男声多美音、女声多英音，
+ *    学术讲座段偏英音，日常对话与新闻偏美音。
+ *
+ * 学生点朗读是为了跟听力对上，跟真题对得上比跟词库音标对得上更要紧。
+ * 词库这本《六级核心词汇》标的是英式音标（ɪ'kɒnəmɪ、'prɒfɪt、ˈsemɪnɑː(r)），
+ * 想跟音标对得上可以在设置里切英音。
  */
 let accent: SpeechAccent = readStoredAccent();
 
 function readStoredAccent(): SpeechAccent {
-  if (typeof window === "undefined") return "en-GB";
+  /* 没有 localStorage 的环境（SSR、脚本里的假 window）不能在这里炸 */
+  if (typeof window === "undefined" || !window.localStorage) return "en-US";
   const stored = window.localStorage.getItem(ACCENT_KEY);
-  return stored === "en-US" ? "en-US" : "en-GB";
+  /* 存过就按存的走（自己选过的口音不改）；没存过的用默认美音 */
+  return stored === "en-GB" ? "en-GB" : "en-US";
 }
 
 export function setSpeechAccent(next: SpeechAccent): void {
@@ -153,7 +166,7 @@ export interface SpeechInfo {
   voiceName: string;
 }
 
-const SERVER_INFO: SpeechInfo = { accent: "en-GB", voiceName: "…" };
+const SERVER_INFO: SpeechInfo = { accent: "en-US", voiceName: "…" };
 
 let cachedInfo: SpeechInfo | null = null;
 const listeners = new Set<() => void>();

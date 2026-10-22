@@ -8,7 +8,7 @@ export type TargetScorePreset = 425 | 500 | 550 | "custom";
 export type Cet6History = "none" | "taken";
 export type ThemeMode = "light" | "dark" | "system";
 
-/** 单词朗读口音。这本词库标的是英式音标，所以默认英音；考试听力是美音。 */
+/** 单词朗读口音。这本词库标的是英式音标，但六级听力录音以美音为主，默认跟听力走。 */
 export type SpeechAccent = "en-GB" | "en-US";
 
 /**
@@ -152,7 +152,10 @@ export interface Settings {
   reminderTime: string;
   /** 主动暂停：暂停期间不新增任务欠账 */
   paused: boolean;
-  /** 单词朗读口音：默认跟词库音标走（英音），可切成考试的美音 */
+  /**
+   * 单词朗读口音：默认跟六级听力录音走（美音），
+   * 词库标的是英式音标，想跟音标对上可以切成英音。
+   */
   speechAccent?: SpeechAccent;
   onboarded: boolean;
   updatedAt: number;

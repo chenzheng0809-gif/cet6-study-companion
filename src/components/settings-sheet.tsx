@@ -130,8 +130,8 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
               void saveSettings({ speechAccent: next });
             }}
             options={[
-              { value: "en-GB", label: "英音" },
               { value: "en-US", label: "美音" },
+              { value: "en-GB", label: "英音" },
             ]}
           />
           <p className="mt-2 flex items-center gap-1.5 text-caption text-fg-muted">
@@ -145,7 +145,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
             </button>
           </p>
           <p className="mt-1 text-caption text-fg-subtle">
-            词库标的是英式音标，默认英音。听力真题音频是原始录音，不受影响。
+            默认美音，跟六级听力录音一致。词库音标是英式的。
           </p>
         </section>
 

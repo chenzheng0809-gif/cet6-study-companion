@@ -28,6 +28,7 @@ import {
   type WeakArea,
 } from "./journey";
 import { mergeVocabEntry, normWord } from "./vocab";
+import { setSpeechAccent } from "./speech";
 import { entryMeaning, entrySourceLabel, type WordbookEntry } from "./wordbooks";
 import type {
   BackupFile,
@@ -529,6 +530,14 @@ export async function importBackup(payload: BackupFile): Promise<void> {
       if (payload.changes?.length) await db.changes.bulkPut(payload.changes);
     },
   );
+  /*
+    发音口音的真正来源是 localStorage（设置页里存的那份），
+    备份里的 speechAccent 只是记了一份 —— 不在这里重新落一次，
+    换设备恢复备份之后口音会悄悄退回默认。
+  */
+  if (payload.settings?.speechAccent) {
+    setSpeechAccent(payload.settings.speechAccent);
+  }
 }
 
 /* ------------------------------------------------------------- 真题作答 */

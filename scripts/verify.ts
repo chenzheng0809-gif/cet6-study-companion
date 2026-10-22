@@ -1816,6 +1816,48 @@ console.log(
   "  四套真题在库 · 每套写明材料出处 · Section 归属来自数据不是猜的 · 听力题干来自录音",
 );
 
+/* ---------------------------------- 24. 发音默认跟六级听力走（美音） */
+
+section("24. 发音默认是美音，跟六级听力录音一致");
+
+const speechSrc = readSrc("src/lib/speech.ts");
+const settingsSrc = readSrc("src/components/settings-sheet.tsx");
+
+// 默认口音：服务端快照、localStorage 兜底、服务端渲染快照，三处都得是美音
+assert(
+  /if \(typeof window === "undefined"[^)]*\) return "en-US";/.test(speechSrc),
+  "speech.ts 的服务端默认值不是美音",
+);
+assert(
+  speechSrc.includes('stored === "en-GB" ? "en-GB" : "en-US"'),
+  "speech.ts 的 localStorage 兜底不是美音 —— 没存过口音的设备该用默认美音",
+);
+assert(
+  speechSrc.includes('const SERVER_INFO: SpeechInfo = { accent: "en-US"'),
+  "speech.ts 的服务端渲染快照不是美音",
+);
+
+// 设置页：美音排在前面，文案说清默认是美音，老文案不许回来
+const usIdx = settingsSrc.indexOf('{ value: "en-US", label: "美音" }');
+const gbIdx = settingsSrc.indexOf('{ value: "en-GB", label: "英音" }');
+assert(
+  usIdx >= 0 && gbIdx >= 0 && usIdx < gbIdx,
+  "设置页的美音没有排在英音前面",
+);
+assert(settingsSrc.includes("默认美音"), "设置页没有写明默认是美音");
+assert(!settingsSrc.includes("默认英音"), "「默认英音」的老文案回来了");
+
+// 备份恢复要把口音落回 localStorage —— 换设备恢复后不能悄悄退回默认
+const repoSrc = readSrc("src/lib/repo.ts");
+assert(
+  repoSrc.includes("setSpeechAccent(payload.settings.speechAccent)"),
+  "恢复备份后没有把备份里的口音落回朗读模块",
+);
+
+console.log(
+  "  默认美音 · 老用户自己选过的口音不变 · 设置页能切英音 · 恢复备份后口音不丢",
+);
+
 /* --------------------------------------------------------------- result */
 
 console.log(
