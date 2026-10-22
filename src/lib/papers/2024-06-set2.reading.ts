@@ -24,6 +24,12 @@ export const READING_SECTIONS: ReadingSection[] = [
         en: "The Sun Is Also a Star is a truly lovely story of love, romance, fate, and destiny. Natasha is a Jamaican-born immigrant living {{26}} in America, not by choice exactly. Her parents brought her over and created the situation she {{27}} to be out of. Daniel is an American born of Korean immigrants. He believes in true love, fate, and all that other nonsense that Natasha {{28}} through scientific reasoning. Daniel and Natasha meet by {{29}} on the streets of New York on the day that she is to be {{30}} . She doesn’t tell him that but does allow him to keep her company while he tries to get her to fall in love with him over the course of the day. Natasha is me. I found her so similar to myself. She’s scientifically-minded, practical, somewhat cynical, and always {{31}} . Her obsession with the universe through a scientific lens is infectious and I {{32}} Daniel seeing that too. Daniel is charming and passionate and has a way with words that even {{33}} Natasha’s tough outer shell.By the end of the book I fell in love with both of them. I used to find romance stories to always be cheap or laughable. I think now I can see the value in escaping into a story of pure optimism. I got {{34}} in The Sun Is Also a Star and finished it cover to cover in a weekend. I couldn’t wait to get to what I hoped would be a happy ending. It’s nice every once in a while to give in to magic. It doesn’t have to be a hard fantasy novel with actual spells, it can be the magic found between two people who just have that special something. That {{35}} that causes them to react and spark when they’re near each other.",
       },
     ],
+    translation: [
+      {
+        label: "",
+        zh: `《太阳也是一颗星星》是一部关于爱、浪漫、命运与宿命的动人故事。娜塔莎是一名牙买加出生的移民，[26]生活在美国，这并非完全出于她自己的选择。是父母把她带到了美国，并制造了她[27]摆脱的局面。丹尼尔是一名出生于韩裔移民家庭的美国人。他相信真爱、命运，以及娜塔莎[28]的那类无稽之谈。丹尼尔与娜塔莎在纽约街头[29]相遇，那天她即将被[30]。她没有把这件事告诉他，却由着他陪在身边，而他则试图在这一天里让她爱上自己。娜塔莎就是我。我发现她与我如此相像。她讲科学、务实、略带愤世嫉俗，而且总是[31]。她透过科学的镜头着迷于宇宙，这份痴迷很有感染力，我[32]丹尼尔也看到了这一点。丹尼尔风度迷人、热情奔放，那张甜嘴连娜塔莎坚硬的外壳都被他[33]了。到全书读完时，我爱上了他们俩。我以前总觉得言情小说总是庸俗可笑。如今我认为，我能看出逃进一个纯粹乐观的故事里有什么价值。我[34]《太阳也是一颗星星》之中，一个周末就从头读到尾。我迫不及待地想看到自己盼望的那个圆满结局。偶尔向魔力低头一次感觉很好。它不必是那种真有咒语的硬奇幻小说，也可以只是两个拥有某种特别默契的人之间找到的那种魔力。正是那种[35]，让他们在靠近彼此时产生反应、迸出火花。`,
+      },
+    ],
     bank: [
       {
         key: "A",
@@ -116,6 +122,18 @@ export const READING_SECTIONS: ReadingSection[] = [
         zh: "努力；力争",
       },
     ],
+    notes: [
+      { en: "truly lovely", zh: "非常动人；十分可爱" },
+      { en: "Jamaican-born immigrant", zh: "牙买加出生的移民" },
+      { en: "not by choice exactly", zh: "并不完全是出于自愿" },
+      { en: "scientifically-minded", zh: "讲科学的；重理性的" },
+      { en: "cynical", zh: "愤世嫉俗的；不轻易信人的" },
+      { en: "infectious", zh: "有感染力的" },
+      { en: "tough outer shell", zh: "坚硬的外壳" },
+      { en: "laughable", zh: "可笑；荒唐的" },
+      { en: "pure optimism", zh: "纯粹的乐观" },
+      { en: "give in to magic", zh: "向魔力低头；屈服于魔力" },
+    ],
   },
   {
     id: "r-b",
@@ -173,6 +191,68 @@ export const READING_SECTIONS: ReadingSection[] = [
         en: "Remember, overcoming the behavioral inertia that prevents us from implementing new changes, like eating a healthy diet or exercising, can benefit us in the long run and can improve our physical and mental health. No one was born with habits. They were all learned, and can all, therefore, be unlearned. The question is: how badly do you really want to change?",
       },
     ],
+    translation: [
+      {
+        label: "A",
+        zh: `据最新研究，行为改变涉及大脑的生理变化。在过去十年里，研究者已经表明，就让一个新行为成为根深蒂固的习惯需要多长时间而言，并没有一个简单的答案。即便是我们当中最高效、最自律的人，要撤销一个已经成为我们身份中自动组成部分的东西，也需要付出远超一个晚上的努力。一旦我们成功做出了那种改变，接下来还得为生活做其他调整，以确保我们能继续维持它，而这本身往往就是另一重挑战。`,
+      },
+      {
+        label: "B",
+        zh: `究其本质，改变并维持一种行为要想取得成功，很少不引入某种系统。当没有合适的框架到位时，我们辛苦换来的进展就更容易被中途打断。为了确保在改变和维持行为上取得成功，我们应当避开一些有害的习惯。`,
+      },
+      {
+        label: "C",
+        zh: `第一个要避开的，是依赖意志力。想想你上一次发誓要抵挡诱惑是什么时候。也许你不想每 15 分钟就查看一次手机，或者你下定决心在下午 3 点不去拿巧克力棒。想想看，当手机就在手边时不去瞥它一眼、当下午的困倦袭来时不去走向自动售货机，该有多难。`,
+      },
+      {
+        label: "D",
+        zh: `关于我们的意志力究竟是有限还是无限，相关研究尚无定论，但专家们普遍认同：只靠意志力，你无法改变并维持一个习惯。那句老兵的格言「你永远无法升到与场合相称的高度，你只会降到训练所给的水平」同样适用于行为改变。道理很简单——你把一件事重复足够多次，它就会变成自动反应。`,
+      },
+      {
+        label: "E",
+        zh: `想想看，你还能改变周围的什么环境，让这件事更容易天天做到。这被称为你的「提示物」。基本上，它就是触发某个特定习惯的信号。如果你不想在下午 3 点去拿甜食，就在办公桌上备好一盒花草茶。下午 3 点一到，这就是提示你给自己倒一杯热水、喝掉那杯茶，而不是走向自动售货机。`,
+      },
+      {
+        label: "F",
+        zh: `第二个要避开的是盯着消极目标。有时候，让你失望的不是方法，而是你一开始就想改掉的那个习惯。首先，为了扛过下午的困倦而「不吃巧克力」，比在指定时间把巧克力换成花草茶更难实现。你的大脑喜欢找到过去行之有效的套路，让你在将来不必费心思考就能重复同样的动作。然而，这套习惯学习系统在「学会不去做某件事」上并不那么管用。所以，与其放弃某样东西，不如考虑引入别的东西来替代它。把注意力放在你将要采取的行动上，这些行动最终会与你想要停止的行为相冲突。当你的心思落在做一件新事情上时，你的习惯系统才有机会运转起来。`,
+      },
+      {
+        label: "G",
+        zh: `第三个要避开的是在不同情境下套用同样的策略。因为我们是习惯的生物，所以当我们确实做到养成并维持某种理想行为时，自然会假定：当我们想再改变一种行为时，同一套策略同样管用。但情况并非总是如此。有时候，让你改掉一种行为的那套系统，对另一种行为可能就不管用了。`,
+      },
+      {
+        label: "H",
+        zh: `有时我们习惯了在做决定时凭直觉行事。这在某些情况下对我们很有帮助，但在另一些情况下却会拖住我们，尤其是在我们需要考虑指标和数据、而不是让本能压倒一切的时候。例如，如果你想戒掉一大早起来就查邮件的习惯，可以决定用另一项活动来替代它。但如果想戒掉沉溺电子游戏，光是决定去跑个步可能就没那么有效。你可能需要再引入一种强化手段，比如约朋友一起、一起预订健身课程。`,
+      },
+      {
+        label: "I",
+        zh: `第四个要避开的是不原谅自己偶尔的失误。当然，再周密的计划也有失手的时候。你可能坚持了五天睡前不看屏幕的习惯，结果一个大项目落到办公桌上，睡前你发现自己抱着笔记本电脑躺在了床上。或者你周日备好了饭菜，坚持在家吃健康晚餐，结果到了周五累得不行，干脆点了油腻的外卖。生活就是这样：即便你的行为改变很小，每一天都可能相当不灵活，总有一天你的运气会用光，哪怕只是一天。你心里那个完美主义者可能会尖叫着要你彻底放弃目标，但试着从更大的图景去看这件事。暂时偏离轨道，并不意味着你第二天不能重新开始。`,
+      },
+      {
+        label: "J",
+        zh: `最后一个要避开的是轻视微小的进展。很多完美主义者在试图建立一种行为改变时，往往会掉进这个习惯：他们过度盯着大目标，却没有花时间去庆祝过程中取得的那些小进步。你的大脑会对奖励作出反应。与我们表现习惯相关联的脑区——基底核——在行为的开端（习惯被提示时）最活跃，在行为结束时（得到奖励时）也最活跃。假设你的目标是每周跑三次、每次五英里，而这一周你在周一、周三、周五各跑了一英里。与其盯着自己离目标还差多远，不如想想怎样奖励自己已经取得的进步。这个奖励不必大，也不必贵，可以简单到跑完步后给自己榨一杯最爱的果汁。不管你的奖励是什么，它都必须比活动本身更多一点，才能让你继续动起来。`,
+      },
+      {
+        label: "K",
+        zh: `开始一种新行为通常看上去是改变过程中最难的部分。然而，人们往往没有为「维持它」做好充分准备。原因之一是，我们误以为用来启动改变的策略，在帮助我们延续改变时同样有效。但它们并非如此。改变一个根深蒂固的习惯，需要改变我们对这个习惯的信念——那个深深渗入我们生活的信念；而要不断把这番道理付诸实践，则要求我们保持积极的心态。一旦情绪低落，那种换个方式行事的智慧似乎就消失了，我们又回到吃得多、动得少的老样子。所以，维持新行为的关键，就是保持快乐！这也正是新行为如此难以维持的原因。`,
+      },
+      {
+        label: "L",
+        zh: `别忘了，克服那些阻碍我们落实新改变的行为惯性——比如养成健康饮食或坚持运动的惯性——从长远看对我们有益，还能改善我们的身心健康。没有人生来就带着习惯，它们全都是学来的，因此也全都可以被学掉。问题在于：你究竟有多想改变？`,
+      },
+    ],
+    notes: [
+      { en: "behavioral change", zh: "行为改变" },
+      { en: "deep-rooted habit", zh: "根深蒂固的习惯" },
+      { en: "derail", zh: "使偏离轨道；中途打断" },
+      { en: "relying on willpower", zh: "依赖意志力" },
+      { en: "sink to the level of training", zh: "沉降到训练所给的水平" },
+      { en: "cue", zh: "提示信号；提示物" },
+      { en: "negative goals", zh: "消极目标" },
+      { en: "designated time", zh: "指定的时间" },
+      { en: "basal ganglia", zh: "基底核" },
+      { en: "behavioral inertia", zh: "行为惯性" },
+    ],
   },
   {
     id: "r-c1",
@@ -186,6 +266,24 @@ export const READING_SECTIONS: ReadingSection[] = [
         en: "The “American Dream” promises that in the Land of Opportunity, any individual can climb the economic ladder and prosper through hard work and ambition alone. And yet, young Americans today are struggling to earn more than their parents did at the same age, and upward mobility in the US actually compares unfavourably to that of other industrialised nations. So why does the idea of the American Dream persist? A new study in the American Journal of Political Science identifies one factor that has been overlooked: the influence of reality TV. Reality shows have come to dominate US television over the past 20 years, notes Eunji Kim from Vanderbilt University. And the overwhelming majority of these have a “rags-to- riches” storyline: they feature ordinary Americans who work hard to achieve great economic success. And while these programmes are regularly among the most-watched shows, news broadcasts—which paint a more realistic view of the economic hardship faced by millions of Americans—get a much smaller proportion of the viewership. — Rags-to-riches stories are ubiquitous (无处不在的) on TVbut does watching these programmes actually convince people that economic mobility is easily attainable? To find out, Kim’s team had participants watch a 5-minute clip from a reality show with a rags-to-riches storyline. Control participants watched a clip from a reality show that didn’t have a rags-to- riches story. After watching the shows, participants rated how much they agreed with four statements relating to the American Dream. The results showed that those who’d watched a rags-to-riches clip did indeed have a significantly greater belief in the American Dream. Interestingly, when participants were separated by party affiliation, this effect was significant among Republicans but not Democrats, suggesting that the kind of messages implicit in these TV shows may play into people’s existing socioeconomic beliefs. Kim also conducted a survey of 3,000 US residents. They also rated the extent to which they believed success in life is related to various internal factors (such as ambition) and external factors (such as family wealth). Finally, they read a list of TV programmes and indicated which they regularly watched. Participants who were heavy viewers of rags-to-riches programmes or frequent viewers had a stronger belief in the American Dream than those who never watched such shows. Kim concludes that “rags-to-riches entertainment media are an important cultural force that promotes and perpetuates beliefs in upward mobility”. And here’s the problem: if people mistakenly believe that hard work is all that is needed for individuals to make a better life for themselves, they may be less supportive of policies that could actually combat inequality. “ In this era of choice, entertainment media are what captures hearts and minds,” Kim writes. “Its political consequences are anything but trivial”.",
       },
     ],
+    translation: [
+      {
+        label: "",
+        zh: `「美国梦」许诺，在机会之地上，任何个人都能仅凭努力与雄心独自攀升经济阶梯、获得成功。然而如今的年轻美国人却连赚到比父母同龄时更多的钱都很吃力，美国的向上流动性与其他工业化国家相比也确实不占优势。那为什么「美国梦」的观念依然长存？《美国政治学杂志》上的一项新研究指出了一个一直被人忽视的因素：真人秀的影响。范德堡大学的 Eunji Kim 指出，过去 20 年里真人秀已经主宰了美国电视。而其中绝大多数都采用「白手起家」式的剧情：片中出现普通美国人，他们努力奋斗，最终取得巨大的经济成功。而这类节目常在最受欢迎的节目之列，新闻广播——它们呈现出数百万美国人经济困境的更真实面貌——却只分到小得多的收视份额。「白手起家」的故事在电视上无处不在，但观看这些节目是否真的让人相信经济上的向上流动唾手可得？为弄清这一点，Kim 的团队让参与者观看一段 5 分钟的真人秀片段，节目带有「白手起家」的剧情。对照组的参与者观看的则是没有「白手起家」故事的真人秀片段。看完节目后，参与者就与「美国梦」有关的四种陈述分别评定自己赞同的程度。结果显示，看过「白手起家」片段的人确实对「美国梦」抱有显著更强的信念。有意思的是，当参与者按党派划分时，这一效应在共和党人身上显著，在民主党人身上则不显著，这说明这些电视节目中所隐含的信息，可能迎合了人们既有的社会经济信念。Kim 还就 3000 名美国居民做了一项调查。他们同样评定自己相信人生中的成功与各种内部因素（如雄心）以及外部因素（如家庭财富）相关程度有多大。最后，他们阅读一份电视节目清单，并指出自己经常收看哪些节目。重度收看「白手起家」类节目或经常收看此类节目的人，比从不看这类节目的人对「美国梦」抱有更强的信念。Kim 总结道：「『白手起家』类娱乐媒体是一股重要的文化力量，它推动并延续着人们对向上流动的信念。」而问题在于：如果人们误以为只要努力就足以让个人过上更好的生活，他们对那些真正能够对抗不平等的政策就会支持得更少。Kim 写道：「在这个选择过剩的时代，娱乐媒体才是俘获人心之物。它的政治后果绝非无关紧要。」`,
+      },
+    ],
+    notes: [
+      { en: "Land of Opportunity", zh: "机会之地" },
+      { en: "upward mobility", zh: "向上流动性" },
+      { en: "industrialised nations", zh: "工业化国家" },
+      { en: "rags-to-riches", zh: "白手起家；从一无所有到富有" },
+      { en: "viewership", zh: "收视份额" },
+      { en: "ubiquitous", zh: "无处不在的" },
+      { en: "party affiliation", zh: "党派归属" },
+      { en: "socioeconomic beliefs", zh: "社会经济信念" },
+      { en: "perpetuates", zh: "使持续；延续" },
+      { en: "inequality", zh: "不平等" },
+    ],
   },
   {
     id: "r-c2",
@@ -198,6 +296,24 @@ export const READING_SECTIONS: ReadingSection[] = [
         label: "",
         en: "When someone asks us ‘what do you do?’ we nearly always reply with our occupation. Work, for many of us, is much more than a job. It is the defining aspect of our identity. For many of us it is through our job that we can define ourselves. “ Without my job I don’t know who I am,” is a sentence that has been uttered on more than a handful of occasions from my office chair. Indeed, it can be one of the most challenging aspects I work on with clients who have lost or been forced into changing their jobs. This loss provokes an identity crisis much greater than the loss of the job itself. One of the things I have come to understand, however, is that our identity is much more complex than we recognise at first glance. If we take the time to reflect we might recognise that as well as our work we can also identify as a friend, a spouse, a son or daughter, a parent, a member of a sports team or religious community. We may recognise that we feel and act differently in these roles and relationships than we do at work. The passive daughter becomes an assertive leader at work. Furthermore, our identities at work are not static. They change over time. I myself have been a shop assistant, a waitress, a student, a graduate, and a clinical psychologist. At each stage my ability to adapt to and develop my career identity has been crucial to my wellbeing. Whilst we like to eliminate uncertainty in our lives at some level we have to manage uncertainty, especially in today’s volatile and ever-shifting job market. How we see ourselves is central to the issue of our identity. When we tell ourselves “I’m good at starting projects but not so great at seeing them through” it can become part of our belief system. But if you have the unfortunate experience of an enforced job change you will need to examine those beliefs to see how grounded in reality they are. You will be required to ask yourself how helpful these beliefs are and consider personal change. We can change our beliefs, behaviours and emotional experience at any time through experimentation, practice and conscious self-discipline. In an age where career progression may lead us into new sectors it is ever more important to challenge our sense of self and explore whether you can create a new experience of your identity by changing the beliefs you hold about yourself in order to expand your career options. Ultimately it is you who define who you are. You are only your job if you let it be so.",
       },
+    ],
+    translation: [
+      {
+        label: "",
+        zh: `别人问我们「你是做什么的？」，我们几乎总是用职业来回答。对我们许多人而言，工作远不只是一份工作，它是界定我们身份的那个方面。对我们许多人来说，正是通过工作，我们才能定义自己。「没有工作，我就不知道自己是谁」——这句话我从自己的办公椅上已经不止一次地听人说过。确实，对于那些失去工作或被迫转换工作的来访者，这可能是我与他们一起处理的最具挑战性的议题之一。这种失去引发的，是一场远比失业本身更大的身份危机。然而我逐渐认识到的一件事是：我们的身份远比乍看之下复杂得多。如果我们花点时间反思，就会意识到除了工作之外，我们还可以认同自己是朋友、配偶、儿女、父母、球队或宗教社群的成员。我们也许会意识到，在这些角色和关系中，我们的感觉与举止跟在工作中不一样。那位被动的女儿在公司里变成了果断的领导者。此外，我们工作中的身份并非一成不变，它们会随时间改变。我本人当过店员、服务员、学生、毕业生，也做过临床心理学家。在每一个阶段，我适应并发展自己职业身份的能力，对我的幸福感都至关重要。虽然我们总想在一定程度上消除生活里的不确定性，但在今天这个动荡多变、不断变化的就业市场里，我们必须学会管理不确定性。我们如何看待自己，是身份问题的核心。当我们告诉自己「我擅长启动项目，却不太擅长把它们做完」时，这句话就可能成为我们信念体系的一部分。但如果你不幸经历了一次被迫的换工作，你就需要审视这些信念，看看它们在多大程度上植根于现实。你需要问自己，这些信念究竟有多大帮助，并考虑做出个人改变。我们随时都可以通过尝试、练习和有意识的自律，改变我们的信念、行为和情绪体验。在一个职业发展可能把我们带入新领域的时代，挑战自我认知、探索能否通过改变你对自己的信念、创造一种新的身份体验来拓宽职业选择，就变得比以往任何时候都更加重要。归根到底，定义你是谁的是你自己。只有你允许工作定义你，你才只是你的工作。`,
+      },
+    ],
+    notes: [
+      { en: "occupation", zh: "职业" },
+      { en: "defining aspect", zh: "起决定作用的一面" },
+      { en: "identity crisis", zh: "身份危机" },
+      { en: "religious community", zh: "宗教社群" },
+      { en: "not static", zh: "并非一成不变" },
+      { en: "career identity", zh: "职业身份" },
+      { en: "volatile and ever-shifting job market", zh: "动荡多变、不断变化的就业市场" },
+      { en: "belief system", zh: "信念体系" },
+      { en: "conscious self-discipline", zh: "有意识的自律" },
+      { en: "career progression", zh: "职业发展" },
     ],
   },
 ];
@@ -297,6 +413,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 36,
     unitId: "r-b",
     stem: "There is general consensus among experts that willpower alone cannot guarantee one’s success in changing and maintaining a habit.",
+    stemZh: "专家们普遍认为，仅凭意志力无法保证你在改变并维持一个习惯上取得成功。",
     options: [],
     answer: "D",
     evidence: "The research on whether we have finite or infinite willpower is inconclusive, but experts do generally agree that you can’t change and sustain a habit if you rely on your willpower alone.",
@@ -306,6 +423,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 37,
     unitId: "r-b",
     stem: "One need not abandon their goals completely just because they missed their target temporarily; they can start anew.",
+    stemZh: "仅仅因为暂时没有达到目标，并不必彻底放弃自己的目标；完全可以重新开始。",
     options: [],
     answer: "I",
     evidence: "The fourth one to avoid is not forgiving ourselves for slipping up.",
@@ -315,6 +433,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 38,
     unitId: "r-b",
     stem: "Research shows it is quite another challenge to maintain a behavioral change after you have initiated it.",
+    stemZh: "研究表明，在启动一项行为改变之后，要维持它是另一重挑战。",
     options: [],
     answer: "A",
     evidence: "According to recent research, behavioral change involves physical changes in the brain.",
@@ -324,6 +443,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 39,
     unitId: "r-b",
     stem: "It is wrong to assume the strategies we use to start a change of behavior will work equally well in helping maintain it.",
+    stemZh: "认为我们用来启动行为改变的策略在维持阶段同样有效，这是错误的。",
     options: [],
     answer: "K",
     evidence: "Initiating a new behavior usually seems like the hardest part of the process of change.",
@@ -333,6 +453,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 40,
     unitId: "r-b",
     stem: "Sometimes, it may not be successful to simply substitute one activity with another to effect a change of habit; you may need extra reinforcement.",
+    stemZh: "有时候，只是把一项活动换成另一项来实现习惯的改变未必奏效，你可能需要额外的强化手段。",
     options: [],
     answer: "H",
     evidence: "Sometimes we become accustomed to relying on our guts when it comes to decision- making.",
@@ -342,6 +463,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 41,
     unitId: "r-b",
     stem: "One should introduce something new to replace an old habit instead of simply kicking it.",
+    stemZh: "人们应当引入新的东西来取代旧习惯，而不是简单地把它戒掉。",
     options: [],
     answer: "F",
     evidence: "The second one to avoid is focusing on negative goals.",
@@ -351,6 +473,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 42,
     unitId: "r-b",
     stem: "Perfectionists focus too much on their big target and neglect celebrating the small gains they make in the process.",
+    stemZh: "完美主义者过度关注大目标，忽略了庆祝过程中取得的微小进步。",
     options: [],
     answer: "J",
     evidence: "The final one to avoid is discounting small progress.",
@@ -360,6 +483,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 43,
     unitId: "r-b",
     stem: "It is of great benefit to us in the long term to conquer the inertia that stops us from making behavioral changes.",
+    stemZh: "从长远看，克服那些阻碍我们做出行为改变的惯性对我们大有好处。",
     options: [],
     answer: "L",
     evidence: "Remember, overcoming the behavioral inertia that prevents us from implementing new changes, like eating a healthy diet or exercising, can benefit us in the long run and can improve our physical and mental health.",
@@ -369,6 +493,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 44,
     unitId: "r-b",
     stem: "The strategy that successfully changed one of your behaviors may not work for some other behavior of yours.",
+    stemZh: "成功改变了你的某一种行为的策略，对你的另一种行为可能并不奏效。",
     options: [],
     answer: "G",
     evidence: "The third one to avoid is using the same strategies in different circumstances.",
@@ -378,6 +503,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 45,
     unitId: "r-b",
     stem: "Without a happy mood, it seems that our wisdom to adopt a different behavior vanishes.",
+    stemZh: "心情不愉快的时候，我们那种改换行事的智慧似乎就消失了。",
     options: [],
     answer: "K",
     evidence: "Initiating a new behavior usually seems like the hardest part of the process of change.",
@@ -387,22 +513,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 46,
     unitId: "r-c1",
     stem: "What do we learn from the passage about young Americans of today?",
+    stemZh: "从文章中我们了解到如今的年轻美国人是什么样的情况？",
     options: [
       {
         key: "A",
         en: "They have greater ambitions than their parents.",
+        zh: "他们的雄心比父母更大。",
       },
       {
         key: "B",
         en: "They find it difficult to achieve upward mobility.",
+        zh: "他们发现要实现向上流动很困难。",
       },
       {
         key: "C",
         en: "They have overtaken their parents in terms of earnings.",
+        zh: "他们在收入上已经超过了父母。",
       },
       {
         key: "D",
         en: "They envy the opportunities in other industrialised nations.",
+        zh: "他们羡慕其他工业化国家的机会。",
       },
     ],
     answer: "B",
@@ -413,22 +544,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 47,
     unitId: "r-c1",
     stem: "What does Kim’s team find about reality TV shows in America?",
+    stemZh: "Kim 团队对美国的真人秀节目有何发现？",
     options: [
       {
         key: "A",
         en: "They reinterpret the essence of the popular rags-to-riches culture.",
+        zh: "它们重新诠释了流行的「白手起家」文化的本质。",
       },
       {
         key: "B",
         en: "They urge people to achieve economic success through hard work.",
+        zh: "它们鼓励人们通过努力奋斗取得经济上的成功。",
       },
       {
         key: "C",
         en: "They help strengthen people’s conviction in the American Dream.",
+        zh: "它们有助于强化人们对「美国梦」的信念。",
       },
       {
         key: "D",
         en: "They feature ordinary Americans striving for social recognition.",
+        zh: "它们刻画的是谋求社会认可的普通美国人。",
       },
     ],
     answer: "C",
@@ -439,22 +575,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 48,
     unitId: "r-c1",
     stem: "What does the author say about news broadcasts in America?",
+    stemZh: "作者对美国的新闻广播说了什么？",
     options: [
       {
         key: "A",
         en: "They attract far fewer viewers than reality TV.",
+        zh: "它们的观众比真人秀少得多。",
       },
       {
         key: "B",
         en: "They are bent on reporting the dark side of life.",
+        zh: "它们一心要报道生活的阴暗面。",
       },
       {
         key: "C",
         en: "They stand in striking contrast with reality TV.",
+        zh: "它们与真人秀形成鲜明对比。",
       },
       {
         key: "D",
         en: "They focus on Americans’ economic hardships.",
+        zh: "它们聚焦于美国人的经济困境。",
       },
     ],
     answer: "A",
@@ -465,22 +606,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 49,
     unitId: "r-c1",
     stem: "What can we infer from the passage about Republicans in general?",
+    stemZh: "从文章中我们可以就共和党人整体推断出什么？",
     options: [
       {
         key: "A",
         en: "They believe strongly in the American Dream.",
+        zh: "他们坚信「美国梦」。",
       },
       {
         key: "B",
         en: "They strive to climb the socio-economic ladder.",
+        zh: "他们努力攀登社会经济阶梯。",
       },
       {
         key: "C",
         en: "They have a very strong affiliation with their party.",
+        zh: "他们与本党的联系非常紧密。",
       },
       {
         key: "D",
         en: "They tend to watch more rags-to-riches TV shows.",
+        zh: "他们更常收看「白手起家」类电视节目。",
       },
     ],
     answer: "A",
@@ -491,22 +637,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 50,
     unitId: "r-c1",
     stem: "What is stated about people who believe in upward mobility?",
+    stemZh: "关于那些相信向上流动的人，文中说了什么？",
     options: [
       {
         key: "A",
         en: "They are likely to blame the government for their plight.",
+        zh: "他们很可能把自己的处境归咎于政府。",
       },
       {
         key: "B",
         en: "They regard political consequences as anything but trivial.",
+        zh: "他们认为政治后果绝非无关紧要。",
       },
       {
         key: "C",
         en: "They respect individuals striving to climb the social ladder.",
+        zh: "他们尊重那些努力攀登社会阶梯的个人。",
       },
       {
         key: "D",
         en: "They are less likely to approve of policies to fight inequality",
+        zh: "他们更不可能赞成对抗不平等的政策。",
       },
     ],
     answer: "D",
@@ -517,22 +668,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 51,
     unitId: "r-c2",
     stem: "What do we learn from the passage about one’s loss of a job?",
+    stemZh: "从文章中我们了解到一个人失去工作会带来什么？",
     options: [
       {
         key: "A",
         en: "It compels them to visit a clinical psychologist.",
+        zh: "这会迫使他们去拜访临床心理学家。",
       },
       {
         key: "B",
         en: "It offers them a chance to play different roles.",
+        zh: "这给了他们扮演不同角色的机会。",
       },
       {
         key: "C",
         en: "It renders them puzzled about who they are.",
+        zh: "这会让他们困惑自己究竟是谁。",
       },
       {
         key: "D",
         en: "It forces them to redefine their life’s goals.",
+        zh: "这会迫使他们重新定义人生目标。",
       },
     ],
     answer: "C",
@@ -543,22 +699,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 52,
     unitId: "r-c2",
     stem: "What has the author come to understand about our identity?",
+    stemZh: "作者对我们的身份有了什么认识？",
     options: [
       {
         key: "A",
         en: "It is crucial to our emotional wellbeing.",
+        zh: "它对我们的情绪健康至关重要。",
       },
       {
         key: "B",
         en: "It plays a big role in many facets of life.",
+        zh: "它在生活的许多方面都扮演重要角色。",
       },
       {
         key: "C",
         en: "It reflects our changing status in society.",
+        zh: "它反映了我们在社会中地位的变化。",
       },
       {
         key: "D",
         en: "It is more complicated than it appears.",
+        zh: "它比表面看起来更复杂。",
       },
     ],
     answer: "D",
@@ -569,22 +730,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 53,
     unitId: "r-c2",
     stem: "What does the passage say about our identities at work?",
+    stemZh: "文章对我们工作中的身份说了什么？",
     options: [
       {
         key: "A",
         en: "They are essential to our self-esteem.",
+        zh: "它们对我们的自尊至关重要。",
       },
       {
         key: "B",
         en: "They evolve with the passage of time.",
+        zh: "它们随着时间的推移而演变。",
       },
       {
         key: "C",
         en: "They overrule all other self-perceptions.",
+        zh: "它们压倒了其他一切自我认知。",
       },
       {
         key: "D",
         en: "They are key to understanding ourselves.",
+        zh: "它们是理解我们的关键。",
       },
     ],
     answer: "B",
@@ -595,22 +761,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 54,
     unitId: "r-c2",
     stem: "What do we have to do in today’s ever-changing job market?",
+    stemZh: "在今天这个不断变化的就业市场里，我们必须做什么？",
     options: [
       {
         key: "A",
         en: "Strive to develop our social identity.",
+        zh: "努力发展我们的社会身份。",
       },
       {
         key: "B",
         en: "Prepare for different career paths.",
+        zh: "为不同的职业道路做好准备。",
       },
       {
         key: "C",
         en: "Try to be assertive at all times.",
+        zh: "努力在任何时候都表现得果断。",
       },
       {
         key: "D",
         en: "Learn to manage uncertainty.",
+        zh: "学会管理不确定性。",
       },
     ],
     answer: "D",
@@ -621,22 +792,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 55,
     unitId: "r-c2",
     stem: "What should we do to expand our career options?",
+    stemZh: "为了拓宽职业选择，我们应当做什么？",
     options: [
       {
         key: "A",
         en: "Alter our perceptions of ourselves.",
+        zh: "改变我们对自己的看法。",
       },
       {
         key: "B",
         en: "Compare various job opportunities.",
+        zh: "比较各种工作机会。",
       },
       {
         key: "C",
         en: "Look into newly emerging sectors.",
+        zh: "考察新出现的行业领域。",
       },
       {
         key: "D",
         en: "Exercise self-discipline consciously.",
+        zh: "有意识地实行自律。",
       },
     ],
     answer: "A",

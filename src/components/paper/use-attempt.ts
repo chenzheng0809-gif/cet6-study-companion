@@ -5,7 +5,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/lib/db";
 import { clearPaperAttempt, savePaperAttempt } from "@/lib/repo";
 import type { PaperAttempt } from "@/lib/types";
-import type { ExamPart, ExamSession } from "@/lib/papers/exam-clock";
+import { partLimitSec, type ExamPart, type ExamSession } from "@/lib/papers/exam-clock";
 
 /**
  * 补齐旧版本记录缺的字段。
@@ -182,17 +182,29 @@ export function usePaperAttempt(paperId: string) {
     [update],
   );
 
-  /** 交卷：记录真实用掉的秒数。 */
+  /**
+   * 交卷：记录真实用掉的秒数。
+   *
+   * 没开考就直接交卷（学生是冲着「看解析」来的，不一定先按开考）也必须算成交卷：
+   * 之前这里直接 return，session 根本没建起来，`isSubmitted` 一直是 false ——
+   * 解析已经解开了，「原文和解析还没解锁」那块却还杵在页面上。
+   */
   const submitSession = useCallback(
     (part: ExamPart) =>
       update((a) => {
         const s = a.sessions[part];
-        if (!s || s.submittedAt) return a;
+        if (s?.submittedAt) return a;
         const submittedAt = Date.now();
+        // 没有开考记录就用这一刻当起点：已用时间记 0，不假装他考过多久
+        const base = s ?? { part, limitSec: partLimitSec(part), startedAt: submittedAt };
         return {
           sessions: {
             ...a.sessions,
-            [part]: { ...s, submittedAt, elapsedSec: Math.round((submittedAt - s.startedAt) / 1000) },
+            [part]: {
+              ...base,
+              submittedAt,
+              elapsedSec: Math.round((submittedAt - base.startedAt) / 1000),
+            },
           },
         };
       }),

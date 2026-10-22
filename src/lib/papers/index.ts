@@ -109,7 +109,7 @@ const PAPER_2024_06_SET_1: Paper = {
   sources: {
     paper: "《2024年06月大学英语六级考试真题（第1套）》PDF（用户提供）",
     answer: "《2024年06月六级考试真题答案速查（第1套）》PDF（用户提供）",
-    explain: "本套没有解析册；逐题解析与原文依据句由本项目依据真题原文撰写",
+    explain: "本套没有解析册；逐题解析、原文依据句、选项译文、参考译文与生词点评均由本项目依据真题原文撰写",
     transcript: "《2024年6月六级真题（第1套）》录音的机器转写（listen_audio）",
     evidenceVerbatim: true,
   },
@@ -139,7 +139,7 @@ const PAPER_2024_06_SET_2: Paper = {
   sources: {
     paper: "《2024年06月大学英语六级考试真题（第2套）》PDF（用户提供）",
     answer: "《2024年06月六级考试真题答案速查（第2套）》PDF（用户提供）",
-    explain: "本套没有解析册；逐题解析与原文依据句由本项目依据真题原文撰写",
+    explain: "本套没有解析册；逐题解析、原文依据句、选项译文、参考译文与生词点评均由本项目依据真题原文撰写",
     transcript: "《2024年6月六级真题（第2套）》录音的机器转写（listen_audio）",
     evidenceVerbatim: true,
   },
@@ -169,7 +169,7 @@ const PAPER_2024_06_SET_3: Paper = {
   sources: {
     paper: "《2024年06月大学英语六级考试真题（第3套）》PDF（用户提供）",
     answer: "《2024年06月六级考试真题答案速查（第3套）》PDF（用户提供）",
-    explain: "本套没有解析册；逐题解析与原文依据句由本项目依据真题原文撰写",
+    explain: "本套没有解析册；逐题解析、原文依据句、选项译文、参考译文与生词点评均由本项目依据真题原文撰写",
     evidenceVerbatim: true,
   },
   listeningUnits: [],

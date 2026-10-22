@@ -194,6 +194,9 @@ export interface PaperTimingProvenance {
  * 卷面、答案、解析、听力原文分别来自哪份文件，必须写在数据里。
  * 没有解析册的卷子就如实写「无解析册，解析由本项目依据原文撰写」，
  * 不拿别处的解析冒充，也不悄悄留空。
+ *
+ * 这份记录只留在数据里，不在界面上单独开一块 —— 出处是给维护者看的，
+ * 摆在学生面前只会占地方。数据本身不能删：删了就没有依据了。
  */
 export interface PaperSources {
   /** 卷面原文（题干、选项、阅读原文、写作题面、翻译原文） */
@@ -230,7 +233,10 @@ export interface Paper {
   examDate: string;
   /** 场次序号：1 */
   setNumber: number;
-  /** 这套卷子的材料出处，界面上要能看到 */
+  /**
+   * 这套卷子的材料出处。
+   * 只写进数据，不在界面上单独开一块 —— 见 PaperSources 的说明。
+   */
   sources?: PaperSources;
   timing?: PaperTimingProvenance;
   listeningUnits: ListeningUnit[];

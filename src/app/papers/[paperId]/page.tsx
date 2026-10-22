@@ -57,33 +57,6 @@ export default function PaperPage({ params }: { params: Promise<{ paperId: strin
       </div>
 
       {/*
-        材料出处。每一段原文、每一个答案、每一条解析分别来自哪里，
-        摊开给用户看 —— 不然「解析」两个字就等于「来源不明」。
-      */}
-      {paper.sources ? (
-        <div className="mt-4 rounded-card bg-surface p-5 shadow-hard-sm">
-          <p className="eyebrow text-fg-muted">SOURCES · 材料出处</p>
-          <dl className="mt-2 grid gap-1.5">
-            {(
-              [
-                ["卷面", paper.sources.paper],
-                ["答案", paper.sources.answer],
-                ["解析", paper.sources.explain],
-                ["听力原文", paper.sources.transcript],
-              ] as [string, string | undefined][]
-            )
-              .filter(([, v]) => !!v)
-              .map(([k, v]) => (
-                <div key={k} className="flex gap-2 text-caption leading-relaxed">
-                  <dt className="shrink-0 font-black text-fg-muted">{k}</dt>
-                  <dd className="min-w-0 flex-1 text-fg-subtle">{v}</dd>
-                </div>
-              ))}
-          </dl>
-        </div>
-      ) : null}
-
-      {/*
         往下就是全部内容：四个 Part 左右滑，听力与阅读再按 Section、题段滑。
         每个 Part 的开考 / 交卷状态由它自己面板里的计时条负责。
       */}

@@ -63,5 +63,16 @@ export function remainingSec(session: ExamSession | undefined, now: number): num
   if (!session) return null;
   const endsAtMs = session.startedAt + session.limitSec * 1000;
   const reference = session.submittedAt ?? now;
-  return Math.max(0, (endsAtMs - reference) / 1000);
+  /**
+   * 计时不能是负的。
+   *
+   * `now` 是上一次 tick 的时间戳，而 tick 只在开考之后才开始跑 ——
+   * 页面开着不动十分钟再点「开考」，那个 `now` 还是页面刚打开时的值，
+   * 比开考那一刻还早十分钟，算出来会冒出「30:22」这种比考场还长的剩余时间，
+   * 下一秒又跳回 29:59。
+   *
+   * 所以参考点不能早于开考时刻：已用时间最少是 0，剩余最多是整场时长。
+   */
+  const ref = Math.max(reference, session.startedAt);
+  return Math.max(0, (endsAtMs - ref) / 1000);
 }

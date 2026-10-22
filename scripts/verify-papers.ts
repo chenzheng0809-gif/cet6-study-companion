@@ -372,6 +372,93 @@ function verifyPaper(paper: Paper) {
     check(`${paper.id} Q${q.n} 依据句是原文逐字子串`, hit, evidence.slice(0, 60));
   }
 
+  // ---- 卷面文字不能混进别的板块 ----
+  // 真题 PDF 里「上一段的最后一个选项」和「下一段 Section 的 Directions」是挨着的，
+  // 解析脚本一不留神就把 Directions 一起抓进选项里 —— 屏幕上会直接出现一整段
+  // 考试说明，学生看到的选项是坏的。卷面文字的长度也该有个上限。
+  for (const q of paper.questions) {
+    check(`${paper.id} Q${q.n} 题干无 Directions 残留`, !/Directions\s*:/i.test(q.stem), q.stem.slice(0, 60));
+    for (const o of q.options ?? []) {
+      const en = o.en ?? "";
+      check(`${paper.id} Q${q.n} 选项 ${o.key} 无 Directions 残留`, !/Directions\s*:/i.test(en), en.slice(0, 60));
+      check(`${paper.id} Q${q.n} 选项 ${o.key} 长度合理`, en.length <= 200, `${en.length}`);
+      // 选项要有中文译文：解析页给的是「原文选项 + 中文」，没有译文就只剩一串英文
+      check(`${paper.id} Q${q.n} 选项 ${o.key} 有中文译文`, (o.zh?.trim().length ?? 0) > 0);
+    }
+  }
+
+  // ---- 生词 / 标注里的词必须出自原文 ----
+  // 生词表、表达升级、难词译法都是从原文里挑出来的词，不许凭空生造。
+  // 但词条写的是词典里的词形，原文里出现的往往是变形：
+  //   bury one's head in the sand ↔ keep our heads buried in the sand
+  //   allot ↔ allotting、pass ↔ passed、plunge into ↔ plunging into
+  // 所以两边都展开成一组可能的词形，取交集才算对上。
+  function stems(w: string): Set<string> {
+    const base = w.toLowerCase();
+    const out = new Set<string>([base]);
+    const add = (s: string) => {
+      if (s) out.add(s);
+    };
+    if (base.endsWith("ies")) add(base.slice(0, -3) + "y");
+    if (base.endsWith("ied")) add(base.slice(0, -3) + "y");
+    if (base.endsWith("ing")) add(base.slice(0, -3));
+    if (base.endsWith("ed")) add(base.slice(0, -2));
+    if (base.endsWith("es")) add(base.slice(0, -2));
+    if (base.endsWith("s") && !base.endsWith("ss")) add(base.slice(0, -1));
+    /* 双写辅音：allotting → allot */
+    for (const s of [...out]) {
+      if (/([bdfglmnprt])\1$/.test(s) && s.length >= 3) add(s.slice(0, -1));
+    }
+    /* 词尾 e 和 y：plunge → plung、bury → buri */
+    for (const s of [...out]) {
+      if (s.endsWith("e")) add(s.slice(0, -1));
+      if (s.endsWith("y")) add(s.slice(0, -1) + "i");
+    }
+    return out;
+  }
+  const headMatch = (needle: string, pool: string) => {
+    const head = (needle.match(/[A-Za-z]+/)?.[0] ?? "").toLowerCase();
+    if (!head) return false;
+    const want = stems(head);
+    const words = norm(pool).toLowerCase().match(/[a-z]+/g) ?? [];
+    return words.some((w) => {
+      const got = stems(w);
+      for (const v of want) if (got.has(v)) return true;
+      return false;
+    });
+  };
+
+  for (const u of paper.listeningUnits) {
+    const pool = u.transcript.map((s) => s.en).join(" ");
+    check(`${paper.id} ${u.id} 有生词`, (u.notes?.length ?? 0) >= 4, `${u.notes?.length ?? 0}`);
+    for (const n of u.notes ?? []) {
+      check(`${paper.id} ${u.id} 生词 "${n.en}" 出自原文`, headMatch(n.en, pool), n.en);
+    }
+  }
+  for (const sec of paper.readingSections) {
+    const pool = (sec.paragraphs ?? []).map((p) => p.en).join(" ");
+    check(`${paper.id} ${sec.id} 有参考译文`, (sec.translation?.length ?? 0) > 0, `${sec.translation?.length ?? 0}`);
+    check(`${paper.id} ${sec.id} 有重难点词`, (sec.notes?.length ?? 0) >= 5, `${sec.notes?.length ?? 0}`);
+    for (const n of sec.notes ?? []) {
+      check(`${paper.id} ${sec.id} 重难点词 "${n.en}" 出自原文`, headMatch(n.en, pool), n.en);
+    }
+  }
+
+  // ---- 题干中文：听力题和仔细阅读题必须有；选词填空题的题干是 {{26}} 占位符，不能有 ----
+  for (const q of paper.questions) {
+    if (q.n <= 25) {
+      check(`${paper.id} Q${q.n} 听力题有题干中文`, (q.stemZh?.trim().length ?? 0) > 0);
+    } else {
+      const sec = paper.readingSections.find((s) => s.questionRange[0] <= q.n && q.n <= s.questionRange[1]);
+      if (sec?.kind === "detail") {
+        check(`${paper.id} Q${q.n} 仔细阅读题有题干中文`, (q.stemZh?.trim().length ?? 0) > 0);
+      }
+      if (sec?.kind === "bank") {
+        check(`${paper.id} Q${q.n} 选词填空无题干中文`, !q.stemZh, q.stemZh ?? "");
+      }
+    }
+  }
+
   // ---- 写作 / 翻译 ----
   check(`${paper.id} 有写作`, !!paper.writing);
   check(`${paper.id} 有范文`, (paper.writing?.sampleEssay.split(/\s+/).length ?? 0) > 100);
@@ -380,6 +467,18 @@ function verifyPaper(paper: Paper) {
     !!paper.writing && paper.writing.sampleEssay.startsWith(paper.writing.prompt));
   check(`${paper.id} 有翻译题`, (paper.translation?.zh.length ?? 0) > 150);
   check(`${paper.id} 有参考译文`, (paper.translation?.reference.length ?? 0) > 200);
+  // 交卷后放出来的东西要全：点评、表达升级、范文译文、译点精析、难词译法
+  check(`${paper.id} 写作有点评`, (paper.writing?.comments?.length ?? 0) >= 3, `${paper.writing?.comments?.length ?? 0}`);
+  check(`${paper.id} 写作有表达升级`, (paper.writing?.notes?.length ?? 0) >= 5, `${paper.writing?.notes?.length ?? 0}`);
+  check(`${paper.id} 写作有范文译文`, (paper.writing?.sampleTranslation?.length ?? 0) > 100, `${paper.writing?.sampleTranslation?.length ?? 0}`);
+  for (const n of paper.writing?.notes ?? []) {
+    check(`${paper.id} 表达升级 "${n.en}" 出自范文`, headMatch(n.en, paper.writing?.sampleEssay ?? ""), n.en);
+  }
+  check(`${paper.id} 翻译有译点精析`, (paper.translation?.points?.length ?? 0) >= 5, `${paper.translation?.points?.length ?? 0}`);
+  check(`${paper.id} 翻译有难词译法`, (paper.translation?.notes?.length ?? 0) >= 8, `${paper.translation?.notes?.length ?? 0}`);
+  for (const n of paper.translation?.notes ?? []) {
+    check(`${paper.id} 难词译法 "${n.en}" 出自参考译文`, headMatch(n.en, paper.translation?.reference ?? ""), n.en);
+  }
 
   // ---- 单题解析不能重复占位 ----
   const explains = paper.questions.map((q) => q.explain);

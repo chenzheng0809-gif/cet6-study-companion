@@ -285,7 +285,12 @@
 
   /* layout */
   --spacing-gutter: 20px;
-  --nav-height: 64px;
+  /*
+    底栏是两行：上面一条窄窄的「日历 / 我的」(h-8 + py-1.5 + 1px 边框 = 45px)，
+    下面一排五个主入口 (h-16 = 64px)。加起来 109px。
+    这里以前写 64px，只算了主入口那一行 —— 每页底部都有 45px 压在导航底下看不见。
+  */
+  --nav-height: 109px;
 }
 
 @layer base {

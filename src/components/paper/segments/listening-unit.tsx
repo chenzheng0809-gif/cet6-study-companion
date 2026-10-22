@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
-import { getListeningUnit, unitAudioRange } from "@/lib/papers";
+import { getListeningUnit, unitAudioRange, formatTime } from "@/lib/papers";
 import { partLimitSec, unitsOfPart } from "@/lib/papers/exam-clock";
 import type { ListeningUnit, Paper } from "@/lib/papers/types";
 import { AudioWindow, Collapsible, LockedPanel, PartSessionBar, type AudioWindowHandle } from "@/components/paper/exam-shell";
@@ -39,6 +39,10 @@ export function ListeningUnitSegment({
   const audioRef = useRef<AudioWindowHandle | null>(null);
   /** 正在重听哪一道题 */
   const [replaying, setReplaying] = useState<number | null>(null);
+  /** 最后放过的那一道 —— 放过就能一键再听一次 */
+  const [played, setPlayed] = useState<number | null>(null);
+  /** 正在重听的是哪一道。事件回调里读它，不能靠 setState 的 updater。 */
+  const replayingRef = useRef<number | null>(null);
 
   const questions = useMemo(
     () =>
@@ -58,13 +62,18 @@ export function ListeningUnitSegment({
     return map;
   }, [unit]);
 
-  /** 播放器放完这一小段，题卡上的"正在重听"要跟着收 */
-  const clearReplay = useCallback(() => setReplaying(null), []);
+  /** 播放器放完这一小段，题卡上的"正在重听"要跟着收，并且记住放过哪一道 */
+  const clearReplay = useCallback(() => {
+    setPlayed(replayingRef.current);
+    replayingRef.current = null;
+    setReplaying(null);
+  }, []);
 
   /** 只重听这一道题的题干 */
   const replay = (n: number) => {
     const w = windows.get(n);
     if (!w) return;
+    replayingRef.current = n;
     setReplaying(n);
     audioRef.current?.playRange(w.startSec, w.endSec, `第 ${n} 题`);
   };
@@ -144,26 +153,33 @@ export function ListeningUnitSegment({
         />
 
         <div className="mt-3 grid gap-3">
-          {questions.map((q) => (
-            <QuestionBlock
-              key={q.n}
-              q={q}
-              answer={answers[q.n]}
-              revealed={revealed.includes(q.n)}
-              onAnswer={(key) => setAnswer(q.n, key)}
-              onReveal={() => revealMany([q.n])}
-              options={q.options ?? []}
-              lockReveal={!submitted}
-              hideChinese={!submitted}
-              /* 听力不显示题干：先扫选项知道要听什么，再听 */
-              hideStem
-              /* 中文解析先收起来，想看再点 */
-              collapseExplain
-              /* 题干藏起来了，得给一个单独重听它的入口 */
-              onReplay={windows.has(q.n) ? () => replay(q.n) : undefined}
-              replayActive={replaying === q.n}
-            />
-          ))}
+          {questions.map((q) => {
+            const w = windows.get(q.n);
+            return (
+              <QuestionBlock
+                key={q.n}
+                q={q}
+                answer={answers[q.n]}
+                revealed={revealed.includes(q.n)}
+                onAnswer={(key) => setAnswer(q.n, key)}
+                onReveal={() => revealMany([q.n])}
+                options={q.options ?? []}
+                lockReveal={!submitted}
+                hideChinese={!submitted}
+                /* 听力不显示题干：先扫选项知道要听什么，再听 */
+                hideStem
+                /* 中文解析默认展开，太长了可以自己收起 */
+                collapseExplain
+                /* 题干藏起来了，得给一个单独重听它的入口 */
+                onReplay={w ? () => replay(q.n) : undefined}
+                replayActive={replaying === q.n}
+                replayPlayed={replaying !== q.n && played === q.n}
+                /* 落点标出来：点之前就知道会跳到哪一秒 */
+                replayAt={w ? formatTime(w.startSec) : undefined}
+                replayRange={w ? `${formatTime(w.startSec)} – ${formatTime(w.endSec)}` : undefined}
+              />
+            );
+          })}
         </div>
 
         {!submitted ? (

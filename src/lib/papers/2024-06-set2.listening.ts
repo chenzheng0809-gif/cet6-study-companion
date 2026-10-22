@@ -212,6 +212,16 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         en: "I can also throw in vegetables, nuts, yogurts, cereals, anything that tickles my fancy.",
       },
     ],
+    notes: [
+      { en: "state of the art", zh: "最先进的技术" },
+      { en: "thorough research", zh: "详尽的调研" },
+      { en: "sturdy", zh: "结实的；坚固的" },
+      { en: "lumpy bits", zh: "结块的小颗粒" },
+      { en: "multitude", zh: "大量；众多" },
+      { en: "tickles my fancy", zh: "合我的口味；吊起我的胃口" },
+      { en: "packaged juice", zh: "包装成品果汁" },
+      { en: "assortment of nutrients", zh: "种类繁多的营养成分" },
+    ],
   },
   {
     id: "l-c2",
@@ -380,6 +390,16 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         en: "Every visitor is warmly welcome.",
       },
     ],
+    notes: [
+      { en: "unheard of", zh: "默默无闻的；鲜为人知的" },
+      { en: "communal good", zh: "公共利益" },
+      { en: "natural allure", zh: "自然之美" },
+      { en: "commenced", zh: "开始；发起" },
+      { en: "legislative proposal", zh: "立法提案" },
+      { en: "aesthetic appearance", zh: "外观美感" },
+      { en: "revitalized", zh: "使复兴；振兴" },
+      { en: "multitudes of visitors", zh: "大批游客" },
+    ],
   },
   {
     id: "l-b1",
@@ -470,6 +490,16 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         speaker: "M",
         en: "\"You might imagine micro-robots as agents to repair or assemble small structures or machines in industry, or as surgical assistants to clear clogged arteries, to stop internal bleeding, or to eliminate cancerous tumors, all in minimally invasive procedures,\" Rogers said.",
       },
+    ],
+    notes: [
+      { en: "remote-controlled", zh: "遥控的" },
+      { en: "shape-memory alloy", zh: "形状记忆合金" },
+      { en: "elastic property", zh: "弹性性能" },
+      { en: "exploratory phase", zh: "探索阶段" },
+      { en: "micro-sized robots", zh: "微型机器人" },
+      { en: "tightly confined spaces", zh: "极其狭窄受限的空间" },
+      { en: "minimally invasive procedures", zh: "微创手术" },
+      { en: "surgical assistants", zh: "外科手术助手" },
     ],
   },
   {
@@ -563,6 +593,16 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         en: "After a year of tough scientific study, however, I have discovered being forced to get up early in the morning is very different from being an early bird.",
         marks: [15],
       },
+    ],
+    notes: [
+      { en: "elite sleeper", zh: "睡眠精英" },
+      { en: "marathon stretches", zh: "马拉松式的长时间" },
+      { en: "doze through", zh: "熬过；挺过" },
+      { en: "biologically programmed", zh: "由生理机制决定的" },
+      { en: "cognitive decline", zh: "认知能力衰退" },
+      { en: "mere mortals", zh: "凡人" },
+      { en: "at the crack of dawn", zh: "黎明破晓时分" },
+      { en: "early bird", zh: "早起族" },
     ],
   },
   {
@@ -685,6 +725,16 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         en: "However, our beliefs on most topics are in the moderate range, and as we go about our daily lives reading informative material, these intriguing findings suggest we are mostly ignorant of how what we just read has updated and altered our own position.",
       },
     ],
+    notes: [
+      { en: "controversial issue", zh: "有争议的话题" },
+      { en: "poor awareness", zh: "糟糕的觉察力" },
+      { en: "underestimate", zh: "低估" },
+      { en: "physical punishment", zh: "体罚" },
+      { en: "memory bias", zh: "记忆偏差" },
+      { en: "concede", zh: "承认" },
+      { en: "deeply held beliefs", zh: "根深蒂固的信念" },
+      { en: "updated and altered", zh: "更新并改变" },
+    ],
   },
   {
     id: "l-r2",
@@ -801,6 +851,16 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         marks: [21],
       },
     ],
+    notes: [
+      { en: "fertility rates", zh: "生育率" },
+      { en: "proportional decline", zh: "占比上的下降" },
+      { en: "age-specific birth rates", zh: "分年龄段的生育率" },
+      { en: "childbearing age range", zh: "生育年龄区间" },
+      { en: "health complications", zh: "健康问题；并发症" },
+      { en: "retail spending", zh: "零售消费" },
+      { en: "demographic shift", zh: "人口结构变化" },
+      { en: "spend more generously", zh: "花得更大方" },
+    ],
   },
   {
     id: "l-r3",
@@ -899,6 +959,16 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         marks: [25],
       },
     ],
+    notes: [
+      { en: "soak up pollution", zh: "吸收污染物" },
+      { en: "sealed containers", zh: "密封容器" },
+      { en: "sick building syndrome", zh: "「病态建筑综合征」" },
+      { en: "super-insulated", zh: "高度保温的" },
+      { en: "volatile organic compounds", zh: "挥发性有机化合物" },
+      { en: "clean air delivery rate", zh: "洁净空气输送率" },
+      { en: "natural ventilation", zh: "自然通风" },
+      { en: "ground truth", zh: "事实真相" },
+    ],
   },
 ];
 
@@ -907,22 +977,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 1,
     unitId: "l-c1",
     stem: "What does the man say he did before buying the blender?",
+    stemZh: "男士说他在购买这台果汁机之前做了什么？",
     options: [
       {
         key: "A",
         en: "Read numerous comments users put online.",
+        zh: "阅读了用户在网上发布的大量评论。",
       },
       {
         key: "B",
         en: "Blended all his food without using a machine.",
+        zh: "不用机器就把所有食物都打碎了。",
       },
       {
         key: "C",
         en: "Searched for the state-of-the-art models of blenders.",
+        zh: "查找了最先进型号的果汁机。",
       },
       {
         key: "D",
         en: "Did thorough research on the price of kitchen appliances.",
+        zh: "对厨房电器的价格做了详尽调研。",
       },
     ],
     answer: "A",
@@ -933,22 +1008,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 2,
     unitId: "l-c1",
     stem: "What does the woman say she has never thought of doing?",
+    stemZh: "女士说她从来没想过做什么？",
     options: [
       {
         key: "A",
         en: "Eating any blended food.",
+        zh: "吃任何打碎过的食物。",
       },
       {
         key: "B",
         en: "Buying a blender herself.",
+        zh: "自己买一台果汁机。",
       },
       {
         key: "C",
         en: "Using machines to do her cooking.",
+        zh: "用机器来做饭。",
       },
       {
         key: "D",
         en: "Making soups and juices for herself.",
+        zh: "自己给自己做汤和果汁。",
       },
     ],
     answer: "B",
@@ -959,22 +1039,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 3,
     unitId: "l-c1",
     stem: "What does the man say is a really healthy habit?",
+    stemZh: "男士说什么才是真正健康的习惯？",
     options: [
       {
         key: "A",
         en: "Cooking every meal creatively in the kitchen.",
+        zh: "在厨房里别出心裁地做每一顿饭。",
       },
       {
         key: "B",
         en: "Paying due attention to his personal hygiene.",
+        zh: "充分注意自己的个人卫生。",
       },
       {
         key: "C",
         en: "Eating breakfast punctually every morning.",
+        zh: "每天准时吃早餐。",
       },
       {
         key: "D",
         en: "Making his own fresh fruit juice regularly.",
+        zh: "经常自己榨新鲜果汁。",
       },
     ],
     answer: "D",
@@ -985,22 +1070,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 4,
     unitId: "l-c1",
     stem: "What do we learn about store-bought juice from the conversation?",
+    stemZh: "从对话中我们了解到商店买的果汁怎么样？",
     options: [
       {
         key: "A",
         en: "One-tenth of it is sugar.",
+        zh: "其中十分之一是糖。",
       },
       {
         key: "B",
         en: "It looks healthy and attractive.",
+        zh: "看起来健康又有吸引力。",
       },
       {
         key: "C",
         en: "One’s fancy may be tickled by it.",
+        zh: "能迎合人的口味。",
       },
       {
         key: "D",
         en: "It contains an assortment of nutrients.",
+        zh: "含有各种各样的营养成分。",
       },
     ],
     answer: "A",
@@ -1011,22 +1101,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 5,
     unitId: "l-c2",
     stem: "What is the question the woman asked Mr. Grimm after the introduction?",
+    stemZh: "介绍结束后，女士向格林先生提了什么问题？",
     options: [
       {
         key: "A",
         en: "How he has made himself popular as the mayor of Berkton.",
+        zh: "他作为伯克顿市长是如何让自己受欢迎的。",
       },
       {
         key: "B",
         en: "How the residents will turn Berkton into a tourist attraction.",
+        zh: "居民将如何把伯克顿变成旅游胜地。",
       },
       {
         key: "C",
         en: "How charming he himself considers the village of Berkton to be.",
+        zh: "他自己觉得伯克顿这个村子有多迷人。",
       },
       {
         key: "D",
         en: "How he has led people of Berkton to change the village radically.",
+        zh: "他如何带领伯克顿的村民彻底改变了村庄。",
       },
     ],
     answer: "D",
@@ -1037,22 +1132,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 6,
     unitId: "l-c2",
     stem: "What do we learn about Birkton of 10 years ago?",
+    stemZh: "从对话中我们了解到十年前的伯克顿是什么样的？",
     options: [
       {
         key: "A",
         en: "It was developed only to a limited extent.",
+        zh: "它的开发程度相当有限。",
       },
       {
         key: "B",
         en: "It was totally isolated as a sleepy village.",
+        zh: "它是一个与世隔绝的沉睡小村。",
       },
       {
         key: "C",
         en: "It was relatively unknown to the outside.",
+        zh: "它相对不为外界所知。",
       },
       {
         key: "D",
         en: "It was endowed with rare natural resources.",
+        zh: "它拥有罕见的自然资源。",
       },
     ],
     answer: "C",
@@ -1063,22 +1163,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 7,
     unitId: "l-c2",
     stem: "What resulted from the passing of the legislative proposal, Motion 836?",
+    stemZh: "836 号议案通过后带来了什么结果？",
     options: [
       {
         key: "A",
         en: "The people in Berkton were in a harmonious atmosphere.",
+        zh: "伯克顿的人们处在融洽的氛围中。",
       },
       {
         key: "B",
         en: "The majority of residents lived in harmony with their neighbors.",
+        zh: "大多数居民与邻居和睦相处。",
       },
       {
         key: "C",
         en: "The majority of residents enjoyed cosy housing conditions.",
+        zh: "大多数居民享用了舒适的居住条件。",
       },
       {
         key: "D",
         en: "All the houses in Berkton looked aesthetically similar.",
+        zh: "伯克顿的所有房屋在外观上都很相似。",
       },
     ],
     answer: "D",
@@ -1089,22 +1194,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 8,
     unitId: "l-c2",
     stem: "Why does the man say the tourists are a blessing to Birkton?",
+    stemZh: "男士说游客为什么是伯克顿的福音？",
     options: [
       {
         key: "A",
         en: "They have helped boost the local economy.",
+        zh: "他们助推了当地经济。",
       },
       {
         key: "B",
         en: "They have made the residents unusually proud.",
+        zh: "他们让居民感到格外自豪。",
       },
       {
         key: "C",
         en: "They have contributed considerably to its popularity.",
+        zh: "他们为小镇的走红做出了很大贡献。",
       },
       {
         key: "D",
-        en: "They have brought happiness to everyone in the village. Section B Directions: In this section, you will hear two passages. At the end of each passage, you will hear three or four questions. Both the passage and the questions will be spoken only once. After you hear a question, ，， you must choose the best answer from the four choices marked",
+        en: "They have brought happiness to everyone in the village.",
+        zh: "他们给村里的每个人都带来了幸福。",
       },
     ],
     answer: "A",
@@ -1115,22 +1225,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 9,
     unitId: "l-b1",
     stem: "What does the passage say about a team of researchers at Northwestern University?",
+    stemZh: "短文讲的是西北大学一个研究团队的什么事？",
     options: [
       {
         key: "A",
         en: "They have created the smallest remote-controlled walking robot in the world.",
+        zh: "他们造出了世界上最小的遥控步行机器人。",
       },
       {
         key: "B",
         en: "They are going to publish their research findings in the journal Science Robotics.",
+        zh: "他们将在《科学·机器人学》杂志上发表研究结果。",
       },
       {
         key: "C",
         en: "They are the first to build a robot that can bend, crawl, walk, turn and even jump.",
+        zh: "他们率先造出了能弯曲、爬行、行走、转向甚至跳跃的机器人。",
       },
       {
         key: "D",
         en: "They are engaged in research on a remote-controlled robot which uses special power.",
+        zh: "他们在研究一种使用特殊动力的遥控机器人。",
       },
     ],
     answer: "A",
@@ -1141,22 +1256,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 10,
     unitId: "l-b1",
     stem: "What did the researchers say about the robot they created?",
+    stemZh: "研究人员是怎么描述他们造出的这台机器人的？",
     options: [
       {
         key: "A",
         en: "It changes its shape by complex hardware.",
+        zh: "它靠复杂的硬件改变形状。",
       },
       {
         key: "B",
         en: "It is operated by a special type of tiny motor.",
+        zh: "它由一种特殊的小马达驱动。",
       },
       {
         key: "C",
         en: "It moves from one place to another by memory.",
+        zh: "它靠记忆从一个地方移动到另一个地方。",
       },
       {
         key: "D",
         en: "It is powered by the elastic property of its body.",
+        zh: "它靠身体的弹性性能获得动力。",
       },
     ],
     answer: "D",
@@ -1167,22 +1287,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 11,
     unitId: "l-b1",
     stem: "What do the researchers expect their robots to do in the future?",
+    stemZh: "研究人员期望他们的机器人在未来能做什么？",
     options: [
       {
         key: "A",
         en: "Replace humans in exploratory tasks.",
+        zh: "在探索性任务中取代人类。",
       },
       {
         key: "B",
         en: "Perform tasks in tightly confined spaces.",
+        zh: "在非常狭窄受限的空间里执行任务。",
       },
       {
         key: "C",
         en: "Explore the structure of clogged arteries.",
+        zh: "探索堵塞动脉的结构。",
       },
       {
         key: "D",
         en: "Assist surgeons in highly complex surgery.",
+        zh: "在高难度手术中协助外科医生。",
       },
     ],
     answer: "B",
@@ -1193,22 +1318,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 12,
     unitId: "l-b2",
     stem: "What does the speaker say she did on her ride to the Isles of Scilly?",
+    stemZh: "演讲者说她在去锡利群岛的航程中做了什么？",
     options: [
       {
         key: "A",
         en: "She threw up in the bathroom.",
+        zh: "她在洗手间里呕吐。",
       },
       {
         key: "B",
         en: "She slept during the entire ride.",
+        zh: "整趟航程她都在睡觉。",
       },
       {
         key: "C",
         en: "She dozed off for a few minutes.",
+        zh: "她打了个盹儿，只睡了几分钟。",
       },
       {
         key: "D",
         en: "She boasted of her marathon race.",
+        zh: "她夸耀自己跑马拉松的本事。",
       },
     ],
     answer: "B",
@@ -1219,22 +1349,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 13,
     unitId: "l-b2",
     stem: "What do we learn from the passage about elite sleepers?",
+    stemZh: "短文让我们了解了精英睡眠者的什么特点？",
     options: [
       {
         key: "A",
         en: "They are mostly immune to cognitive impairment.",
+        zh: "他们大多不受认知损伤的影响。",
       },
       {
         key: "B",
         en: "They can sleep soundly during a rough ride at sea.",
+        zh: "在海上颠簸的航程中他们也能睡得很沉。",
       },
       {
         key: "C",
         en: "They are genetically determined to need less sleep.",
+        zh: "他们由基因决定，睡得比别人少。",
       },
       {
         key: "D",
         en: "They constitute about 13 percent of the population.",
+        zh: "他们约占人口的 13%。",
       },
     ],
     answer: "C",
@@ -1245,22 +1380,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 14,
     unitId: "l-b2",
     stem: "What has the speaker been trying to find out over the past year?",
+    stemZh: "过去一年里，演讲者一直在试图弄清什么？",
     options: [
       {
         key: "A",
         en: "Whether there is a way to reach elite status.",
+        zh: "有没有办法达到精英身份。",
       },
       {
         key: "B",
         en: "Whether it is possible to modify one’s genes.",
+        zh: "是否有可能改变自己的基因。",
       },
       {
         key: "C",
         en: "Whether having a baby impacts one’s passion.",
+        zh: "生个孩子会不会影响自己的热情。",
       },
       {
         key: "D",
         en: "Whether one can train themselves to sleep less.",
+        zh: "能否训练自己少睡一些。",
       },
     ],
     answer: "D",
@@ -1271,22 +1411,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 15,
     unitId: "l-b2",
     stem: "What has the speaker discovered after a year of tough scientific study?",
+    stemZh: "经过一年艰苦的科学研究，演讲者发现了什么？",
     options: [
       {
         key: "A",
         en: "It is in fact quite possible to nurture a passion for sleep.",
+        zh: "事实上完全有可能培养出对睡觉的热情。",
       },
       {
         key: "B",
         en: "Babies can severely disrupt their parents’ sleep patterns.",
+        zh: "婴儿会严重打乱父母的睡眠规律。",
       },
       {
         key: "C",
         en: "Being forced to rise early differs from being an early bird.",
+        zh: "被迫早起与成为早起族是不同的。",
       },
       {
         key: "D",
-        en: "New parents are forced to jump out of bed at the crack of dawn. Section C Directions: In this section, you will hear three recordings of lectures or talks followed by three or four questions. The recordings will be played only once. After you hear a question, you must choose the best answer from the four choices marked",
+        en: "New parents are forced to jump out of bed at the crack of dawn.",
+        zh: "新手父母被迫在天刚亮时就跳下床。",
       },
     ],
     answer: "C",
@@ -1297,22 +1442,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 16,
     unitId: "l-r1",
     stem: "What does a new paper in the Quarterly Journal of Experimental Psychology suggest?",
+    stemZh: "《实验心理学季刊》上的一篇新论文提出了什么？",
     options: [
       {
         key: "A",
         en: "We have poor awareness of how many controversial issues are being debated.",
+        zh: "我们对有多少争议性话题正在被讨论知之甚少。",
       },
       {
         key: "B",
         en: "No one knows better than yourself what you are thinking about at the moment.",
+        zh: "没有人比你更了解自己此刻在想什么。",
       },
       {
         key: "C",
         en: "No one can change your opinions more than those who speak in a convincing tone.",
+        zh: "没有人能比那些语气很有说服力的人更能改变你的观点。",
       },
       {
         key: "D",
         en: "We are likely to underestimate how much we can be swayed by a convincing article.",
+        zh: "我们很可能低估了自己会被一篇有说服力的文章左右的程度。",
       },
     ],
     answer: "D",
@@ -1323,22 +1473,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 17,
     unitId: "l-r1",
     stem: "What happened when the students read a text that argued against their own initial position?",
+    stemZh: "当学生读到与自己最初立场相悖的材料时，发生了什么？",
     options: [
       {
         key: "A",
         en: "Their belief about physical punishment changed.",
+        zh: "他们对体罚的看法发生了改变。",
       },
       {
         key: "B",
         en: "Their memory pushed them toward a current belief.",
+        zh: "他们的记忆把他们推向当前的信念。",
       },
       {
         key: "C",
         en: "The memory of their initial belief came back to them.",
+        zh: "他们对最初信念的记忆又回来了。",
       },
       {
         key: "D",
         en: "Their experiences of physical punishment haunted them.",
+        zh: "他们被自己挨过体罚的经历所困扰。",
       },
     ],
     answer: "A",
@@ -1349,22 +1504,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 18,
     unitId: "l-r1",
     stem: "What did the researchers concede concerning their findings?",
+    stemZh: "研究者在自己的研究结论上承认了什么？",
     options: [
       {
         key: "A",
         en: "They apparently have little to do with moderate beliefs.",
+        zh: "这些发现显然与中等程度的信念关系不大。",
       },
       {
         key: "B",
         en: "They don’t reflect the changes of view on physical punishment.",
+        zh: "它们并没有反映对体罚看法的变化。",
       },
       {
         key: "C",
         en: "They may not apply to changes to extreme or deeply held beliefs.",
+        zh: "它们可能不适用于极端或根深蒂固的信念变化。",
       },
       {
         key: "D",
         en: "They are unlikely to alter people’s position without more evidence.",
+        zh: "没有更多证据，它们不太可能改变人们的立场。",
       },
     ],
     answer: "C",
@@ -1375,22 +1535,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 19,
     unitId: "l-r2",
     stem: "What does the speaker conclude from her analysis of the Census Bureau's data?",
+    stemZh: "演讲者从自己对人口普查局数据的分析中得出了什么结论？",
     options: [
       {
         key: "A",
         en: "American moms have been increasingly inclined to live alone.",
+        zh: "美国妈妈越来越倾向于独居。",
       },
       {
         key: "B",
         en: "The American population has been on the rise in the past 25 years.",
+        zh: "美国人口在过去 25 年里一直在上升。",
       },
       {
         key: "C",
         en: "American motherhood has actually been on the decline.",
+        zh: "美国的母职实际上在减少。",
       },
       {
         key: "D",
         en: "The fertility rates in America have in fact been falling sharply.",
+        zh: "美国的生育率事实上在急剧下降。",
       },
     ],
     answer: "C",
@@ -1401,22 +1566,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 20,
     unitId: "l-r2",
     stem: "What does the speaker say is a positive consequence of the age shift in childbearing?",
+    stemZh: "演讲者说生育年龄结构变化的一个正面后果是什么？",
     options: [
       {
         key: "A",
         en: "More new mothers tend to take greater care of their children.",
+        zh: "更多新妈妈倾向于更用心地照顾孩子。",
       },
       {
         key: "B",
         en: "More new mothers are economically able to raise children.",
+        zh: "更多新妈妈在经济上有能力抚养孩子。",
       },
       {
         key: "C",
         en: "A larger proportion of women take pride in their children.",
+        zh: "更大比例的女性为自己的孩子感到骄傲。",
       },
       {
         key: "D",
         en: "A larger proportion of women really enjoy motherhood.",
+        zh: "更大比例的女性真正享受做母亲。",
       },
     ],
     answer: "B",
@@ -1427,22 +1597,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 21,
     unitId: "l-r2",
     stem: "What might be one explanation for the rise in retail spending on Mother's Day?",
+    stemZh: "母亲节零售消费上升的一个可能解释是什么？",
     options: [
       {
         key: "A",
         en: "The meaning of motherhood has changed considerably.",
+        zh: "母职的含义发生了很大的变化。",
       },
       {
         key: "B",
         en: "More and more mothers go shopping to treat themselves.",
+        zh: "越来越多母亲通过购物来犒劳自己。",
       },
       {
         key: "C",
         en: "More mothers have adult children celebrating the holiday.",
+        zh: "更多母亲有已成年、会在这个节日里庆祝他们的孩子。",
       },
       {
         key: "D",
         en: "The number of American mothers has been growing steadily.",
+        zh: "美国母亲的数量一直在稳步增长。",
       },
     ],
     answer: "C",
@@ -1453,22 +1628,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 22,
     unitId: "l-r3",
     stem: "What does NASA's 1989 paper claim houseplants can do?",
+    stemZh: "NASA 1989 年的论文声称室内植物能做什么？",
     options: [
       {
         key: "A",
         en: "Add to indoor toxic pollutants.",
+        zh: "增加室内的有毒污染物。",
       },
       {
         key: "B",
         en: "Absorb poisonous chemicals.",
+        zh: "吸收有毒的化学物质。",
       },
       {
         key: "C",
         en: "Beautify the home environment.",
+        zh: "美化家居环境。",
       },
       {
         key: "D",
         en: "Soak up surrounding moisture.",
+        zh: "吸收周围的湿气。",
       },
     ],
     answer: "B",
@@ -1479,22 +1659,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 23,
     unitId: "l-r3",
     stem: "What is said to be the problem with NASA's study reported in its 1989 paper?",
+    stemZh: "NASA 1989 年论文所报告的那项研究存在什么问题？",
     options: [
       {
         key: "A",
         en: "NASA did experiments in sealed containers resembling the super-insulated offices of 1970s.",
+        zh: "NASA 在密封容器中做实验，模拟 20 世纪 70 年代的高保温写字楼。",
       },
       {
         key: "B",
         en: "It was based on experiments under conditions unlike those in most homes or offices.",
+        zh: "它所依据的实验条件与大多数家庭或办公室不同。",
       },
       {
         key: "C",
         en: "NASA conducted tests in outer space whose environment is different from ours.",
+        zh: "NASA 在与我们环境不同的外层空间里做测试。",
       },
       {
         key: "D",
         en: "It drew its conclusion without any contrastive data from other experiments.",
+        zh: "它在没有其他实验作对比数据的情况下就得出了结论。",
       },
     ],
     answer: "B",
@@ -1505,22 +1690,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 24,
     unitId: "l-r3",
     stem: "What is the finding of a new evaluation of dozens of studies spanning 30 years?",
+    stemZh: "一项针对横跨 30 年的数十项研究的新评估，其发现是什么？",
     options: [
       {
         key: "A",
         en: "Natural ventilation proves much more efficient for cleaning the air than house plants.",
+        zh: "事实证明自然通风净化空气的效率远高于室内植物。",
       },
       {
         key: "B",
         en: "House plants disperse chemical compounds more quickly with people moving around.",
+        zh: "有人来回走动时，室内植物分散化合物的速度更快。",
       },
       {
         key: "C",
         en: "Natural ventilation turns out to be most effective with doors and windows wide open.",
+        zh: "事实证明门窗大开时自然通风最有效。",
       },
       {
         key: "D",
         en: "House plants in a normal environment rarely have any adverse impact on the air.",
+        zh: "普通环境中的室内植物很少对空气产生不利影响。",
       },
     ],
     answer: "A",
@@ -1531,22 +1721,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 25,
     unitId: "l-r3",
     stem: "What does NASA's sealed experiment recommendation exemplify in scientists' pursuit of truth?",
+    stemZh: "NASA 密封实验的建议在科学家追求真理的过程中说明了什么？",
     options: [
       {
         key: "A",
         en: "The root cause for misinterpretations of scientific findings.",
+        zh: "科学发现被误读的根源。",
       },
       {
         key: "B",
         en: "The difficulty in understanding what’s actually happening.",
+        zh: "弄清实际发生之事的困难。",
       },
       {
         key: "C",
         en: "The steps to be taken in arriving at any conclusion with certainty.",
+        zh: "要得出任何确定的结论需要走的步骤。",
       },
       {
         key: "D",
         en: "The necessity of continually re-examining and challenging findings.",
+        zh: "不断重新审视、质疑既有发现的必要性。",
       },
     ],
     answer: "D",

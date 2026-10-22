@@ -106,10 +106,13 @@ export function PartSessionBar({
         <p className="num mt-1.5 text-caption text-fg-subtle">
           已交卷 · 实际用了 {elapsedLabel(session.elapsedSec ?? 0)}
           {(() => {
-            const savedSec = session.limitSec - (session.elapsedSec ?? session.limitSec);
+            const elapsed = session.elapsedSec ?? 0;
+            const savedSec = session.limitSec - elapsed;
             // 不足一分钟的差额不拿"分钟"去凑，否则会出现"用了 1 分钟，
-            // 比考场少 30 分钟"这种自相矛盾的话
-            return savedSec >= 60 ? ` · 比考场少 ${Math.floor(savedSec / 60)} 分钟` : "";
+            // 比考场少 30 分钟"这种自相矛盾的话。
+            // 一次都没考的（直接点"看解析"来的）也不跟考场比 ——
+            // 没计时就没有"比考场省了多久"这回事。
+            return elapsed >= 60 && savedSec >= 60 ? ` · 比考场少 ${Math.floor(savedSec / 60)} 分钟` : "";
           })()}
         </p>
       ) : null}

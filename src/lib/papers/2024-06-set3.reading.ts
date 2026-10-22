@@ -9,6 +9,7 @@ import type { Question, ReadingSection } from "./types";
  * 这一套没有解析册：逐题解析与原文依据句由本项目依据真题原文撰写，
  * 每条依据句都逐字取自上面的原文，不是别处的措辞。
  * 中文标题也是按原文内容写的，不是从别处抄的。
+ * 全文译文、选项译文、题干译文与重难点词，同样由本项目依据上面的原文撰写。
  */
 
 export const READING_SECTIONS: ReadingSection[] = [
@@ -22,6 +23,12 @@ export const READING_SECTIONS: ReadingSection[] = [
       {
         label: "",
         en: "A rainbow is a multi-colored, arc-shaped phenomenon that can appear in the sky. The colors of a rainbow are produced by the reflection and {{26}} of light through water droplets (小滴) present in the atmosphere. An observer may {{27}} a rainbow to be located either near or far away, but this phenomenon is not actually located at any specific spot. Instead, the appearance of a rainbow depends entirely upon the position of the observer in {{28}} to the direction of light. In essence, a rainbow is an {{29}} illusion. Rainbows present a {{30}} made up of seven colors in a specific order. In fact, school children in many English-speaking countries are taught to remember the name “Roy G. Biv” as an aid for remembering the colors of a rainbow and their order. “Roy G. Biv” {{31}} for: red, orange, yellow, green, blue, indigo, and violet. The outer edge of the rainbow arc is red, while the inner edge is violet. A rainbow is formed when light (generally sunlight) passes through water droplets {{32}} in the atmosphere. The light waves change direction as they pass through the water droplets, resulting in two processes: reflection and refraction (折射). When light reflects off a water droplet, it simply {{33}} back in the opposite direction from where it {{34}} . When light refracts, it takes a different direction. Some individuals refer to refracted light as “bent light waves.” A rainbow is formed because white light enters the water droplet, where it bends in several different directions. When these bent light waves reach the other side of the water droplet, they reflect back out of the droplet instead of {{35}} passing through the water. Since the white light is separated inside of the water, the refracted light appears as separate colors to the human eye.",
+      },
+    ],
+    translation: [
+      {
+        label: "",
+        zh: "彩虹是一种呈弧形的多色现象，可以出现在天空中。彩虹的颜色来自光在大气中的水滴（小滴）上发生的反射与[26]。观察者可能[27]一道彩虹似乎既在近处又在远处，但这种现象其实并不位于任何一个具体的地点。相反，彩虹的外观完全取决于观察者相对于光线方向的[28]。本质上，彩虹是一种[29]错觉。彩虹呈现出由七种颜色按特定顺序组成的[30]。事实上，许多英语国家的学童会被教去记住「Roy G. Biv」这个名字，把它当作记住彩虹颜色及其顺序的辅助方法。「Roy G. Biv」[31]：红、橙、黄、绿、蓝、靛、紫。彩虹弧的外缘是红色，内缘是紫色。彩虹是在光（一般是阳光）穿过大气中[32]的水滴时形成的。光波在穿过水滴时改变方向，于是产生两个过程：反射与折射。当光在水滴上发生反射时，它只是简单地[33]回去，方向与其[34]之处恰好相反。当光发生折射时，它会走上另一个方向。有些人把折射光称为「弯曲的光波」。彩虹之所以形成，是因为白光进入水滴后，在其中朝几个不同的方向弯曲。当这些弯曲的光波到达水滴的另一侧时，它们就从水滴中反射出去，而不是[35]穿过水。由于白光在水里被分离开来，折射光在人眼中就呈现出彼此分离的颜色。",
       },
     ],
     bank: [
@@ -116,6 +123,16 @@ export const READING_SECTIONS: ReadingSection[] = [
         zh: "位于；立着",
       },
     ],
+    notes: [
+      { en: "multi-colored", zh: "多色的" },
+      { en: "arc-shaped", zh: "弧形的" },
+      { en: "phenomenon", zh: "现象" },
+      { en: "atmosphere", zh: "大气（层）" },
+      { en: "illusion", zh: "错觉" },
+      { en: "refraction", zh: "折射" },
+      { en: "refracted light", zh: "折射光" },
+      { en: "bent light waves", zh: "弯曲的光波" },
+    ],
   },
   {
     id: "r-b",
@@ -181,6 +198,32 @@ export const READING_SECTIONS: ReadingSection[] = [
         en: "Most important, however, is for organisations to awaken to the concept of meetings being flexible, says Allen. By reshaping the way they prioritise employees’ time, companies can eliminate the very sources of MRS in their tracks.",
       },
     ],
+    translation: [
+      { label: "A", zh: "Phyllis Hartman 深知在办公室会议的「地狱」里摸爬滚打是什么滋味。她此前在人力资源岗上的上司安排了太多会议，以至于与会者常常在桌边睡着，或者故意迟到。一天里有许多小时被无谓的会议占满，她常常只能在加班时间把落下的工作补回来。「我实际工作的时间，可能比真正完成这些工作所需的时间还要多，」Hartman 说道。她是宾夕法尼亚州匹兹堡 PGHR Consulting 的创始人兼总裁。" },
+      { label: "B", zh: "她并不是唯一一个为此烦恼的人。在美国，每天举行的会议在 1100 万到 5500 万场之间，使大多数组织花掉人事预算的 7% 到 15%。员工每周要花大约六小时开会，而普通管理者每周的会议时间高达惊人的 23 小时。" },
+      { label: "C", zh: "尽管专家一致认为传统会议对于做出某些决策和制定战略不可或缺，但一些员工把它们视为工作日中最没有必要的一部分。其结果不仅是数百亿美元被白白浪费，还有一件让组织心理学家头疼不已的事，他们称之为会议后恢复综合征（meeting recovery syndrome，MRS）：在一场无用的会议之后，用来平复情绪、重新集中注意力所花的时间。如果你在一次令人沮丧的会议之后跑到办公室茶水间，和同事们聊聊天缓解一下，那你多半正在经历会议后恢复综合征。" },
+      { label: "D", zh: "会议后恢复综合征这一概念，凡是在正规岗位工作过的人几乎都不会陌生。说工人开会之后会感到疲惫，这并不是什么开创性的发现，但直到近几十年，科学家才认为这一状况值得进一步研究。由于它牵涉到组织效率与员工幸福感，MRS 引起了心理学家的注意——他们意识到有必要弄清它确切的成因与疗法。" },
+      { label: "E", zh: "时至今日，就研究者所能假设的范围而言，MRS 最容易被理解为有限的心智与体能资源的一种缓慢再生。当员工坐在一场低效的会议里，他们的脑力实际上正被一点点抽干。会议如果持续太久、无法让员工参与，或者变成单方面的宣讲，就会耗掉人的活力。资源保存理论由 Stevan Hobfoll 博士于 1989 年最初提出，该理论指出：当一个人的资源受到威胁或被耗损时，心理压力就会产生。当资源所剩无几时，人就会转入防御状态，以保存剩余的储备。就办公室会议而言，员工最宝贵的资源是专注力、警觉性和动机，这可能意味着一旦他们花时间恢复，生产力就会突然停滞。" },
+      { label: "F", zh: "作为人类，我们在工作中从一项任务切换到另一项任务时——比如从坐着开会转去做日常工作——需要付出一次费力的认知切换。我们必须让自己从上一项任务中抽离出来，并耗费大量心智能量才能继续往下走。如果我们已经精疲力竭到了危险的境地，那么再把思维切换到下一件事上就格外困难。常见的场景是，人们在一场令人沮丧的会议之后上班摸鱼、去喝杯咖啡、打断同事把会议讲给他们听，等等。" },
+      { label: "G", zh: "每个人从糟糕会议中恢复过来的能力都不一样。有些人能很快恢复过来，另一些人却把疲惫一直带到一个工作日结束。虽然目前还没有正式针对 MRS 的研究，但人们不妨大致推测一下普通员工的滞后时间有多长。在没有 MRS 的状态下，切换任务大约需要 10 到 15 分钟；有了 MRS，平均可能长达 45 分钟。当一个员工连着开几场、彼此只隔 30 分钟的会议时，情况就更糟了。「在非 MRS 的情况下，这点时间不够完成手头的事；而在 MRS 的情况下，这点时间又不够为下一场会议恢复过来，」研究者 Joseph Allen 说道。「再加上接连几场糟糕会议的叠加效应，我们手上可能就要出现一场流行病了。」" },
+      { label: "H", zh: "为了应对 MRS 的副作用，Allen 与研究者 Joseph Mroz 以及内布拉斯加大学奥马哈分校的同事们一起发表了一项研究，详细说明如何避开常见陷阱，其中包含一份适用于任何工作场所的「该做与不该做」简明清单。Mroz 和他的团队从大约 200 篇论文中提炼出这份全面清单，如今可能为这个大体上还界定不清的 MRS 问题拿出了对策。" },
+      { label: "I", zh: "Mroz 说，一个好的起点是问问自己这些会议究竟有没有必要。如果议程上只有一次简短碰头，或者一些不紧急的信息分享，那么给团队发一封邮件也许更合适。「我总是会推荐的第二点是，把会议规模尽可能缩小，」Mroz 说道。「如果他们其实并不需要马上提供某种反馈，那完全可以事后再跟进。他们没必要坐在这一场一小时的会议里。」花在会议上的时间更少，最终会带来员工在他们真正参加的会议中更高的参与度，而专家认为这正是缓解 MRS 的有效办法。" },
+      { label: "J", zh: "组织科学教授 Cliff Scott 说，当员工被召集到一起参加那些激不起参与感的会议时，他们也会感到被折腾。在一场毫无意义的会议之后，他们要花宝贵的时间去发泄情绪、抱怨，并试图重新集中注意力——这正是 MRS 的主要陷阱之一。随着员工发现自己被越来越多的无谓会议绑住——于是不得不应付 MRS 带来的越来越长的滞后时间——工作日时间的这种浪费会让人感到是一种侮辱。" },
+      { label: "K", zh: "尽管关于这个课题的研究相对匮乏，Hartman 却已经自学了 Mroz 研究中提出的许多同样技巧，而且比当初困在无谓会议里的日子前进了一大步。今天她邀请来参加会议的人，不只是那些必不可少的员工，还包括每一个可能与当前议题利害相关的部门代表。她说，像她这样即便向非专业人士也征求意见、以便据此决策的管理者，能从员工队伍那里获得更多的支持与配合。" },
+      { label: "L", zh: "Mroz 说，如果一家组织能把 Mroz 与 Allen 研究成果中的全部 22 条建议都落实下去，最明显的变化将是日程上会议总数的大幅减少。花在会议上的时间更少，最终会带来生产力的提高，而这本来就是召集会议的根本目的。虽然这些对抗 MRS 的想法还没有哪一条经过实证检验，但 Allen 说有一个颇具希望的窍门：员工可以找出那些能迅速把自己情绪从负面转为正面的东西。这个办法听上去很简单——找到一个属于自己的快乐角落，去那里待一待，然后直接回到工作——但它或许正是帮助自己恢复的关键。" },
+      { label: "M", zh: "《会议的惊人科学》一书的作者 Steven Rogelberg 补充道，领导者也应该把自己看作「他人宝贵时间的管家」。领导者若具备预判潜在陷阱、体恤员工精力消耗的能力，就能为 MRS 提供有效的短期缓解手段。" },
+      { label: "N", zh: "不过，最重要的还是让组织意识到会议是可以灵活安排的这个观念，Allen 说道。公司只要重新调整安排员工时间的方式，就能把 MRS 的根源彻底清除干净。" },
+    ],
+    notes: [
+      { en: "meeting recovery syndrome", zh: "会议后恢复综合征（MRS）" },
+      { en: "organisational psychologists", zh: "组织心理学家" },
+      { en: "conservation of resources theory", zh: "资源保存理论" },
+      { en: "one-sided lectures", zh: "单方面的宣讲" },
+      { en: "cyber-loafing", zh: "上班摸鱼；划水" },
+      { en: "lag time", zh: "滞后时间" },
+      { en: "do’s and don’ts", zh: "该做与不该做的事" },
+      { en: "stewards", zh: "管家；管理者" },
+    ],
   },
   {
     id: "r-c1",
@@ -193,6 +236,22 @@ export const READING_SECTIONS: ReadingSection[] = [
         label: "",
         en: "Sarcasm and jazz have something surprisingly in common: You know them when you hear them. Sarcasm is mostly understood through tone of voice, which is used to portray the opposite of the literal words. For example, when someone says, “Well, that’s exactly what I need right now,” their tone can tell you it’s not what they need at all. Most frequently, sarcasm highlights an irritation or is, quite simply, mean. If you want to be happier and improve your relationships, cut out sarcasm. Why? Because sarcasm is actually hostility disguised as humor. Despite smiling outwardly, many people who receive sarcastic comments feel put down and often think the sarcastic person is rude, or contemptible. Indeed, it’s not surprising that the origin of the word sarcasm derives from the Greek word “sarkazein” which literally means “to tear or strip the flesh off.” Hence, it’s no wonder that sarcasm is often preceded by the word “cutting” and that it hurts. What’s more, since actions strongly determine thoughts and feelings, when a person consistently acts sarcastically it may only serve to heighten their underlying hostility and insecurity. After all, when you come right down to it, sarcasm can be used as a subtle form of bullying—and most bullies are angry, insecure, or cowardly. Alternatively, when a person stops voicing negative comments, especially sarcastic ones, they may soon start to feel happier and more self-confident. Also, other people in their life benefit even more because they no longer have to hear the emotionally hurtful language of sarcasm. Now, I’m not saying all sarcasm is bad. It may just be better used sparingly—like a potent spice in cooking. Too much of the spice, and the dish will be overwhelmed by it. Similarly, an occasional dash of sarcastic wit can spice up a chat and add an element of humor to it. But a big or steady serving of sarcasm will overwhelm the emotional flavor of any conversation and can taste very bitter to its recipient. So, tone down the sarcasm and work on clever wit instead, which is usually without any hostility and thus more appreciated by those you’re communicating with. In essence, sarcasm is easy while true, harmless wit takes talent. Thus, the main difference between wit and sarcasm is that, as already stated, sarcasm is often hostility disguised as humor. It can be intended to hurt and is often bitter and biting. Witty statements are usually in response to someone’s unhelpful remarks or behaviors, and the intent is to untangle and clarify the issue by emphasizing its absurdities. Sarcastic statements are expressed in a cutting manner; witty remarks are delivered with undisguised and harmless humor.",
       },
+    ],
+    translation: [
+      {
+        label: "",
+        zh: "讽刺与爵士乐有一个出人意料的共同点：一听到你就认得出来。讽刺主要靠语气来传达，语气被用来表达字面意思的反面。举例来说，当某人说「嗯，这正是我现在需要的」，他的语气会告诉你，他压根儿不需要这个。讽刺最常用来凸显不满，或者干脆就是刻薄。如果你想更快乐一些、把人际关系搞得更融洽，就把讽刺戒掉。为什么？因为讽刺其实是披着幽默外衣的敌意。尽管脸上挂着笑，许多听到讽刺话语的人仍觉得自己被贬低，而且往往认为说话的人粗鲁或令人鄙夷。说讽刺这个词源自希腊语「sarkazein」，字面意思是「割肉、剥皮」，这确实不足为奇。因此，讽刺常常被「尖锐（cutting）」这个词修饰、而且会伤人，也就不足为奇了。更进一步说，既然行为强烈地决定着想法和感受，一个人若总是以讽刺的方式行事，那只可能加剧他内在的敌意与不安。归根结底，讽刺可以被当作一种隐蔽的霸凌——而大多数霸凌者都是愤怒的、没有安全感的，或者懦弱的。反过来说，当一个人不再说那些负面的话，尤其是带讽刺意味的话，他可能很快就会觉得更快乐、更自信。另外，他生活中的其他人受益更多，因为他们不必再听那些伤人感情的讽刺话语。当然，我并不是说所有讽刺都是坏事。它可能只是更适合偶尔用一点——就像烹饪里的一味猛料。这种香料放得太多，菜就完全被它盖住了。同样地，偶尔来一点讽刺的机智，能让谈话更有味道，也添上一份幽默。但大份的、持续不断的讽刺会压倒任何一场对话的情绪味道，而且在听者嘴里尝起来非常苦。所以，请把讽刺的调子压低，转而练就聪明的机智——这种机智通常不带任何敌意，因而更被你交流的对象所接受。本质上，讽刺是容易的，而真正无伤大雅的机智需要天赋。因此，机智与讽刺的主要区别在于，正如前面已经说过的，讽刺常常是披着幽默外衣的敌意。它可能是有意要伤人，而且往往苦涩尖刻。机智的话语通常是对某人不得体言论或行为的回应，其意图是通过强调其中的荒谬来理清、说明问题。讽刺的话语则以尖刻的方式表达；机智的妙语则以不加掩饰的、无伤大雅的幽默传达。",
+      },
+    ],
+    notes: [
+      { en: "sarcasm", zh: "讽刺" },
+      { en: "tone of voice", zh: "语气" },
+      { en: "hostility", zh: "敌意" },
+      { en: "disguised as humor", zh: "伪装成幽默" },
+      { en: "contemptible", zh: "令人鄙夷的" },
+      { en: "bullying", zh: "霸凌" },
+      { en: "cowardly", zh: "懦弱的" },
+      { en: "sarcastic wit", zh: "讽刺的机智（带刺的妙语）" },
     ],
   },
   {
@@ -208,6 +267,25 @@ export const READING_SECTIONS: ReadingSection[] = [
 
 But why does variability impact learning and generalisation? One theory is that more variable input can highlight which aspects of a task are relevant and which are not. Another theory is that greater variability leads to broader generalisations. This is because variability will represent the real world better, including atypical (非典型的) examples. A third reason has to do with the way memory works: when training is variable, learners are forced to actively reconstruct their memories. “ Understanding the impact of variability is important for literally every aspect of our daily life. Beyond affecting the way we learn language, motor skills, and categories, it even has an impact on our social lives,” explains Raviv. “For example, face recognition is affected by whether people grew up in a small community or in a larger community. Exposure to fewer faces during childhood is associated with diminished face memory.” “ We hope this work will spark people’ s curiosity and generate more work on the topic,” “ concludes Raviv.Our paper raises a lot of open questions. Can we find similar effects of variability beyond the brain, for instance, in the immune system?”`,
       },
+    ],
+    translation: [
+      {
+        label: "",
+        zh: `变异性对学习新技能至关重要。想象一下学习网球发球：你是否应该每次都从球场上完全相同的位置发球，瞄准完全相同的目标点？虽然在更多变的条件下练习一开始会慢一些，但最终很可能让你成为更好的网球运动员。这是因为变异性能让所学内容得到更好的泛化。这一原则在许多领域都能见到，包括言语感知和类别学习。举例来说，如果婴儿只接触过吉娃娃，而不是各种各样的狗，他们就会难以学会「狗」这一类别。「关于这个基本原则，有十多个不同的名称，」最近一项研究的资深研究者 Limor Raviv 说道。「从变化较少的输入中学习往往很快，但可能无法泛化到新的刺激物上。」为了找出关键模式、理解变异性效应的内在原理，Raviv 和她的同事们综述了 150 多项研究，涵盖计算机科学、语言学、分类、视觉知觉和正规教育等不同领域。研究人员发现，综观各项研究，variability（变异性）一词至少可以指四种不同的变异性，比如集合大小和安排方式。「这四种变异性从来没有被直接比较过——这意味着我们目前还不知道哪一种对学习最有效，」Raviv 说道。变异性的影响取决于它是否与任务相关。不过，按照「宫崎先生原则」，练习看似无关的技能实际上可能有利于其他技能的学习。
+
+但为什么变异性会影响学习和泛化？一种理论认为，更多变的输入能够凸显一项任务中哪些方面相关、哪些方面无关。另一种理论认为，更大的变异性会带来更宽泛的泛化。这是因为变异性更好地代表了真实世界，包括非典型的例子。第三个原因与记忆的运作方式有关：当训练具有变化时，学习者被迫主动重构自己的记忆。「理解变异性的影响对我们日常生活的方方面面都至关重要。它不仅影响我们学习语言、动作技能和类别的方式，甚至还会影响我们的社交生活，」Raviv 解释道。「例如，面孔识别会受到人们是在小型社区还是大型社区长大的影响。童年时期接触到的面孔较少，与面孔记忆减弱有关。」「我们希望这项工作能激起人们的好奇心，并催生更多相关的研究，」Raviv 总结道。「我们的论文提出了许多悬而未决的问题。例如，我们能否在大脑之外找到类似的变异性效应，比如在免疫系统中？」`,
+      },
+    ],
+    notes: [
+      { en: "Variability", zh: "变异性" },
+      { en: "generalisation", zh: "泛化；迁移" },
+      { en: "Chihuahuas", zh: "吉娃娃（犬种）" },
+      { en: "stimuli", zh: "刺激物；新异样本" },
+      { en: "set size", zh: "集合大小（同类项目的数量）" },
+      { en: "scheduling", zh: "安排；日程" },
+      { en: "atypical", zh: "非典型的" },
+      { en: "reconstruct their memories", zh: "主动重构记忆" },
+      { en: "face recognition", zh: "面孔识别" },
     ],
   },
 ];
@@ -307,6 +385,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 36,
     unitId: "r-b",
     stem: "Although employees are said to be fatigued by meetings, the condition has not been considered worthy of further research until recently.",
+    stemZh: "尽管人们都说员工会因会议而疲惫不堪，但直到最近，这一状况才被认为值得进一步研究。",
     options: [],
     answer: "D",
     evidence: "It isn’t ground-breaking to say workers feel fatigued after a meeting, but only in recent decades have scientists deemed the condition worthy of further investigation.",
@@ -316,6 +395,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 37,
     unitId: "r-b",
     stem: "Mroz and his team compiled a list of what to do and what not to do to remedy the problem of MRS.",
+    stemZh: "Mroz 和他的团队汇编了一份「该做与不该做」的清单，用来应对 MRS 这一问题。",
     options: [],
     answer: "H",
     evidence: "In an effort to combat the side effects of MRS, Allen, along with researcher Joseph Mroz and colleagues at the University of Nebraska-Omaha, published a study detailing the best ways to avoid common traps, including a concise checklist of do’s and don’ts applicable to any workplace.",
@@ -325,6 +405,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 38,
     unitId: "r-b",
     stem: "Companies can get rid of the root cause of MRS if they give priority to workers’ time.",
+    stemZh: "如果公司优先考虑员工的时间，就能根除 MRS 的根源。",
     options: [],
     answer: "N",
     evidence: "By reshaping the way they prioritise employees’ time, companies can eliminate the very sources of MRS in their tracks.",
@@ -334,6 +415,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 39,
     unitId: "r-b",
     stem: "If workers are exhausted to a dangerous degree, it is extremely hard for them to transition to the next task.",
+    stemZh: "如果员工已经疲惫到危险的程度，他们切换到下一项任务就会非常困难。",
     options: [],
     answer: "F",
     evidence: "If we are already drained to dangerous levels, then making the mental switch to the next thing is extra tough.",
@@ -343,6 +425,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 40,
     unitId: "r-b",
     stem: "Employees in America spend a lot of time attending meetings while the number of hours managers meet is several times more.",
+    stemZh: "美国的员工花大量时间参加会议，而管理者开会的时间是前者的好几倍。",
     options: [],
     answer: "B",
     evidence: "Every week, employees spend about six hours in meetings, while the average manager meets for a staggering 23 hours.",
@@ -352,6 +435,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 41,
     unitId: "r-b",
     stem: "Phyllis Hartman has learned by herself many of the ways Mroz suggested in his study and made remarkable success in freeing herself from unnecessary meetings.",
+    stemZh: "Phyllis Hartman 自学掌握了 Mroz 在研究中提出的许多方法，并在摆脱无谓会议方面取得了显著成效。",
     options: [],
     answer: "K",
     evidence: "Despite the relative scarcity of research behind the subject, Hartman has taught herself many of the same tricks suggested in Mroz’s study, and has come a long way since her days of being stuck with unnecessary meetings.",
@@ -361,6 +445,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 42,
     unitId: "r-b",
     stem: "When meetings continue too long or don’t engage employees, they deplete vitality.",
+    stemZh: "当会议持续太久或无法让员工参与时，它们会消耗人的活力。",
     options: [],
     answer: "E",
     evidence: "Meetings drain vitality if they last too long, fail to engage employees or turn into one-sided lectures.",
@@ -370,6 +455,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 43,
     unitId: "r-b",
     stem: "When the time of meetings is reduced, employees will be more engaged in the meetings they do participate in.",
+    stemZh: "当会议时间减少后，员工在他们真正参加的会议中会更加投入。",
     options: [],
     answer: "I",
     evidence: "Less time in meetings would ultimately lead to more employee engagement in the meetings they do attend, which experts agree is a proven remedy for MRS.",
@@ -379,6 +465,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 44,
     unitId: "r-b",
     stem: "Some employees consider meetings one of the most dispensable parts of the workday.",
+    stemZh: "一些员工认为会议是工作日中最可以省掉的部分之一。",
     options: [],
     answer: "C",
     evidence: "And though experts agree that traditional meetings are essential for making certain decisions and developing strategy, some employees view them as one of the most unnecessary parts of the workday.",
@@ -388,6 +475,7 @@ export const READING_QUESTIONS: Question[] = [
     n: 45,
     unitId: "r-b",
     stem: "According to Mroz, if all his suggestions were applied, a very obvious change would be a steep decrease in the number of meetings scheduled.",
+    stemZh: "Mroz 认为，如果他的全部建议都得到落实，最明显的变化将是会议排期数量的急剧减少。",
     options: [],
     answer: "L",
     evidence: "If an organisation were to apply all 22 suggestions from Mroz and Allen’s findings, the most noticeable difference would be a stark decrease in the total number of meetings on the schedule, Mroz says.",
@@ -397,22 +485,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 46,
     unitId: "r-c1",
     stem: "Why does the author say sarcasm and jazz have something surprisingly in common?",
+    stemZh: "作者为什么说讽刺与爵士乐有着出人意料的共同点？",
     options: [
       {
         key: "A",
         en: "Both are recognized when heard.",
+        zh: "两者都是一听到就能辨认出来。",
       },
       {
         key: "B",
         en: "Both have exactly the same tone.",
+        zh: "两者的语气完全相同。",
       },
       {
         key: "C",
         en: "Both mean the opposite of what they appear to.",
+        zh: "两者的意思都与表面看上去的相反。",
       },
       {
         key: "D",
         en: "Both have hidden in them an evident irritation.",
+        zh: "两者都暗含着明显的恼怒。",
       },
     ],
     answer: "A",
@@ -423,22 +516,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 47,
     unitId: "r-c1",
     stem: "How do many people feel when they hear sarcastic comments?",
+    stemZh: "许多人在听到讽刺的话时会是什么感受？",
     options: [
       {
         key: "A",
         en: "They feel hostile towards the sarcastic person.",
+        zh: "他们会对说讽刺话的人感到敌意。",
       },
       {
         key: "B",
         en: "They feel belittled and disrespected.",
+        zh: "他们感到被贬低、被轻视。",
       },
       {
         key: "C",
         en: "They feel a strong urge to retaliate.",
+        zh: "他们会产生强烈的报复念头。",
       },
       {
         key: "D",
         en: "They feel incapable of disguising their irritation.",
+        zh: "他们觉得自己无法掩饰恼怒。",
       },
     ],
     answer: "B",
@@ -449,22 +547,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 48,
     unitId: "r-c1",
     stem: "What happens when a person consistently acts sarcastically?",
+    stemZh: "当一个人总是以讽刺的方式行事时会发生什么？",
     options: [
       {
         key: "A",
         en: "They feel their dignity greatly heightened.",
+        zh: "他们感到自己的尊严大为提高。",
       },
       {
         key: "B",
         en: "They feel increasingly insecure and hostile.",
+        zh: "他们会感到越来越不安、越来越充满敌意。",
       },
       {
         key: "C",
         en: "They endure hostility under the disguise of humor.",
+        zh: "他们在幽默的外衣下忍受敌意。",
       },
       {
         key: "D",
         en: "They taste bitterness even in pleasant interactions.",
+        zh: "即使在愉快的交往中也会尝到苦涩。",
       },
     ],
     answer: "B",
@@ -475,22 +578,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 49,
     unitId: "r-c1",
     stem: "What does the author say about people quitting sarcastic comments?",
+    stemZh: "作者对人们不再说带讽刺意味的话这件事是怎么看的？",
     options: [
       {
         key: "A",
         en: "It makes others happier and more self-confident.",
+        zh: "这会让别人更快乐、更自信。",
       },
       {
         key: "B",
         en: "It restrains them from being irritating and bullying.",
+        zh: "这能约束他们不去惹人烦、不去霸凌。",
       },
       {
         key: "C",
         en: "It benefits not only themselves but also those around them.",
+        zh: "这不仅让他们自己受益，也让身边的人受益。",
       },
       {
         key: "D",
         en: "It shields them from negative comments and outright hostility.",
+        zh: "这能保护他们免受负面评论和公然的敌意。",
       },
     ],
     answer: "C",
@@ -501,22 +609,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 50,
     unitId: "r-c1",
     stem: "What is the chief difference between a speaker’s wit and sarcasm?",
+    stemZh: "机智与讽刺之间的主要区别是什么？",
     options: [
       {
         key: "A",
         en: "Their clarity.",
+        zh: "它们的清晰度。",
       },
       {
         key: "B",
         en: "Their appreciation.",
+        zh: "它们是否受欣赏。",
       },
       {
         key: "C",
         en: "Their emphasis.",
+        zh: "它们的强调重点。",
       },
       {
         key: "D",
         en: "Their intention.",
+        zh: "它们的意图。",
       },
     ],
     answer: "D",
@@ -527,22 +640,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 51,
     unitId: "r-c2",
     stem: "What does the passage say about infants learning the category “dog” if they are exposed to Chihuahuas only?",
+    stemZh: "文章说，如果婴儿只接触过吉娃娃，他们学习「狗」这一类别会怎样？",
     options: [
       {
         key: "A",
         en: "They will encounter some degree of difficulty.",
+        zh: "他们会遇到一定的困难。",
       },
       {
         key: "B",
         en: "They will try to categorise other objects first.",
+        zh: "他们会先尝试给别的物体归类。",
       },
       {
         key: "C",
         en: "They will prefer Chihuahuas to other dog species.",
+        zh: "他们会偏爱吉娃娃胜过其他犬种。",
       },
       {
         key: "D",
         en: "They will imagine Chihuahuas in various conditions.",
+        zh: "他们会在各种情境中想象吉娃娃。",
       },
     ],
     answer: "A",
@@ -553,22 +671,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 52,
     unitId: "r-c2",
     stem: "What does Raviv say about the four different kinds of variability?",
+    stemZh: "Raviv 对这四种不同的变异性是怎么说的？",
     options: [
       {
         key: "A",
         en: "Which of them is most relevant to the task at hand is to be confirmed.",
+        zh: "其中哪一种与当前任务最相关，还有待确认。",
       },
       {
         key: "B",
         en: "Why they have an impact on learning is far from being understood.",
+        zh: "它们为何会影响学习，还远未被理解。",
       },
       {
         key: "C",
         en: "Why they have never been directly compared remains a mystery.",
+        zh: "它们为何从未被直接比较过，仍是个谜。",
       },
       {
         key: "D",
         en: "Which of them is most conducive to learning is yet to be identified.",
+        zh: "其中哪一种最有助于学习，还有待查明。",
       },
     ],
     answer: "D",
@@ -579,22 +702,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 53,
     unitId: "r-c2",
     stem: "How does one of the theories explain the importance of variability for learning new skills?",
+    stemZh: "其中一种理论是如何解释变异性在学习新技能时的重要性的？",
     options: [
       {
         key: "A",
         en: "Learners regard variable training as typical of what happens in the real world.",
+        zh: "学习者认为有变化的训练就像真实世界中发生的那样。",
       },
       {
         key: "B",
         en: "Learners receiving variable training are compelled to reorganise their memories.",
+        zh: "接受有变化训练的学习者被迫重新组织自己的记忆。",
       },
       {
         key: "C",
         en: "Learners pay attention to the relevant aspects of a task and ignore those irrelevant.",
+        zh: "学习者关注任务中相关的方面，忽略不相关的方面。",
       },
       {
         key: "D",
         en: "Learners focus on related skills instead of wasting time and effort on unrelated ones.",
+        zh: "学习者专注于相关技能，而不是把时间和精力浪费在无关的技能上。",
       },
     ],
     answer: "B",
@@ -605,22 +733,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 54,
     unitId: "r-c2",
     stem: "What does the passage say about face recognition?",
+    stemZh: "关于面孔识别，文章说了什么？",
     options: [
       {
         key: "A",
         en: "People growing up in a small community may find it easy to remember familiar faces.",
+        zh: "在小型社区长大的人可能会觉得熟悉的面孔很容易记住。",
       },
       {
         key: "B",
         en: "Face recognition has a significant impact on literally every aspect of our social lives.",
+        zh: "面孔识别对我们社交生活的方方面面都有显著影响。",
       },
       {
         key: "C",
         en: "People growing up in a large community can readily recognise any individual faces.",
+        zh: "在大型社区长大的人能轻易认出任何一张面孔。",
       },
       {
         key: "D",
         en: "The size of the community people grow up in impacts their face recognition ability.",
+        zh: "人们成长的社区规模会影响他们的面孔识别能力。",
       },
     ],
     answer: "D",
@@ -631,22 +764,27 @@ export const READING_QUESTIONS: Question[] = [
     n: 55,
     unitId: "r-c2",
     stem: "What does Raviv hope to do with their research work?",
+    stemZh: "Raviv 希望他们的这项研究工作能起到什么作用？",
     options: [
       {
         key: "A",
         en: "Highlight which aspects of a task are relevant and which are not to learning a skill.",
+        zh: "凸显一项任务中哪些方面与学习技能有关、哪些无关。",
       },
       {
         key: "B",
         en: "Use the principle of variability in teaching seemingly unrelated skills in education.",
+        zh: "在教学中运用变异性原则来教授看似无关的技能。",
       },
       {
         key: "C",
         en: "Arouse people’s interest in variability and stimulate more research on the topic.",
+        zh: "激起人们对变异性的兴趣，并推动该主题上更多的研究。",
       },
       {
         key: "D",
         en: "Apply the principle of variability to such fields of study as the immune system.",
+        zh: "把变异性原则应用到免疫系统这样的研究领域。",
       },
     ],
     answer: "C",

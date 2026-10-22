@@ -188,6 +188,15 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         en: "But I still need to check this with a couple of departments.",
       },
     ],
+    notes: [
+      { en: "pending one small change", zh: "以合同做一处小改动为前提" },
+      { en: "the utmost concern", zh: "最为关切的事" },
+      { en: "comb through", zh: "逐一仔细审查" },
+      { en: "prospective", zh: "潜在的；有可能实现的" },
+      { en: "overlap geographically", zh: "在地理区域上重叠" },
+      { en: "conflict of interest", zh: "利益冲突" },
+      { en: "negligible", zh: "微不足道的；可忽略不计的" },
+    ],
   },
   {
     id: "l-c2",
@@ -341,6 +350,15 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         en: "Thank you, Paula, for the information.",
       },
     ],
+    notes: [
+      { en: "congregating", zh: "聚集；云集" },
+      { en: "come into close proximity", zh: "（与……）极为接近" },
+      { en: "the naked eye", zh: "肉眼" },
+      { en: "formidable", zh: "令人敬畏的；气势逼人的" },
+      { en: "conducive", zh: "有助于……的；有利于……的" },
+      { en: "due north", zh: "正北方向" },
+      { en: "facilitate", zh: "使便利；帮助（某人）更容易做到某事" },
+    ],
   },
   {
     id: "l-b1",
@@ -421,6 +439,15 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         speaker: "W",
         en: "While the mechanisms behind these associations are not fully understood, Monteiro argues that the existing evidence is sufficient to justify discouraging consumption of ultra-processed foods in dietary recommendations and government policies.",
       },
+    ],
+    notes: [
+      { en: "stirred debate", zh: "引发争论" },
+      { en: "outline the case for and against", zh: "列出正反两方面的理由" },
+      { en: "degree of industrial processing", zh: "工业加工程度" },
+      { en: "sequences of processes", zh: "一系列加工工序" },
+      { en: "reconstituted meat products", zh: "复原肉制品" },
+      { en: "chronic diseases", zh: "慢性病" },
+      { en: "justify discouraging", zh: "为劝阻……提供依据" },
     ],
   },
   {
@@ -529,6 +556,15 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         en: "Creativity thrives best when constrained.\"",
         marks: [15],
       },
+    ],
+    notes: [
+      { en: "benefits from constraints", zh: "从限制中获益" },
+      { en: "resourcefully", zh: "灵活地；机智地" },
+      { en: "impetus", zh: "推动力；促进因素" },
+      { en: "leverage their limitations", zh: "利用自身的局限" },
+      { en: "scarcity or abundance", zh: "稀缺还是富足" },
+      { en: "broaden your perspective", zh: "拓宽你的视野" },
+      { en: "thrives best", zh: "最能发挥作用；效果最好" },
     ],
   },
   {
@@ -716,6 +752,15 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         en: "Owls are not satisfied until a solution is found that achieves their own goals and the other person's goals, and they are not satisfied until the tensions and negative feelings have been fully resolved.",
       },
     ],
+    notes: [
+      { en: "strategies for managing conflicts", zh: "处理冲突的策略" },
+      { en: "achieving your personal goals", zh: "实现自己的个人目标" },
+      { en: "keeping a good relationship", zh: "与对方保持良好关系" },
+      { en: "withdraw into their shells", zh: "缩回自己的壳里（回避冲突）" },
+      { en: "at all costs", zh: "不惜一切代价" },
+      { en: "both sides gain something", zh: "双方都能有所收获" },
+      { en: "negative feelings have been fully resolved", zh: "负面情绪被彻底化解" },
+    ],
   },
   {
     id: "l-r2",
@@ -831,6 +876,16 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         speaker: "N",
         en: "I think we're making history.\"",
       },
+    ],
+    notes: [
+      { en: "cracking the genetic code", zh: "破解遗传密码" },
+      { en: "biomaterials", zh: "生物材料" },
+      { en: "joined forces to sequence", zh: "携手为……测序" },
+      { en: "sixth mass extinction", zh: "第六次物种大灭绝" },
+      { en: "habitat loss", zh: "栖息地丧失" },
+      { en: "bolster efforts to conserve", zh: "加强保护的努力" },
+      { en: "harness", zh: "驾驭；利用" },
+      { en: "prospective model on the future", zh: "对未来的前瞻性模型" },
     ],
   },
   {
@@ -950,6 +1005,16 @@ export const LISTENING_UNITS: ListeningUnit[] = [
         en: "\"So, let's open our eyes to the hidden connections all around us.\"",
       },
     ],
+    notes: [
+      { en: "just an illusion", zh: "不过是一种幻觉" },
+      { en: "Copernican-like revolution", zh: "类似哥白尼的革命" },
+      { en: "a significant milestone in the cultural evolution", zh: "人类心智文化演进中的一个重要里程碑" },
+      { en: "one more big myth to dispose of", zh: "还有一个大迷思需要摒弃" },
+      { en: "a central anchor point", zh: "一个核心的锚点" },
+      { en: "the persistent thread of an identity", zh: "身份延续的那条线索" },
+      { en: "overconsumption", zh: "过度消费" },
+      { en: "a critical crossroads", zh: "一个关键的十字路口" },
+    ],
   },
 ];
 
@@ -958,22 +1023,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 1,
     unitId: "l-c1",
     stem: "What does the woman say she will do?",
+    stemZh: "女士说她将会做什么？",
     options: [
       {
         key: "A",
         en: "Reply to the man’s last proposal within a short time.",
+        zh: "在短时间内回复男士上一次的提案。",
       },
       {
         key: "B",
         en: "Sign the agreement if one small change is made to it.",
+        zh: "如果协议做一处小改动就把它签下来。",
       },
       {
         key: "C",
         en: "Make a sponsorship deal for her client at the meeting.",
+        zh: "在会上为她的客户谈成一笔赞助交易。",
       },
       {
         key: "D",
         en: "Give the man some good news regarding the contract.",
+        zh: "就合同的事给男士一些好消息。",
       },
     ],
     answer: "B",
@@ -984,22 +1054,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 2,
     unitId: "l-c1",
     stem: "What does the man say about some people he represents?",
+    stemZh: "男士如何评价他所代表的某些人？",
     options: [
       {
         key: "A",
         en: "They are becoming impatient.",
+        zh: "他们正变得不耐烦。",
       },
       {
         key: "B",
         en: "They are afraid time is running out.",
+        zh: "他们担心时间快不够用了。",
       },
       {
         key: "C",
         en: "They are used to making alterations.",
+        zh: "他们习惯于反复作出修改。",
       },
       {
         key: "D",
         en: "They are concerned about the details.",
+        zh: "他们很在意其中的细节。",
       },
     ],
     answer: "A",
@@ -1010,22 +1085,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 3,
     unitId: "l-c1",
     stem: "What reason does the woman give for the new deal to exclude the Middle East?",
+    stemZh: "女士为新合同排除中东给出了什么理由？",
     options: [
       {
         key: "A",
         en: "To prevent geographical discrimination.",
+        zh: "为了避免地域歧视。",
       },
       {
         key: "B",
         en: "To tap the food and beverage market.",
+        zh: "为了开拓食品饮料市场。",
       },
       {
         key: "C",
         en: "To avoid any conflict of interest.",
+        zh: "为了避免任何利益冲突。",
       },
       {
         key: "D",
         en: "To reduce unfair competition.",
+        zh: "为了减少不公平竞争。",
       },
     ],
     answer: "C",
@@ -1036,22 +1116,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 4,
     unitId: "l-c1",
     stem: "What does the man say about the Middle East?",
+    stemZh: "男士对中东说了什么？",
     options: [
       {
         key: "A",
         en: "It is a potential market for food and beverage.",
+        zh: "中东是食品饮料行业一个有潜力的市场。",
       },
       {
         key: "B",
         en: "It is very attractive for real estate developers.",
+        zh: "中东对房地产开发商很有吸引力。",
       },
       {
         key: "C",
         en: "It is a negligible market for his company.",
+        zh: "中东对他的公司而言是个微不足道的市场。",
       },
       {
         key: "D",
         en: "It is very different from other markets.",
+        zh: "中东与其他市场很不一样。",
       },
     ],
     answer: "C",
@@ -1062,22 +1147,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 5,
     unitId: "l-c2",
     stem: "What does the woman say about all the astronomers at the Denver Observatory?",
+    stemZh: "女士说丹佛天文台的所有天文学家怎么样？",
     options: [
       {
         key: "A",
         en: "They are thrilled by a rare astronomic phenomenon.",
+        zh: "他们为一个罕见的天文现象而激动不已。",
       },
       {
         key: "B",
         en: "They are celebrating a big event on mountain tops.",
+        zh: "他们正在山顶上庆祝一场盛大的活动。",
       },
       {
         key: "C",
         en: "They are enthusiastic about big science-related stories.",
+        zh: "他们热衷于重大的科学类新闻。",
       },
       {
         key: "D",
         en: "They are joined by astronomers all across North America.",
+        zh: "全北美的天文学家都加入了他们。",
       },
     ],
     answer: "A",
@@ -1088,22 +1178,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 6,
     unitId: "l-c2",
     stem: "What do we learn from the conversation about the Oppenheimer comet?",
+    stemZh: "从对话中我们了解到奥本海默彗星的什么情况？",
     options: [
       {
         key: "A",
         en: "It will be the most formidable of its kind in over a century.",
+        zh: "它将是一百多年来同类中最令人敬畏的一个。",
       },
       {
         key: "B",
         en: "It will come closest to Earth in more than one hundred years.",
+        zh: "它将在一百多年来最接近地球一次。",
       },
       {
         key: "C",
         en: "It will eclipse many other such events in human history.",
+        zh: "它将使人类历史上许多类似事件相形见绌。",
       },
       {
         key: "D",
         en: "It will be seen most clearly from Denver’s mountain tops.",
+        zh: "从丹佛的山顶上看得最清楚。",
       },
     ],
     answer: "B",
@@ -1114,22 +1209,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 7,
     unitId: "l-c2",
     stem: "What does the woman say people will only see in the sky without a telescope?",
+    stemZh: "女士说不用望远镜，人们在天空中只能看到什么？",
     options: [
       {
         key: "A",
         en: "A blur.",
+        zh: "一团模糊的影像。",
       },
       {
         key: "B",
         en: "Stars.",
+        zh: "星星。",
       },
       {
         key: "C",
         en: "The edge of our galaxy.",
+        zh: "我们银河系的边缘。",
       },
       {
         key: "D",
         en: "An ordinary flying object.",
+        zh: "一个普普通通的飞行物。",
       },
     ],
     answer: "A",
@@ -1140,22 +1240,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 8,
     unitId: "l-c2",
     stem: "What do scientists at the Denver Observatory advise amateurs do to facilitate their observation?",
+    stemZh: "丹佛天文台的科学家建议业余观测者做什么以便观测？",
     options: [
       {
         key: "A",
         en: "Use professional equipment.",
+        zh: "使用专业设备。",
       },
       {
         key: "B",
         en: "Climb to the nearby heights.",
+        zh: "爬到附近的高处去。",
       },
       {
         key: "C",
         en: "Fix their eyes due north.",
+        zh: "把视线固定在正北方向。",
       },
       {
         key: "D",
-        en: "Make use of phone apps. Section B Directions: In this section, you will hear two passages. At the end of each passage, you will hear three or four questions. Both the passage and the questions will be spoken only once. After you hear a question, ，， you must choose the best answer from the four choices marked",
+        en: "Make use of phone apps.",
+        zh: "利用手机应用程序。",
       },
     ],
     answer: "D",
@@ -1166,22 +1271,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 9,
     unitId: "l-b1",
     stem: "What question is said to have recently stirred debate?",
+    stemZh: "据说最近引发争论的是哪个问题？",
     options: [
       {
         key: "A",
         en: "Whether consumers should be warned against ultra-processed foods.",
+        zh: "是否应当提醒消费者少吃超加工食品。",
       },
       {
         key: "B",
         en: "Whether there is sufficient scientific consensus on dietary guidelines.",
+        zh: "膳食指南是否已有充分的科学共识。",
       },
       {
         key: "C",
         en: "Whether guidelines can form the basis for nutrition advice to consumers.",
+        zh: "指南能否成为面向消费者的营养建议依据。",
       },
       {
         key: "D",
         en: "Whether food scientists will agree on the concept of ultra-processed foods.",
+        zh: "食品科学家是否会对超加工食品这一概念达成一致。",
       },
     ],
     answer: "A",
@@ -1192,22 +1302,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 10,
     unitId: "l-b1",
     stem: "How does the system developed by Monteiro and colleagues classify foods?",
+    stemZh: "Monteiro 及其同事开发的体系如何给食物分类？",
     options: [
       {
         key: "A",
         en: "By the labor cost for the final products.",
+        zh: "按最终产品的人工成本。",
       },
       {
         key: "B",
         en: "By the degree of industrial processing.",
+        zh: "按工业加工程度。",
       },
       {
         key: "C",
         en: "By the extent of chemical alteration.",
+        zh: "按化学改变的程度。",
       },
       {
         key: "D",
         en: "By the convention of classification.",
+        zh: "按分类的惯例。",
       },
     ],
     answer: "B",
@@ -1218,22 +1333,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 11,
     unitId: "l-b1",
     stem: "What is consumption of ultra-processed foods linked with according to studies?",
+    stemZh: "研究认为，食用超加工食品与什么有关？",
     options: [
       {
         key: "A",
         en: "Increased consumers’ expenses.",
+        zh: "消费者支出增加。",
       },
       {
         key: "B",
         en: "Greater risk of chronic diseases.",
+        zh: "慢性病风险上升。",
       },
       {
         key: "C",
         en: "People’s misunderstanding of nutrition.",
+        zh: "人们对营养的误解。",
       },
       {
         key: "D",
         en: "Children’s dislike for unprocessed foods.",
+        zh: "孩子对未加工食品的厌恶。",
       },
     ],
     answer: "B",
@@ -1244,22 +1364,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 12,
     unitId: "l-b2",
     stem: "What do psychologists say people do when they are short of resources?",
+    stemZh: "心理学家说人们在资源匮乏时会做什么？",
     options: [
       {
         key: "A",
         en: "They begin to think of the benefits of constraints.",
+        zh: "他们开始想到限制带来的好处。",
       },
       {
         key: "B",
         en: "They try to seek solutions from creative people.",
+        zh: "他们设法向有创意的人寻求解决办法。",
       },
       {
         key: "C",
         en: "They try hard to maximize their mental energy.",
+        zh: "他们努力把自己的精神能量用到最大。",
       },
       {
         key: "D",
         en: "They begin to see the world in a different way.",
+        zh: "他们开始用不同的眼光看世界。",
       },
     ],
     answer: "D",
@@ -1270,22 +1395,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 13,
     unitId: "l-b2",
     stem: "What does the passage say about innovation?",
+    stemZh: "短文对创新是怎么说的？",
     options: [
       {
         key: "A",
         en: "It is characteristic of all creative people.",
+        zh: "它是所有有创造力的人的共同特征。",
       },
       {
         key: "B",
         en: "It is essential to pushing society forward.",
+        zh: "它是推动社会前进所必需的。",
       },
       {
         key: "C",
         en: "It is a creative person’s response to limitation.",
+        zh: "创新是创造者对限制的回应。",
       },
       {
         key: "D",
         en: "It is an impetus to socio-economic development.",
+        zh: "它是社会经济发展的推动力。",
       },
     ],
     answer: "C",
@@ -1296,22 +1426,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 14,
     unitId: "l-b2",
     stem: "What did a 2015 study by Ravi Mehta and Meng Zhu find?",
+    stemZh: "Ravi Mehta 与 Meng Zhu 2015 年的研究发现了什么？",
     options: [
       {
         key: "A",
         en: "Scarcity or abundance of resources has little impact on people’s creativity.",
+        zh: "资源的稀缺或富足对人的创造力影响很小。",
       },
       {
         key: "B",
         en: "Innovative people are not constrained in connecting unrelated concepts.",
+        zh: "有创新的人不受限制地连接不相关的概念。",
       },
       {
         key: "C",
         en: "People have no incentive to use available resources in new ways.",
+        zh: "人们没有动机用新的方式利用手边已有的资源。",
       },
       {
         key: "D",
         en: "Creative people tend to consume more available resources.",
+        zh: "有创造力的人往往会消耗更多可获得的资源。",
       },
     ],
     answer: "C",
@@ -1322,22 +1457,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 15,
     unitId: "l-b2",
     stem: "What did Marissa Mayer once write concerning creativity?",
+    stemZh: "Marissa Mayer 曾就创造力写过什么？",
     options: [
       {
         key: "A",
         en: "It is key to a company’s survival.",
+        zh: "它是公司生存的关键。",
       },
       {
         key: "B",
         en: "It shapes and focuses problems.",
+        zh: "它塑造问题并让问题聚焦。",
       },
       {
         key: "C",
         en: "It is essential to meeting challenges.",
+        zh: "它是应对挑战所必需的。",
       },
       {
         key: "D",
-        en: "It thrives best when constrained. Section C Directions: In this section, you will hear three recordings of lectures or talks followed by three or four questions. The recordings will be played only once. After you hear a question, you must choose the best answer from the four choices marked",
+        en: "It thrives best when constrained.",
+        zh: "越是受到约束，它越能发挥得最好。",
       },
     ],
     answer: "D",
@@ -1348,22 +1488,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 16,
     unitId: "l-r1",
     stem: "Why does the speaker say strategies for managing conflicts can always be changed?",
+    stemZh: "讲者为什么说处理冲突的策略总是可以改变的？",
     options: [
       {
         key: "A",
         en: "Because they are learned.",
+        zh: "因为它们是后天学来的。",
       },
       {
         key: "B",
         en: "Because they come naturally.",
+        zh: "因为它们是自然产生的。",
       },
       {
         key: "C",
         en: "Because they have to be properly personalized.",
+        zh: "因为它们必须加以个性化。",
       },
       {
         key: "D",
         en: "Because there can be more effective strategies.",
+        zh: "因为还可以有更有效的策略。",
       },
     ],
     answer: "A",
@@ -1374,22 +1519,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 17,
     unitId: "l-r1",
     stem: "What is said to affect the way one acts in a conflict?",
+    stemZh: "据说是什么影响一个人在冲突中的行为方式？",
     options: [
       {
         key: "A",
         en: "The extent of difference and of similarity between the two sides.",
+        zh: "双方之间的差异与相似程度。",
       },
       {
         key: "B",
         en: "The knowledge of the specific expectation the other side holds.",
+        zh: "对对方具体期待的知情程度。",
       },
       {
         key: "C",
         en: "The importance of one’s goals and of the relationship.",
+        zh: "个人目标与关系的重要性。",
       },
       {
         key: "D",
         en: "The approaches one adopts to conflict management.",
+        zh: "一个人所采取的冲突处理方式。",
       },
     ],
     answer: "C",
@@ -1400,22 +1550,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 18,
     unitId: "l-r1",
     stem: "Of the five styles the speaker discusses, which views conflicts as problems to be solved?",
+    stemZh: "讲者讨论的五种风格中，哪一种把冲突看作有待解决的问题？",
     options: [
       {
         key: "A",
         en: "The fox.",
+        zh: "狐狸。",
       },
       {
         key: "B",
         en: "The owl.",
+        zh: "猫头鹰。",
       },
       {
         key: "C",
         en: "The shark.",
+        zh: "鲨鱼。",
       },
       {
         key: "D",
         en: "The turtle.",
+        zh: "乌龟。",
       },
     ],
     answer: "B",
@@ -1426,22 +1581,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 19,
     unitId: "l-r2",
     stem: "What do scientists hope to do by cracking the genetic code of plants and animals?",
+    stemZh: "科学家希望通过破解动植物的遗传密码做到什么？",
     options: [
       {
         key: "A",
         en: "Help save species from extinction and boost human health.",
+        zh: "帮助物种免于灭绝并促进人类健康。",
       },
       {
         key: "B",
         en: "Understand how plants and animals perished over the past.",
+        zh: "弄清过去的动植物是如何消亡的。",
       },
       {
         key: "C",
         en: "Help gather information publicly available to researchers.",
+        zh: "帮助汇集可以向研究者公开的信息。",
       },
       {
         key: "D",
         en: "Find out the cause of extinction of Britain’s 66,000 species.",
+        zh: "查明英国六万六千个物种灭绝的原因。",
       },
     ],
     answer: "A",
@@ -1452,22 +1612,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 20,
     unitId: "l-r2",
     stem: "What do many scientists believe with regard to Earth?",
+    stemZh: "许多科学家对地球有何看法？",
     options: [
       {
         key: "A",
         en: "It was once dominated by dinosaurs.",
+        zh: "它曾由恐龙主宰。",
       },
       {
         key: "B",
         en: "It has entered the sixth mass extinction.",
+        zh: "它已进入第六次大灭绝。",
       },
       {
         key: "C",
         en: "Its prospects depend on future human behaviour.",
+        zh: "它的前景取决于人类未来的行为。",
       },
       {
         key: "D",
         en: "Its climate change is aggravated by humans.",
+        zh: "它的气候变化被人类加剧了。",
       },
     ],
     answer: "B",
@@ -1478,22 +1643,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 21,
     unitId: "l-r2",
     stem: "How does Sir Jim Smith, director of science at Wellcome, describe the Darwin Tree of Life project?",
+    stemZh: "Wellcome 科学总监 Jim Smith 爵士如何描述「达尔文生命之树」项目？",
     options: [
       {
         key: "A",
         en: "It dwarfs all other efforts to conserve, protect and restore biodiversity on earth.",
+        zh: "它让地球上其他所有保护、保育和恢复生物多样性的努力都相形见绌。",
       },
       {
         key: "B",
         en: "It is costly to get started and requires the joint efforts of thousands of scientists.",
+        zh: "它启动成本高昂，需要数千名科学家通力合作。",
       },
       {
         key: "C",
         en: "It can help to bring back the large numbers of plants and animals that have gone extinct.",
+        zh: "它能让大量已经灭绝的动植物重新出现。",
       },
       {
         key: "D",
         en: "It is the most exciting, most relevant, most timely and most internationally inspirational.",
+        zh: "它是最令人激动、最切题、最及时、最具国际启发性的项目。",
       },
     ],
     answer: "D",
@@ -1504,22 +1674,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 22,
     unitId: "l-r3",
     stem: "What is indeed just an illusion according to Professor Tom Oliver?",
+    stemZh: "在 Tom Oliver 教授看来，什么其实只是一种幻觉？",
     options: [
       {
         key: "A",
         en: "Cultural identity.",
+        zh: "文化认同。",
       },
       {
         key: "B",
         en: "Social evolution.",
+        zh: "社会进化。",
       },
       {
         key: "C",
         en: "The Copernican revolution.",
+        zh: "哥白尼革命。",
       },
       {
         key: "D",
         en: "Human individuality.",
+        zh: "人类的个体性。",
       },
     ],
     answer: "D",
@@ -1530,22 +1705,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 23,
     unitId: "l-r3",
     stem: "What does Professor Tom Oliver think of the idea that we exist as independent selves at the center of a subjective universe?",
+    stemZh: "Tom Oliver 教授如何看待「我们作为独立的自我存在于主观宇宙中心」这一观念？",
     options: [
       {
         key: "A",
         en: "It is a delusion to be disposed of.",
+        zh: "这是应当被抛弃的谬见。",
       },
       {
         key: "B",
         en: "It is prevalent even among academics.",
+        zh: "即使在学者当中也很流行。",
       },
       {
         key: "C",
         en: "It is a myth spread by John Donne’s poem.",
+        zh: "这是约翰·多恩的诗所散布的迷思。",
       },
       {
         key: "D",
         en: "It is rooted in the mindset of the 17th century.",
+        zh: "它根植于十七世纪的思维观念。",
       },
     ],
     answer: "A",
@@ -1556,22 +1736,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 24,
     unitId: "l-r3",
     stem: "Why does Professor Tom Oliver claim that the material \"us\" is constantly changing?",
+    stemZh: "Tom Oliver 教授为什么声称物质层面的「我们」在不断变化？",
     options: [
       {
         key: "A",
         en: "He believes in Copernican philosophical doctrines about the universe.",
+        zh: "他信奉关于宇宙的哥白尼哲学学说。",
       },
       {
         key: "B",
         en: "He has gained ample scientific evidence at the University of Reading.",
+        zh: "他在雷丁大学获得了大量科学证据。",
       },
       {
         key: "C",
         en: "He has found that our inner self and material self are interconnected.",
+        zh: "他发现内在自我与物质自我是相互联结的。",
       },
       {
         key: "D",
         en: "He contends most of our body cells can only live a few days or weeks.",
+        zh: "他主张我们体内大多数细胞只能存活几天或几周。",
       },
     ],
     answer: "D",
@@ -1582,22 +1767,27 @@ export const LISTENING_QUESTIONS: Question[] = [
     n: 25,
     unitId: "l-r3",
     stem: "How can we solve pressing environmental and societal problems according to Professor Tom Oliver?",
+    stemZh: "按照 Tom Oliver 教授的说法，我们如何解决紧迫的环境和社会问题？",
     options: [
       {
         key: "A",
         en: "By coming to see how disruptive such problems have got to be.",
+        zh: "通过看清这类问题已经变得多么具有破坏性。",
       },
       {
         key: "B",
         en: "By realising that we all can do our own bit in such endeavours.",
+        zh: "通过意识到我们在这类事业中都能尽自己的一份力。",
       },
       {
         key: "C",
         en: "By becoming aware that we are part of a bigger world.",
+        zh: "通过意识到自己是一个更大整体的一部分。",
       },
       {
         key: "D",
         en: "By making joint efforts resolutely and persistently.",
+        zh: "通过坚决而持久地共同努力。",
       },
     ],
     answer: "C",

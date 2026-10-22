@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Headphones, Pause, Play, RotateCcw, Square } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { useIsMounted } from "@/hooks/use-is-mounted";
 import { formatTime } from "@/lib/papers";
 import type { AnswerKey, Choice, Question, ReadingSection } from "@/lib/papers/types";
 
@@ -20,8 +22,6 @@ const PLAYBACK_RATES = [0.8, 1, 1.5] as const;
 export interface AudioWindowHandle {
   /** 只播这一段，播完自动停 */
   playRange: (startSec: number, endSec: number, label?: string) => void;
-  /** 退出聚焦，回到整段 */
-  clearFocus: () => void;
 }
 
 export function AudioWindow({
@@ -50,6 +50,8 @@ export function AudioWindow({
   const [dragging, setDragging] = useState(false);
   /** 正在重听的那一小段。非空时只播这一段，轨道上用一条带标出来。 */
   const [focus, setFocus] = useState<{ startSec: number; endSec: number; label: string } | null>(null);
+  /** 悬浮提示条要送到 body 上，SSR 阶段没有 document —— 挂载了才送。 */
+  const mounted = useIsMounted();
 
   useEffect(() => {
     const el = audioRef.current;
@@ -111,13 +113,28 @@ export function AudioWindow({
     setPlaying(true);
   };
 
-  const clearFocus = () => setFocus(null);
+  /**
+   * 停下这一小段，回到它的开头。
+   *
+   * 以前这里只清状态不停声音，音频接着往后播 —— 说停没停。
+   */
+  const stopFocus = () => {
+    const el = audioRef.current;
+    const back = focus?.startSec ?? startSec;
+    if (el) {
+      el.pause();
+      el.currentTime = back;
+    }
+    setFocus(null);
+    setPlaying(false);
+    setPos(back);
+    onFocusEnd?.();
+  };
 
   useImperativeHandle(
     ref,
     () => ({
       playRange,
-      clearFocus,
     }),
     [],
   );
@@ -140,6 +157,8 @@ export function AudioWindow({
     setPos(startSec);
     setPlaying(false);
     setFocus(null);
+    /* 重置也是"这段不播了"，题卡上的"正在重听"得跟着收 */
+    if (focus) onFocusEnd?.();
   };
 
   /** 跳到本段里的某个时间点。 */
@@ -247,10 +266,10 @@ export function AudioWindow({
           </p>
           <button
             type="button"
-            onClick={clearFocus}
+            onClick={stopFocus}
             className="tap shrink-0 text-caption font-black text-marker-fg underline underline-offset-4"
           >
-            退出
+            停
           </button>
         </div>
       ) : null}
@@ -323,6 +342,42 @@ export function AudioWindow({
           </button>
         ))}
       </div>
+
+      {/*
+        正在重听哪一题，必须一直看得见。
+
+        播放器在页面顶上、题卡在下面，学生滚到题卡就看不见上面那条横幅了 ——
+        只剩一段声音，不知道自己在听第几题。所以这里再贴一条视口底部的，
+        滚到哪都在，点了「停」也真停。
+
+        必须用 portal 送到 body 上：真题分段浏览的舞台带着 translateX 的 transform，
+        有 transform 的祖先会把 fixed 变成相对那个祖先定位，条子直接跑到屏幕外。
+      */}
+      {focus && mounted
+        ? createPortal(
+            <div
+              role="status"
+              aria-live="polite"
+              className="pointer-events-none fixed inset-x-0 bottom-0 z-[60] flex justify-center px-3 pb-[calc(var(--nav-height)+env(safe-area-inset-bottom,0px)+10px)]"
+            >
+              <div className="pointer-events-auto flex w-full max-w-[436px] items-center gap-2 rounded-row border-2 border-fg bg-marker px-3 py-2 shadow-hard">
+                <Headphones className="size-4 shrink-0 text-marker-fg" strokeWidth={3} />
+                <p className="num min-w-0 flex-1 truncate text-caption font-black text-marker-fg">
+                  正在重听{focus.label || "这一段"} · {formatTime(focus.startSec)} –{" "}
+                  {formatTime(focus.endSec)}
+                </p>
+                <button
+                  type="button"
+                  onClick={stopFocus}
+                  className="tap shrink-0 text-caption font-black text-marker-fg underline underline-offset-4"
+                >
+                  停
+                </button>
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
@@ -419,6 +474,9 @@ export function QuestionBlock({
   collapseExplain = false,
   onReplay,
   replayActive = false,
+  replayAt,
+  replayRange,
+  replayPlayed = false,
 }: {
   q: Question;
   answer?: string;
@@ -436,7 +494,7 @@ export function QuestionBlock({
    * 前提是每道听力题都必须有选项，否则藏掉题干就变成没法做的题。
    */
   hideStem?: boolean;
-  /** 中文解析先收起来，想看再点 */
+  /** 中文解析默认展开，给一个"收起中文"的开关 */
   collapseExplain?: boolean;
   /**
    * 听力用：只重听这一道题的题干。
@@ -446,8 +504,20 @@ export function QuestionBlock({
   onReplay?: () => void;
   /** 这一题是不是正在重听 */
   replayActive?: boolean;
+  /** 这道题的题干在音频里的位置 —— 点之前就知道会落在哪 */
+  replayAt?: string;
+  /** 正在重听时标出这一题的区间 */
+  replayRange?: string;
+  /** 放过一次了，可以再听一次 */
+  replayPlayed?: boolean;
 }) {
-  const [showExplain, setShowExplain] = useState(false);
+  /*
+    中文解析默认展开 —— 按钮叫「看解析」，就得给解析。
+    太长的时候可以自己收起：收起后按钮变回「看中文解析」，再点一次又展开。
+    chineseOpen 为 null 表示"还没表态"。
+  */
+  const [chineseOpen, setChineseOpen] = useState<boolean | null>(null);
+  const chineseVisible = !collapseExplain || chineseOpen !== false;
 
   return (
     <div className="rounded-card bg-surface p-5 shadow-hard-sm">
@@ -471,7 +541,13 @@ export function QuestionBlock({
               type="button"
               onClick={onReplay}
               aria-pressed={replayActive}
-              aria-label={`重听第 ${q.n} 题的题干`}
+              aria-label={
+                replayActive
+                  ? `正在重听第 ${q.n} 题的题干`
+                  : replayPlayed
+                    ? `再听一次第 ${q.n} 题的题干`
+                    : `重听第 ${q.n} 题的题干`
+              }
               className={cn(
                 "tap mt-2 inline-flex items-center gap-1.5 rounded-pill border-2 px-2.5 py-1 text-caption font-bold",
                 replayActive
@@ -480,7 +556,8 @@ export function QuestionBlock({
               )}
             >
               <Headphones className="size-3.5" strokeWidth={3} />
-              重听本题
+              {replayActive ? "正在重听" : replayPlayed ? "再听一次" : "重听本题"}
+              {replayActive && replayRange ? ` · ${replayRange}` : replayAt ? ` · ${replayAt}` : null}
             </button>
           ) : null}
         </div>
@@ -543,10 +620,10 @@ export function QuestionBlock({
             </p>
           ) : null}
 
-          {collapseExplain && !showExplain ? (
+          {!chineseVisible ? (
             <button
               type="button"
-              onClick={() => setShowExplain(true)}
+              onClick={() => setChineseOpen(true)}
               className="tap mt-3 w-full rounded-btn border-2 border-dashed border-fg/25 py-2.5 text-label font-bold"
             >
               看中文解析
@@ -557,7 +634,7 @@ export function QuestionBlock({
               {collapseExplain ? (
                 <button
                   type="button"
-                  onClick={() => setShowExplain(false)}
+                  onClick={() => setChineseOpen(false)}
                   className="tap mt-3 text-caption font-bold text-fg-muted underline underline-offset-4"
                 >
                   收起中文
