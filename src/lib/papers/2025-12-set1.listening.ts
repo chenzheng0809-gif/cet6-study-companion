@@ -535,7 +535,7 @@ export const LISTENING_QUESTIONS: Question[] = [
     stemZh: "根据这篇讲座，导致行李最终遗失的首要原因是什么？",
     options: [
       { key: "A", en: "Its owner's flight is delayed because of bad weather.", zh: "行李主人的航班因恶劣天气延误。" },
-      { key: "B", en: "The bag lacks an identity tag, and the airline cannot find its owner.", zh: "行李缺少身份标签，航空公司无法找到其主人。" },
+      { key: "B", en: "Airlines cannot find its owner without an ID tag on it.", zh: "行李缺少身份标签，航空公司无法找到其主人。" },
       { key: "C", en: "Airline staff have not correctly coded its destination tag.", zh: "航空公司工作人员错编了行李目的地标签。" },
       { key: "D", en: "Its owner has forgotten to pick it up from the baggage claim.", zh: "行李主人忘了去行李提取处取行李。" },
     ],

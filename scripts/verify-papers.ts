@@ -19,6 +19,8 @@ import {
 } from "../src/lib/papers";
 import { EXAM_PART_LIMIT } from "../src/lib/papers/exam-clock";
 import type { Paper, Question } from "../src/lib/papers/types";
+import fs from "node:fs";
+import path from "node:path";
 
 let passed = 0;
 const failures: string[] = [];
@@ -513,6 +515,52 @@ for (const paper of PAPERS) {
     dupIds.add(s.id);
   }
   check(`${paper.id} 原文句 id 唯一`, !dup, `共 ${dupIds.size} 句`);
+}
+
+/* ------------------------------------------------------------------ *
+ * 卷面快照闸门
+ *
+ * 题干和选项**必须逐字是卷面上印的那句**。
+ * 这一条挡的是「顺手改写」：把卷面的
+ *   "Airlines cannot find its owner without an ID tag on it."
+ * 改成读起来更顺的
+ *   "The bag lacks an identity tag, and the airline cannot find its owner."
+ * —— 语义没错，但学生看到的不是卷面上的话，做题时对不上原文。
+ *
+ * 快照由 scripts/build-paper-manifest.py 从真题 PDF 生成，
+ * 里面记着 PDF 的 sha256 和每一条 OCR 修正的理由。
+ * ------------------------------------------------------------------ */
+interface PaperManifest {
+  paperId: string;
+  source: { file: string; sha256: string; note: string };
+  ocrFixes: { key: string; pdf: string; text: string; reason: string }[];
+  options: Record<string, Record<string, string>>;
+}
+
+const MANIFEST_DIR = path.resolve(__dirname, "../src/lib/papers/manifests");
+for (const paper of PAPERS) {
+  const file = path.join(MANIFEST_DIR, `${paper.id}.json`);
+  if (!fs.existsSync(file)) continue; // 这套卷子还没做卷面快照
+  const manifest = JSON.parse(fs.readFileSync(file, "utf-8")) as PaperManifest;
+  check(`${paper.id} 卷面快照是这套卷子的`, manifest.paperId === paper.id);
+  check(`${paper.id} 卷面快照记了源 PDF`, !!manifest.source?.sha256);
+  const byN = new Map(paper.questions.map((q) => [q.n, q]));
+  for (const [n, opts] of Object.entries(manifest.options)) {
+    const q = byN.get(Number(n));
+    if (!q) {
+      check(`${paper.id} 卷面快照里的 Q${n} 数据里有`, false);
+      continue;
+    }
+    for (const key of ["A", "B", "C", "D"] as const) {
+      const want = norm(opts[key] ?? "");
+      const got = norm(q.options?.find((o) => o.key === key)?.en ?? "");
+      check(
+        `${paper.id} Q${n} 选项 ${key} 是卷面原文`,
+        want === got,
+        want === got ? "" : `卷面：${want} ｜ 数据：${got}`,
+      );
+    }
+  }
 }
 
 // ---- 汇总 ----

@@ -1,0 +1,282 @@
+{
+  "paperId": "2025-12-set1",
+  "source": {
+    "file": "15-28-09-753-asset_20261022-152809-753_acddddaf3687_51cb7b96-2025.12六级真题第1套.pdf",
+    "sha256": "acddddaf3687e5654f228cad5294b626805624651ad564136927caec95a515ad",
+    "note": "卷面原文快照。改了源 PDF 就得重新生成，否则闸门会一直报差异。"
+  },
+  "ocrFixes": [
+    {
+      "key": "1.A",
+      "pdf": "He has distinguished himself in foreigns ervice.",
+      "text": "He has distinguished himself in foreign service.",
+      "reason": "PDF 文字层在 foreign service 中间多断了一次"
+    },
+    {
+      "key": "1.B",
+      "pdf": "He is his.country's ambassador to Winopia.",
+      "text": "He is his country's ambassador to Winopia.",
+      "reason": "PDF 文字层把撇号认成了点号"
+    },
+    {
+      "key": "3.B",
+      "pdf": "It is a prerequisite to get Some practice in diplomacy.",
+      "text": "It is a prerequisite to get some practice in diplomacy.",
+      "reason": "句中小写 some 被 PDF 文字层认成了大写"
+    },
+    {
+      "key": "6.A",
+      "pdf": "The board members! insufficient support.",
+      "text": "The board members' insufficient support.",
+      "reason": "PDF 文字层把撇号认成了感叹号"
+    },
+    {
+      "key": "15.A",
+      "pdf": "People's intense fbcus on convenience.",
+      "text": "People's intense focus on convenience.",
+      "reason": "PDF 文字层 OCR 错字：fbcus → focus"
+    },
+    {
+      "key": "16.D",
+      "pdf": "Its owner has forgot to pick it up from the baggage claim.",
+      "text": "Its owner has forgotten to pick it up from the baggage claim.",
+      "reason": "PDF 文字层 OCR 漏字母：forgot → forgotten"
+    },
+    {
+      "key": "17.A",
+      "pdf": "Its tag may get tom off on the conveyor belt.",
+      "text": "Its tag may get torn off on the conveyor belt.",
+      "reason": "PDF 文字层 OCR 错字：tom → torn"
+    },
+    {
+      "key": "18.C",
+      "pdf": "Get the airline agenfs phone number before boarding.",
+      "text": "Get the airline agent's phone number before boarding.",
+      "reason": "PDF 文字层 OCR 错字：agenfs → agent's"
+    },
+    {
+      "key": "25.D",
+      "pdf": "Opportunities fbr income.",
+      "text": "Opportunities for income.",
+      "reason": "PDF 文字层把 fi 连字拆成了 fbr"
+    },
+    {
+      "key": "51.B",
+      "pdf": "It has been the fbcus of many vital conversations.",
+      "text": "It has been the focus of many vital conversations.",
+      "reason": "PDF 文字层 OCR 错字：fbcus → focus"
+    }
+  ],
+  "options": {
+    "1": {
+      "A": "He has distinguished himself in foreign service.",
+      "C": "He is currently an electrical engineer.",
+      "B": "He is his country's ambassador to Winopia.",
+      "D": "He craves attention from the media."
+    },
+    "2": {
+      "A": "A government reshuffle.",
+      "C": "Some sort of political reorientation.",
+      "B": "A fundamental reform.",
+      "D": "Some sort of crisis of legitimacy."
+    },
+    "3": {
+      "A": "All diplomats have more or less similar stories to tell.",
+      "B": "It is a prerequisite to get some practice in diplomacy.",
+      "C": "Different people can take different paths.",
+      "D": "It is a must to first obtain a law degree."
+    },
+    "4": {
+      "A": "Key skills required of a diplomat.",
+      "C": "Diplomatic discourse and rhetoric.",
+      "B": "The making of an expert diplomat.",
+      "D": "Contributions by diplomatic envoys."
+    },
+    "5": {
+      "A": "They have got their work done.",
+      "C": "They can meet again tomorrow anyway.",
+      "B": "They both look tired.",
+      "D": "They are both anxious to go home."
+    },
+    "6": {
+      "A": "The board members' insufficient support.",
+      "C": "Working two months without any progress.",
+      "B": "Two months devoted to the same contract.",
+      "D": "The man's long concentration on the project."
+    },
+    "7": {
+      "A": "Unprofessional.",
+      "C": "Exceptional.",
+      "B": "Inspirational.",
+      "D": "Delusional."
+    },
+    "8": {
+      "A": "Fewer rectifications of the contract.",
+      "C": "The early implementation of the project.",
+      "B": "More support from the board members.",
+      "D": "The alignment of all sections of the contract."
+    },
+    "9": {
+      "A": "When two employees propose contrary solutions to their dispute.",
+      "B": "When two employees are directed by their respective manager.",
+      "C": "When two people behave in an apparently clashing manner.",
+      "D": "When two people tell different stories of the same event."
+    },
+    "10": {
+      "A": "How it got resolved.",
+      "C": "What it was about.",
+      "B": "How it happened.",
+      "D": "When it was settled."
+    },
+    "11": {
+      "A": "They intervened promptly lest their dispute escalate.",
+      "C": "They assumed the best about them and moved on.",
+      "B": "They tried to ascertain the actual facts of the matter.",
+      "D": "They persuaded them to put their conflict aside."
+    },
+    "12": {
+      "A": "Dine out daily.",
+      "C": "Enjoy cooking.",
+      "B": "Budget sensibly.",
+      "D": "Shop at groceries."
+    },
+    "13": {
+      "A": "Shopping.",
+      "C": "Entertaining oneself.",
+      "B": "Sewing.",
+      "D": "Fashion designing."
+    },
+    "14": {
+      "A": "Satisfy their taste.",
+      "C": "Eat more healthily.",
+      "B": "Cut down expenses.",
+      "D": "Cultivate new hobbies."
+    },
+    "15": {
+      "A": "People's intense focus on convenience.",
+      "C": "People's strong aversion to junk foods.",
+      "B": "People's deteriorating family finances.",
+      "D": "People's increasing dislike of cooking."
+    },
+    "16": {
+      "A": "Its owner's flight is delayed because of bad weather.",
+      "B": "Airlines cannot find its owner without an ID tag on it.",
+      "C": "Airline staff have not correctly coded its destination tag.",
+      "D": "Its owner has forgotten to pick it up from the baggage claim."
+    },
+    "17": {
+      "A": "Its tag may get torn off on the conveyor belt.",
+      "C": "It may be sent to a wrong destination.",
+      "B": "Its tag may get stuck in the sorting machine.",
+      "D": "It may be picked up by someone else."
+    },
+    "18": {
+      "A": "Purchase irretrievably lost things at auction.",
+      "B": "Contact the airport staff to find our missing bag.",
+      "C": "Get the airline agent's phone number before boarding.",
+      "D": "Avoid packing valuable items in our checked baggage."
+    },
+    "19": {
+      "A": "It can be behaviorally hazardous.",
+      "C": "It can be socially harmful.",
+      "B": "It can be especially disappointing.",
+      "D": "It can be really embarrassing."
+    },
+    "20": {
+      "A": "They considered it inevitable.",
+      "C": "They were concerned with its effects.",
+      "B": "They held a negative view towards it.",
+      "D": "They saw it as a sign of social evolution."
+    },
+    "21": {
+      "A": "Elaborate forms of social contact.",
+      "C": "Poor relationships with others.",
+      "B": "Ill effects on one's sense of pride.",
+      "D": "Vicious cycles of detachment."
+    },
+    "22": {
+      "A": "The ill treatment they get as tourists.",
+      "C": "The impersonal accommodations.",
+      "B": "The nonprofessional business they see.",
+      "D": "The many adventures on their way."
+    },
+    "23": {
+      "A": "They have been the classic way to visit Europe.",
+      "B": "They attract tourists with location and decoration.",
+      "C": "They have long been competing with chain hotels.",
+      "D": "They are in fact a completely new idea in America."
+    },
+    "24": {
+      "A": "Your financial status.",
+      "C": "Your property.",
+      "B": "Your family's consent.",
+      "D": "Your personality."
+    },
+    "25": {
+      "A": "Costs for starting the business.",
+      "C": "The facilities to provide.",
+      "B": "The number of guests to receive.",
+      "D": "Opportunities for income."
+    },
+    "46": {
+      "A": "They lack a shoulder to cry on.",
+      "C": "They cannot find reliable friends.",
+      "B": "They have no soul to confide in.",
+      "D": "They ignore their ties with friends."
+    },
+    "47": {
+      "A": "Reexamine its detrimental effects.",
+      "C": "Avoid the chaos and turmoil involved.",
+      "B": "Shrug off the loss of their loved ones.",
+      "D": "Remove aggressive obstacles in the way."
+    },
+    "48": {
+      "A": "It is to be duly celebrated and highly commended.",
+      "C": "It revolves around an individualistic culture.",
+      "B": "It is a sure way to fulfill a person's dream.",
+      "D": "It reflects a person's exceptional endeavor."
+    },
+    "49": {
+      "A": "Attaching importance to academic gains on the road to success.",
+      "B": "Investing one's time in work instead of connecting with friends.",
+      "C": "Trying to strengthen friendships in one's pursuit of personal success.",
+      "D": "Excelling in academic performance to get into a prestigious college."
+    },
+    "50": {
+      "A": "No one can succeed without pushing limits.",
+      "C": "Collectivism is superior to individualism.",
+      "B": "No one can afford to neglect close friends.",
+      "D": "Success experts often lead people to ruin."
+    },
+    "51": {
+      "A": "It is struggling to transform fiction into reality.",
+      "B": "It has been the focus of many vital conversations.",
+      "C": "It still has a long way to go before equity can be truly realized.",
+      "D": "It has got to a point where people disagree on nearly every issue."
+    },
+    "52": {
+      "A": "They have been unfairly treated regarding higher education.",
+      "B": "They have been battling hard to address equity issues.",
+      "C": "They have boosted their lifetime incomes by billions of dollars.",
+      "D": "They have come to see the consequences of racial discrimination."
+    },
+    "53": {
+      "A": "By dealing with the thorny issues confronting them.",
+      "B": "By seizing every chance to enhance racial harmony.",
+      "C": "By continuing to pursue Martin Luther King Jr.'s cause.",
+      "D": "By striving to identify exceedingly valuable opportunities."
+    },
+    "54": {
+      "A": "It is compelled to address its historical social issues.",
+      "B": "It is delaying advancements toward racial equality.",
+      "C": "It has kept itself from polarization.",
+      "D": "It has become increasingly split."
+    },
+    "55": {
+      "A": "Ensure the wellbeing of their children and grandchildren.",
+      "B": "Make joint efforts to tackle the nation's equity issues.",
+      "C": "Restrain their intolerance and discrimination.",
+      "D": "Restore social order for a harmonious nation."
+    }
+  }
+}
